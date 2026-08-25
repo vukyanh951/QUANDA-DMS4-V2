@@ -124,4 +124,4 @@ Import this repository into Vercel as a Next.js project. No custom build or outp
 
 Copy `.env.example` to `.env.local` for local server-side integrations. Configure the same variable names in Vercel for Preview and Production. `GEMINI_API_KEY` is server-only and must never use a `NEXT_PUBLIC_` prefix.
 
-The current deterministic MVP does not call Gemini, so Gemini variables may remain unset until that server-side integration is implemented.
+Each uncached project submission makes one server-side Gemini structured-analysis request. The validated analysis enriches repository-owned ontology and capability resolution, then the deterministic QUANDA solver ranks the paths. If Gemini configuration, quota, output validation, or the request itself fails, the API automatically uses local deterministic analysis instead.
