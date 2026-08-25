@@ -178,3 +178,72 @@ test('messy Y2K brief resolves concepts before deterministic ranking', async () 
   assert(outcome.resolution.ontologyConceptIds.some((id) => id.includes('chrome')));
   assert.equal(solution.recommended.softwareIds[0], 'blender');
 });
+
+test('creative-coding lyrics website resolves to a web path instead of Blender', async () => {
+  const creativeWebInput: ProjectInput = {
+    brief: 'I know Illustrator but have never coded. I want a web to displays a song lyrics with creative coding techniques',
+    deadline,
+    hoursPerDay: 2,
+    skills: 'Illustrator — advanced; Coding — none',
+    constraints: 'Prefer free tools.',
+    language: 'en',
+  };
+  const analysis = ProjectAnalysisSchema.parse({
+    ...validAnalysis,
+    destination: 'Creative-coded lyrics website',
+    deliverables: ['Published website'],
+    creativeDirection: ['Generative typography'],
+    mandatoryRequirements: ['Prefer free tools'],
+    knownSoftware: ['Illustrator'],
+    knownSkills: ['Illustrator — advanced', 'Coding — none'],
+    requiredCapabilities: ['Web publishing', 'Text rendering', 'Generative typography', 'Interactive web graphics'],
+    likelyTechniques: [],
+  });
+  const outcome = await runProjectAnalysis(creativeWebInput, async () => analysis);
+  const solution = solveProject(creativeWebInput, outcome);
+  const everyCandidate = [solution.recommended, ...solution.alternatives, ...solution.rejected];
+
+  assert.equal(outcome.source, 'gemini');
+  assert.equal(solution.detectedKind, 'creative-web');
+  assert.deepEqual(solution.recommended.softwareIds, ['illustrator', 'p5js', 'vercel']);
+  assert(solution.recommended.tasks.some((task) => task.recommendedSoftwareId === 'p5js'));
+  assert(solution.recommended.tasks.some((task) => task.method === 'delegate_to_agent'));
+  assert(everyCandidate.every((path) => !path.softwareIds.includes('blender')));
+  assert(everyCandidate.every((path) => !path.softwareIds.includes('maya')));
+});
+
+test('creative-coding website remains a web path when Gemini is unavailable', async () => {
+  const creativeWebInput: ProjectInput = {
+    brief: 'I want a website that displays song lyrics with creative coding techniques.',
+    deadline,
+    hoursPerDay: 2,
+    skills: 'Illustrator advanced; no coding',
+    constraints: 'Prefer free tools.',
+    language: 'en',
+  };
+  const outcome = await runProjectAnalysis(creativeWebInput, async () => {
+    throw new Error('offline');
+  });
+  const solution = solveProject(creativeWebInput, outcome);
+
+  assert.equal(outcome.source, 'fallback');
+  assert.equal(solution.detectedKind, 'creative-web');
+  assert(solution.recommended.softwareIds.includes('p5js'));
+  assert(!solution.recommended.softwareIds.includes('blender'));
+});
+
+test('unrecognized briefs request clarification instead of defaulting to animation', () => {
+  const solution = solveProject({
+    brief: 'I want to make something meaningful for a small community event.',
+    deadline,
+    hoursPerDay: 2,
+    skills: '',
+    constraints: '',
+    language: 'en',
+  });
+
+  assert.equal(solution.detectedKind, 'unresolved');
+  assert.equal(solution.recommended.id, 'clarify-project');
+  assert.deepEqual(solution.recommended.softwareIds, []);
+  assert(!solution.recommended.title.includes('Blender'));
+});
