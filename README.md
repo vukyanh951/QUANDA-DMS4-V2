@@ -100,3 +100,28 @@ scripts/
 If implementation details are ambiguous, `QUANDA_V2_SPEC.md` is authoritative.
 
 Do not modify QUANDA V1.
+
+## Local development
+
+QUANDA V2 is a standard Next.js App Router application.
+
+```bash
+pnpm install
+pnpm dev
+```
+
+Run the validation gate with:
+
+```bash
+pnpm test:solver
+pnpm lint
+pnpm build
+```
+
+## Vercel deployment
+
+Import this repository into Vercel as a Next.js project. No custom build or output configuration is required.
+
+Copy `.env.example` to `.env.local` for local server-side integrations. Configure the same variable names in Vercel for Preview and Production. `GEMINI_API_KEY` is server-only and must never use a `NEXT_PUBLIC_` prefix.
+
+The current deterministic MVP does not call Gemini, so Gemini variables may remain unset until that server-side integration is implemented.
