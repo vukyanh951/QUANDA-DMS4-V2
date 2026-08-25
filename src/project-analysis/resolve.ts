@@ -1,5 +1,6 @@
 import ontologyData from '@/knowledge/ontology.compiled.json';
 import capabilitiesData from '@/knowledge/software-capabilities.json';
+import { playbookAliases } from '@/src/solver/playbooks';
 import type { ProjectAnalysis, ResolvedProjectAnalysis } from './schema';
 
 const normalize = (value: string) => value
@@ -32,6 +33,7 @@ const capabilityAliases: Record<string, string[]> = {
   'web-and-creative-coding.library.three-js': ['three.js', 'three js', 'webgl'],
   'web-and-creative-coding.library.p5-js': ['p5.js', 'p5 js', 'p5js'],
   'traditional-and-physical-media.installation-technique.projection-mapping': ['projection mapping', 'projected installation', 'projector calibration'],
+  ...playbookAliases,
 };
 
 const softwareLabelById = Object.fromEntries(

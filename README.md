@@ -18,6 +18,14 @@ The primary ontology source is:
 
 Treat `quanda.skills` as the human-maintained creative and technical knowledge source. Compile it into runtime data rather than sending the whole file to Gemini on every request.
 
+The runtime knowledge layers are:
+
+- `knowledge/ontology.compiled.json` — canonical concepts compiled from `quanda.skills`
+- `knowledge/software-capabilities.json` — technique-to-software support and methods
+- `knowledge/technique-playbooks.json` — curated prerequisites, artifacts, implementation steps, acceptance checks, and failure modes for executable tasks and agent handoffs
+
+Gemini identifies plain-language project intent. Repository-owned resolution validates it against these canonical layers, and the deterministic solver selects paths, task dependencies, and delegation playbooks. Agent prompts are generated from the selected playbooks; they are not generic Gemini-authored instructions.
+
 ## V2 product direction
 
 QUANDA V2 is **not** primarily a tutorial recommender.
@@ -114,6 +122,7 @@ Run the validation gate with:
 
 ```bash
 pnpm test:solver
+pnpm test:analysis
 pnpm lint
 pnpm build
 ```

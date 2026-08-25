@@ -9,6 +9,8 @@ import {
 import { resolveProjectAnalysis } from './resolve';
 import { solveProject } from '@/src/solver/solve';
 import type { ProjectInput } from '@/src/solver/types';
+import ontologyData from '@/knowledge/ontology.compiled.json';
+import playbookData from '@/knowledge/technique-playbooks.json';
 
 const deadline = new Date(Date.now() + 7 * 86_400_000).toISOString().slice(0, 10);
 const input: ProjectInput = {
@@ -33,6 +35,12 @@ const validAnalysis: ProjectAnalysis = {
   highImpactUncertainties: [],
   unknownTerminology: [],
 };
+
+test('every technique playbook references a canonical quanda.skills concept', () => {
+  const canonicalIds = new Set(ontologyData.concepts.map((concept) => concept.id));
+  assert(playbookData.playbooks.length >= 10);
+  assert(playbookData.playbooks.every((playbook) => canonicalIds.has(playbook.techniqueId)));
+});
 
 test('accepts valid structured Gemini analysis', () => {
   assert.deepEqual(parseProjectAnalysisJson(JSON.stringify(validAnalysis)), validAnalysis);
@@ -181,7 +189,7 @@ test('messy Y2K brief resolves concepts before deterministic ranking', async () 
 
 test('creative-coding lyrics website resolves to a web path instead of Blender', async () => {
   const creativeWebInput: ProjectInput = {
-    brief: 'I know Illustrator but have never coded. I want a web to displays a song lyrics with creative coding techniques',
+    brief: 'I know Illustrator and Photoshop and Blender but have never coded. I want to make a website to display song lyrics with creative web scrolling animations and interactive visuals.',
     deadline,
     hoursPerDay: 2,
     skills: 'Illustrator — advanced; Coding — none',
@@ -196,8 +204,8 @@ test('creative-coding lyrics website resolves to a web path instead of Blender',
     mandatoryRequirements: ['Prefer free tools'],
     knownSoftware: ['Illustrator'],
     knownSkills: ['Illustrator — advanced', 'Coding — none'],
-    requiredCapabilities: ['Web publishing', 'Text rendering', 'Generative typography', 'Interactive web graphics'],
-    likelyTechniques: [],
+    requiredCapabilities: ['Web publishing', 'Text rendering', 'Generative typography', 'Interactive web graphics', 'Scroll interaction'],
+    likelyTechniques: ['Scroll-linked animation', 'Character stagger', 'Scroll reveal'],
   });
   const outcome = await runProjectAnalysis(creativeWebInput, async () => analysis);
   const solution = solveProject(creativeWebInput, outcome);
@@ -213,7 +221,21 @@ test('creative-coding lyrics website resolves to a web path instead of Blender',
   assert(delegatedTasks.every((task) => task.agentDelegation?.compatibleAgents.join(' ') === 'Claude Codex Kimi'));
   assert(delegatedTasks.every((task) => task.agentDelegation?.prompt.includes(creativeWebInput.brief)));
   assert(delegatedTasks.every((task) => task.agentDelegation?.prompt.includes(task.objective)));
-  assert(delegatedTasks.every((task) => task.agentDelegation?.expectedOutputs.length === 4));
+  assert(delegatedTasks.every((task) => (task.agentDelegation?.expectedOutputs.length ?? 0) > 4));
+  assert(delegatedTasks.every((task) => task.agentDelegation?.prompt.includes('REQUIRED TECHNIQUE PLAN')));
+  assert(delegatedTasks.every((task) => task.agentDelegation?.prompt.includes('IMPLEMENTATION SEQUENCE')));
+  assert(delegatedTasks.every((task) => task.agentDelegation?.prompt.includes('FAILURE MODES TO PREVENT')));
+  const scaffold = delegatedTasks.find((task) => task.id === 'scaffold');
+  const typography = delegatedTasks.find((task) => task.id === 'typography');
+  assert(scaffold?.agentDelegation?.techniquePlan.some((plan) => plan.label === 'Semantic HTML structure'));
+  assert(scaffold?.agentDelegation?.techniquePlan.some((plan) => plan.label === 'p5.js visual runtime'));
+  assert(typography?.agentDelegation?.techniquePlan.some((plan) => plan.label === 'Normalized scroll progress'));
+  assert(typography?.agentDelegation?.techniquePlan.some((plan) => plan.label === 'Scroll-linked kinetic typography'));
+  assert(typography?.agentDelegation?.techniquePlan.some((plan) => plan.label === 'Accessible character staggering'));
+  assert.deepEqual(typography?.prerequisiteTaskIds, ['scaffold']);
+  assert.notDeepEqual(scaffold?.techniqueIds, typography?.techniqueIds);
+  assert.notDeepEqual(scaffold?.definitionOfDone, typography?.definitionOfDone);
+  assert.notEqual(scaffold?.agentDelegation?.prompt, typography?.agentDelegation?.prompt);
   assert(solution.recommended.tasks.filter((task) => task.method !== 'delegate_to_agent').every((task) => task.agentDelegation === null));
   assert(everyCandidate.every((path) => !path.softwareIds.includes('blender')));
   assert(everyCandidate.every((path) => !path.softwareIds.includes('maya')));

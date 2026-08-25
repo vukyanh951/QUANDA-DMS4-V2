@@ -1,5 +1,6 @@
 import resourcesData from '@/knowledge/resources.json';
 import type { ProjectAnalysisOutcome } from '@/src/project-analysis/schema';
+import { flattenTechniquePlans, resolveTechniquePlans } from './playbooks';
 import type { AgentDelegationGuide, CandidatePath, ExecutionMethod, Language, PipelineTask, ProjectInput, ScoreBreakdown, Solution } from './types';
 
 const APPS:Record<string,string>={blender:'Blender',touchdesigner:'TouchDesigner','davinci-resolve':'DaVinci Resolve','python-opencv':'Python + OpenCV',p5js:'p5.js',threejs:'Three.js','after-effects':'After Effects',houdini:'Houdini',maya:'Maya',illustrator:'Illustrator',vercel:'Vercel'};
@@ -8,6 +9,7 @@ const official=Object.fromEntries(resourcesData.resources.filter((r)=>r.reliabil
 const tr=(lang:Language,en:string,vi:string)=>lang==='vi'?vi:en;
 const has=(text:string,words:string[])=>words.some((word)=>text.includes(word));
 const clamp=(n:number)=>Math.max(0,Math.min(100,Math.round(n)));
+const unique=<T,>(values:T[])=>[...new Set(values)];
 
 type Seed={id:string;apps:string[];human:number;learning:number;agent:number;risk:number};
 const seeds=(kind:string):Seed[]=>kind==='installation'?[{id:'td-native',apps:['blender','touchdesigner','davinci-resolve'],human:315,learning:45,agent:0,risk:16},{id:'td-python',apps:['blender','python-opencv','touchdesigner','davinci-resolve'],human:275,learning:105,agent:50,risk:26},{id:'td-lean',apps:['touchdesigner','davinci-resolve'],human:350,learning:70,agent:0,risk:19},{id:'unity-route',apps:['blender','davinci-resolve'],human:390,learning:150,agent:25,risk:34}]
@@ -23,8 +25,8 @@ function appMentions(text:string){return Object.entries(APPS).filter(([,label])=
 function mandatory(text:string){return[...new Set(text.split(/[.!?;\n]+/).filter((clause)=>has(clause,['must','mandatory','required','bắt buộc','phải dùng'])).flatMap(appMentions))]}
 function methodLabel(lang:Language,m:ExecutionMethod){const labels:Record<ExecutionMethod,[string,string]>={do_yourself:['Do yourself','Tự thực hiện'],delegate_to_agent:['Delegate to agent','Giao cho AI agent'],read_documentation:['Read documentation','Đọc tài liệu'],follow_tutorial:['Focused learning','Học có trọng tâm'],use_example:['Adapt example','Chỉnh sửa ví dụ'],human_review:['Human review','Người dùng duyệt']};return labels[m][lang==='vi'?1:0]}
 
-type TaskSeed={id:string;title:[string,string];objective:[string,string];app:string|null;method:ExecutionMethod;human:number;learn:number;agent:number;tech:string[];why:[string,string]};
-function taskSeeds(kind:string,seed:Seed,known:string[]):TaskSeed[]{
+type TaskSeed={id:string;title:[string,string];objective:[string,string];app:string|null;method:ExecutionMethod;human:number;learn:number;agent:number;tech:string[];why:[string,string];prerequisites?:string[]};
+function taskSeeds(kind:string,seed:Seed,known:string[],requestedTechniques:string[]):TaskSeed[]{
  const familiar=(app:string)=>known.includes(app);
  if(kind==='unresolved')return[
   {id:'clarify',title:['Clarify the project requirements','Làm rõ yêu cầu dự án'],objective:['Confirm the medium, deliverable, and required behavior before selecting software.','Xác nhận phương tiện, đầu ra và hành vi bắt buộc trước khi chọn phần mềm.'],app:null,method:'human_review',human:25,learn:0,agent:0,tech:[],why:['The brief does not yet support a defensible software recommendation.','Brief hiện chưa đủ để đề xuất phần mềm có căn cứ.']}
@@ -40,18 +42,27 @@ function taskSeeds(kind:string,seed:Seed,known:string[]):TaskSeed[]{
  if(kind==='creative-web'){
   const creativeApp=seed.apps.includes('p5js')?'p5js':'threejs';
   const creativeTechnique=creativeApp==='p5js'?'web-and-creative-coding.library.p5-js':'web-and-creative-coding.library.three-js';
+  const foundationTechniques=['web-and-creative-coding.markup-language.html','web-and-creative-coding.styling-language.css','web-and-creative-coding.rendering-technology.dom',creativeTechnique,'web-and-creative-coding.web-standard.accessibility-aria'];
+  const requestedMotion=requestedTechniques.filter((id)=>id.startsWith('motion-and-animation.'));
+  const behaviorDefaults=['motion-and-animation.typography-animation.kinetic-typography','motion-and-animation.typography-animation.character-stagger'];
+  const scrollRequested=requestedMotion.some((id)=>id.includes('scroll'));
+  const scrollPlaybooks=['motion-and-animation.interaction-reactive-motion.scroll','motion-and-animation.typography-animation.scroll-linked','motion-and-animation.ui-animation.scroll-reveal'];
+  const behaviorTechniques=unique([...requestedMotion,...behaviorDefaults,...(scrollRequested?scrollPlaybooks:[])]);
+  const scaffoldObjective=scrollRequested?['Create the semantic lyric structure, responsive visual layer, scroll-state bridge, and accessible interaction controls.','Tạo cấu trúc lời bài hát có ngữ nghĩa, lớp hình ảnh responsive, cầu nối trạng thái cuộn và điều khiển tương tác dễ tiếp cận.'] as [string,string]:['Create the semantic lyric structure, responsive visual layer, shared interaction state, and accessible controls.','Tạo cấu trúc lời bài hát có ngữ nghĩa, lớp hình ảnh responsive, trạng thái tương tác dùng chung và điều khiển dễ tiếp cận.'] as [string,string];
+  const behaviorTitle=scrollRequested?['Build the scroll-linked lyric system','Xây hệ lời bài hát liên kết cuộn'] as [string,string]:['Build the kinetic lyric system','Xây hệ kinetic typography cho lời bài hát'] as [string,string];
+  const behaviorObjective=scrollRequested?['Turn normalized section progress into reversible kinetic typography, staggered lyric reveals, and coordinated p5.js visuals.','Biến progress section đã chuẩn hóa thành kinetic typography đảo ngược được, reveal lời theo stagger và hình p5.js đồng bộ.'] as [string,string]:['Turn the approved art direction into readable kinetic typography, staggered lyric reveals, and coordinated generative visuals.','Biến art direction đã duyệt thành kinetic typography dễ đọc, reveal lời theo stagger và hình ảnh sinh động đồng bộ.'] as [string,string];
   return[
    {id:'direction',title:['Design the lyric visual system','Thiết kế hệ hình ảnh cho lời bài hát'],objective:['Define typography, color, motion rules, and reusable visual assets.','Xác định chữ, màu, quy tắc chuyển động và asset hình ảnh tái sử dụng.'],app:seed.apps.includes('illustrator')?'illustrator':null,method:seed.apps.includes('illustrator')&&familiar('illustrator')?'do_yourself':'human_review',human:55,learn:0,agent:0,tech:[],why:['The user already has strong visual-design skills and should own the art direction.','Người dùng có kỹ năng thiết kế mạnh và nên giữ vai trò art direction.']},
-   {id:'scaffold',title:['Build the browser experience','Dựng trải nghiệm trên trình duyệt'],objective:['Create the page structure, lyric data, responsive canvas, and playback controls.','Tạo cấu trúc trang, dữ liệu lời bài hát, canvas responsive và điều khiển phát.'],app:creativeApp,method:familiar(creativeApp)?'do_yourself':'delegate_to_agent',human:70,learn:familiar(creativeApp)?0:15,agent:familiar(creativeApp)?0:45,tech:[creativeTechnique],why:['A small working scaffold makes the creative behavior testable early.','Khung hoạt động nhỏ giúp kiểm thử hành vi sáng tạo sớm.']},
-   {id:'typography',title:['Create the generative lyric behavior','Tạo hành vi chữ sinh động'],objective:['Map lyric timing and interaction to position, scale, color, and motion.','Ánh xạ thời gian lời bài hát và tương tác vào vị trí, tỉ lệ, màu và chuyển động.'],app:creativeApp,method:familiar(creativeApp)?'do_yourself':'delegate_to_agent',human:95,learn:familiar(creativeApp)?0:25,agent:familiar(creativeApp)?0:35,tech:[creativeTechnique],why:['Generative typography is the requested creative-coding core.','Typography sinh động là cốt lõi creative coding được yêu cầu.']},
-   {id:'review',title:['Review lyrics and accessibility','Duyệt lời bài hát và khả năng tiếp cận'],objective:['Verify lyric text, readability, reduced-motion behavior, and mobile controls.','Kiểm tra lời bài hát, độ dễ đọc, chế độ giảm chuyển động và điều khiển di động.'],app:null,method:'human_review',human:35,learn:0,agent:0,tech:[],why:['Only the user can approve the final text and visual pacing.','Chỉ người dùng có thể duyệt nội dung và nhịp hình ảnh cuối.']},
-   {id:'deploy',title:['Publish the website','Xuất bản website'],objective:['Run the production build and deploy a shareable Vercel URL.','Chạy production build và deploy URL Vercel có thể chia sẻ.'],app:'vercel',method:'do_yourself',human:20,learn:0,agent:0,tech:[],why:['A working public URL is the required web deliverable.','URL công khai hoạt động là đầu ra web bắt buộc.']}
+   {id:'scaffold',title:['Build the browser experience','Dựng trải nghiệm trên trình duyệt'],objective:scaffoldObjective,app:creativeApp,method:familiar(creativeApp)?'do_yourself':'delegate_to_agent',human:70,learn:familiar(creativeApp)?0:15,agent:familiar(creativeApp)?0:45,tech:foundationTechniques,prerequisites:['direction'],why:['A measurable browser foundation gives the motion task stable content, state, and rendering boundaries.','Nền tảng trình duyệt có thể đo lường cung cấp nội dung, trạng thái và ranh giới render ổn định cho bước motion.']},
+   {id:'typography',title:behaviorTitle,objective:behaviorObjective,app:creativeApp,method:familiar(creativeApp)?'do_yourself':'delegate_to_agent',human:95,learn:familiar(creativeApp)?0:25,agent:familiar(creativeApp)?0:35,tech:behaviorTechniques,prerequisites:['scaffold'],why:scrollRequested?['The brief specifically asks for interactive scrolling visuals, so the behavior is defined as testable scroll and typography techniques rather than generic creative coding.','Brief yêu cầu cụ thể hình ảnh tương tác khi cuộn, vì vậy hành vi được xác định bằng kỹ thuật cuộn và typography có thể kiểm thử thay vì creative coding chung chung.']:['The requested lyric experience needs a defined typography motion grammar rather than generic creative-coding effects.','Trải nghiệm lời bài hát cần ngữ pháp chuyển động typography rõ ràng thay vì hiệu ứng creative coding chung chung.']},
+   {id:'review',title:['Review lyrics and accessibility','Duyệt lời bài hát và khả năng tiếp cận'],objective:['Verify lyric text, readability, reduced-motion behavior, mobile controls, and visual pacing in both scroll directions.','Kiểm tra lời bài hát, độ dễ đọc, chế độ giảm chuyển động, điều khiển mobile và nhịp hình ảnh ở cả hai hướng cuộn.'],app:null,method:'human_review',human:35,learn:0,agent:0,tech:[],prerequisites:['typography'],why:['Only the user can approve the final text and visual pacing.','Chỉ người dùng có thể duyệt nội dung và nhịp hình ảnh cuối.']},
+   {id:'deploy',title:['Publish the website','Xuất bản website'],objective:['Run the production build and deploy a shareable Vercel URL.','Chạy production build và deploy URL Vercel có thể chia sẻ.'],app:'vercel',method:'do_yourself',human:20,learn:0,agent:0,tech:[],prerequisites:['review'],why:['A working public URL is the required web deliverable.','URL công khai hoạt động là đầu ra web bắt buộc.']}
   ];
  }
  if(kind==='threejs')return[
   {id:'direction',title:['Lock the visual system','Chốt hệ hình ảnh'],objective:['Choose type, color, motion, and one signature interaction.','Chọn chữ, màu, chuyển động và một tương tác đặc trưng.'],app:null,method:'human_review',human:40,learn:0,agent:0,tech:[],why:['Human art direction prevents a generic portfolio.','Art direction của bạn tránh kết quả đại trà.']},
-  {id:'scaffold',title:['Scaffold the web experience','Dựng khung trải nghiệm web'],objective:['Create the scene, renderer, and content structure.','Tạo scene, renderer và cấu trúc nội dung.'],app:seed.apps[0],method:seed.id==='three-learn'?'follow_tutorial':'delegate_to_agent',human:70,learn:seed.id==='three-learn'?80:10,agent:seed.id==='three-learn'?0:60,tech:[seed.apps[0]==='p5js'?'web-and-creative-coding.library.p5-js':'web-and-creative-coding.library.three-js'],why:['The foundation is repetitive and easy to validate.','Phần nền có tính lặp và dễ kiểm tra.']},
-  {id:'interaction',title:['Build the signature interaction','Xây tương tác đặc trưng'],objective:['Connect pointer, scroll, and motion to scene behavior.','Kết nối con trỏ, cuộn và chuyển động với scene.'],app:seed.apps[0],method:seed.id==='three-learn'?'do_yourself':'delegate_to_agent',human:95,learn:seed.id==='three-learn'?40:10,agent:seed.id==='three-learn'?0:35,tech:[],why:['One strong interaction beats many weak effects.','Một tương tác mạnh hơn nhiều hiệu ứng yếu.']},
+  {id:'scaffold',title:['Scaffold the web experience','Dựng khung trải nghiệm web'],objective:['Create the semantic content structure and a responsive, disposable scene runtime.','Tạo cấu trúc nội dung có ngữ nghĩa và runtime scene responsive, có thể dispose.'],app:seed.apps[0],method:seed.id==='three-learn'?'follow_tutorial':'delegate_to_agent',human:70,learn:seed.id==='three-learn'?80:10,agent:seed.id==='three-learn'?0:60,tech:['web-and-creative-coding.markup-language.html','web-and-creative-coding.styling-language.css','web-and-creative-coding.rendering-technology.dom',seed.apps[0]==='p5js'?'web-and-creative-coding.library.p5-js':'web-and-creative-coding.library.three-js','web-and-creative-coding.web-standard.accessibility-aria'],why:['The foundation is repetitive and easy to validate.','Phần nền có tính lặp và dễ kiểm tra.']},
+  {id:'interaction',title:['Build the signature interaction','Xây tương tác đặc trưng'],objective:['Connect normalized pointer and scroll state to bounded, reversible scene behavior.','Kết nối trạng thái con trỏ và cuộn đã chuẩn hóa với hành vi scene có giới hạn, đảo ngược được.'],app:seed.apps[0],method:seed.id==='three-learn'?'do_yourself':'delegate_to_agent',human:95,learn:seed.id==='three-learn'?40:10,agent:seed.id==='three-learn'?0:35,tech:['motion-and-animation.interaction-reactive-motion.mouse-position','motion-and-animation.interaction-reactive-motion.scroll'],why:['One strong interaction beats many weak effects.','Một tương tác mạnh hơn nhiều hiệu ứng yếu.']},
   {id:'review',title:['Review content and accessibility','Duyệt nội dung và khả năng truy cập'],objective:['Replace placeholders and verify every link and label.','Thay placeholder và kiểm tra mọi link, nhãn.'],app:null,method:'human_review',human:35,learn:0,agent:0,tech:[],why:['Only you can validate the portfolio story.','Chỉ bạn có thể duyệt câu chuyện portfolio.']},
   {id:'deploy',title:['Ship a Vercel preview','Đưa bản xem trước lên Vercel'],objective:['Run the production build and deploy the repository.','Build production và deploy repository.'],app:'vercel',method:'do_yourself',human:20,learn:0,agent:0,tech:[],why:['A shareable URL is the finish line.','URL chia sẻ được là đích đến.']}
  ];
@@ -68,17 +79,16 @@ function taskSeeds(kind:string,seed:Seed,known:string[]):TaskSeed[]{
 }
 
 function delegationGuide(task:PipelineTask,input:ProjectInput):AgentDelegationGuide{
- const techniques=task.techniqueIds.length?task.techniqueIds.map((id)=>id.split('.').at(-1)).join(', '):tr(input.language,'None specified','Không chỉ định');
+ const techniquePlan=resolveTechniquePlans(task.techniqueIds,task.recommendedSoftwareId,input.language);
+ const details=flattenTechniquePlans(techniquePlan);
  const deadline=input.deadline||tr(input.language,'Not specified','Không chỉ định');
  const contextChecklist=input.language==='vi'?
-  ['Brief dự án và người xem mục tiêu','File, asset hiện có và quyền truy cập repository','Phần mềm, runtime và phiên bản mục tiêu','Deadline, ràng buộc và phần việc đã hoàn thành']:
-  ['Project brief and intended audience','Existing files, assets, and repository access','Target software, runtime, and version','Deadline, constraints, and work already completed'];
- const expectedOutputs=input.language==='vi'?
-  [`Kết quả ${task.softwareLabel} hoạt động đúng phạm vi`,'Nhật ký thay đổi ngắn gọn kèm file hoặc asset đã sửa','Lệnh, test hoặc kiểm tra trực quan chứng minh kết quả','Giả định, rủi ro và quyết định còn cần con người']:
-  [`A working ${task.softwareLabel} result within scope`,'A concise change log naming files or assets changed','Commands, tests, or visual checks that prove the result','Remaining assumptions, risks, and human decisions'];
- const reviewChecklist=input.language==='vi'?
-  ['Kết quả đúng mục tiêu, không tự ý redesign rộng','Mỗi điều kiện hoàn thành đều có bằng chứng','Không làm yếu đi ràng buộc đã nêu','Người dùng có thể hiểu, chỉnh sửa và tiếp tục công việc']:
-  ['The result matches the objective without a broad redesign','Every definition-of-done item has evidence','No stated constraint was weakened','The user can understand, edit, and continue the work'];
+  ['Output đã duyệt từ các bước phụ thuộc','Repository, file và asset hiện có','Lời bài hát, audio được phép sử dụng và art direction đã duyệt','Runtime mục tiêu, deadline và mọi ràng buộc']:
+  ['Approved outputs from prerequisite steps','Existing repository, files, and assets','Licensed lyric/audio content and approved art direction','Target runtime, deadline, and every stated constraint'];
+ const expectedOutputs=unique([...details.artifacts,tr(input.language,'A change log naming every file or asset changed','Nhật ký thay đổi nêu rõ file hoặc asset đã sửa'),tr(input.language,'Test, build, and visual-validation evidence','Bằng chứng test, build và kiểm tra trực quan'),tr(input.language,'Remaining assumptions, risks, and human decisions','Giả định, rủi ro và quyết định còn cần con người')]);
+ const reviewChecklist=unique([...details.acceptanceChecks,tr(input.language,'The result stays in scope without redesigning unrelated work','Kết quả đúng phạm vi và không redesign phần không liên quan'),tr(input.language,'The user can understand, edit, and continue the work','Người dùng có thể hiểu, chỉnh sửa và tiếp tục công việc')]);
+ const dependencyText=task.prerequisiteTaskIds.length?task.prerequisiteTaskIds.join(', '):tr(input.language,'Không có','None');
+ const techniqueText=techniquePlan.map((plan,index)=>`${index+1}. ${plan.label}\n   ${plan.method}`).join('\n');
  const prompt=input.language==='vi'?`Bạn là một implementation agent phụ trách đúng một bước có phạm vi rõ ràng. Có thể dùng Claude, Codex hoặc Kimi, nhưng phải tuân thủ cùng hợp đồng công việc này.
 
 BỐI CẢNH DỰ ÁN
@@ -92,7 +102,13 @@ NHIỆM VỤ CỦA BẠN
 Tên bước: ${task.title}
 Mục tiêu: ${task.objective}
 Công cụ chính: ${task.softwareLabel}
-Kỹ thuật liên quan: ${techniques}
+Bước phụ thuộc cần hoàn tất trước: ${dependencyText}
+
+KẾ HOẠCH KỸ THUẬT BẮT BUỘC
+${techniqueText}
+
+TRÌNH TỰ THỰC HIỆN
+${details.implementationSteps.map((item,index)=>`${index+1}. ${item}`).join('\n')}
 
 QUY ƯỚC LÀM VIỆC
 1. Chỉ xử lý nhiệm vụ này; không redesign hoặc refactor phần không liên quan.
@@ -106,9 +122,12 @@ QUY ƯỚC LÀM VIỆC
 ${expectedOutputs.map((item,index)=>`${index+1}. ${item}`).join('\n')}
 
 ĐIỀU KIỆN CHẤP NHẬN
-${task.definitionOfDone.map((item,index)=>`${index+1}. ${item}`).join('\n')}
+${reviewChecklist.map((item,index)=>`${index+1}. ${item}`).join('\n')}
 
-Bắt đầu bằng kế hoạch ngắn, các đầu vào bạn đã có và blocker thật sự nếu có. Sau đó hoàn thành nhiệm vụ, kiểm tra kết quả và kết thúc bằng change log, bằng chứng kiểm tra, giả định và rủi ro còn lại.`:`You are an implementation agent responsible for one bounded project step. You may be Claude, Codex, or Kimi, but you must follow the same working contract.
+CÁC LỖI CẦN CHỦ ĐỘNG TRÁNH
+${details.failureModes.map((item,index)=>`${index+1}. ${item}`).join('\n')}
+
+Bắt đầu bằng cách kiểm tra output của bước phụ thuộc, repository và asset đã cung cấp. Nêu kế hoạch theo đúng trình tự kỹ thuật ở trên và blocker thật sự nếu có. Sau đó hoàn thành nhiệm vụ, kiểm tra từng điều kiện chấp nhận và kết thúc bằng change log, bằng chứng kiểm tra, giả định và rủi ro còn lại.`:`You are an implementation agent responsible for one bounded project step. You may be Claude, Codex, or Kimi, but you must follow the same working contract.
 
 PROJECT CONTEXT
 Overall goal: ${input.brief.trim()}
@@ -121,7 +140,13 @@ YOUR ASSIGNMENT
 Step: ${task.title}
 Objective: ${task.objective}
 Primary tool: ${task.softwareLabel}
-Relevant techniques: ${techniques}
+Prerequisite task outputs required first: ${dependencyText}
+
+REQUIRED TECHNIQUE PLAN
+${techniqueText}
+
+IMPLEMENTATION SEQUENCE
+${details.implementationSteps.map((item,index)=>`${index+1}. ${item}`).join('\n')}
 
 WORKING AGREEMENT
 1. Keep scope limited to this assignment; do not redesign or refactor unrelated work.
@@ -135,22 +160,28 @@ REQUIRED DELIVERABLES
 ${expectedOutputs.map((item,index)=>`${index+1}. ${item}`).join('\n')}
 
 ACCEPTANCE CRITERIA
-${task.definitionOfDone.map((item,index)=>`${index+1}. ${item}`).join('\n')}
+${reviewChecklist.map((item,index)=>`${index+1}. ${item}`).join('\n')}
 
-Start with a short plan, the inputs you have, and any genuine blockers. Then complete the assignment, validate it, and finish with a change log, validation evidence, assumptions, and remaining risks.`;
- return{compatibleAgents:['Claude','Codex','Kimi'],prompt,contextChecklist,expectedOutputs,reviewChecklist};
+FAILURE MODES TO PREVENT
+${details.failureModes.map((item,index)=>`${index+1}. ${item}`).join('\n')}
+
+Start by inspecting the prerequisite outputs, repository, and supplied assets. State a short plan that follows the implementation sequence above and identify only genuine blockers. Then complete the assignment, verify every acceptance criterion, and finish with a change log, validation evidence, assumptions, and remaining risks.`;
+ return{compatibleAgents:['Claude','Codex','Kimi'],prompt,prerequisiteTaskIds:task.prerequisiteTaskIds,techniquePlan:techniquePlan.map(({techniqueId,label,method})=>({techniqueId,label,method})),implementationSteps:details.implementationSteps,contextChecklist,expectedOutputs,reviewChecklist,failureModes:details.failureModes};
 }
 
-function tasks(kind:string,seed:Seed,lang:Language,known:string[],input:ProjectInput):PipelineTask[]{
- return taskSeeds(kind,seed,known).map((t)=>{
-  const task:PipelineTask={id:t.id,title:tr(lang,...t.title),objective:tr(lang,...t.objective),techniqueIds:t.tech,recommendedSoftwareId:t.app,softwareLabel:t.app?APPS[t.app]:tr(lang,'Software-agnostic','Không phụ thuộc phần mềm'),softwareAgnostic:t.app===null,method:t.method,methodLabel:methodLabel(lang,t.method),resourceIds:(t.method==='read_documentation'||t.method==='follow_tutorial')&&t.app&&official[t.app]?[official[t.app]]:[],estimatedHumanMinutes:t.human,estimatedLearningMinutes:t.learn,estimatedAgentMinutes:t.agent,whyIncluded:tr(lang,...t.why),definitionOfDone:[tr(lang,'The required behavior works.','Hành vi bắt buộc hoạt động.'),tr(lang,'The output can be reviewed or exported.','Đầu ra có thể duyệt hoặc xuất.')],agentDelegation:null};
+function tasks(kind:string,seed:Seed,lang:Language,known:string[],input:ProjectInput,requestedTechniques:string[]):PipelineTask[]{
+ const seeds=taskSeeds(kind,seed,known,requestedTechniques);
+ return seeds.map((t,index)=>{
+  const techniqueDetails=flattenTechniquePlans(resolveTechniquePlans(t.tech,t.app,lang));
+  const fallbackDone=[tr(lang,'The required behavior works.','Hành vi bắt buộc hoạt động.'),tr(lang,'The output can be reviewed or exported.','Đầu ra có thể duyệt hoặc xuất.')];
+  const task:PipelineTask={id:t.id,title:tr(lang,...t.title),objective:tr(lang,...t.objective),techniqueIds:t.tech,prerequisiteTaskIds:t.prerequisites??(index?[seeds[index-1].id]:[]),recommendedSoftwareId:t.app,softwareLabel:t.app?APPS[t.app]:tr(lang,'Software-agnostic','Không phụ thuộc phần mềm'),softwareAgnostic:t.app===null,method:t.method,methodLabel:methodLabel(lang,t.method),resourceIds:(t.method==='read_documentation'||t.method==='follow_tutorial')&&t.app&&official[t.app]?[official[t.app]]:[],estimatedHumanMinutes:t.human,estimatedLearningMinutes:t.learn,estimatedAgentMinutes:t.agent,whyIncluded:tr(lang,...t.why),definitionOfDone:techniqueDetails.acceptanceChecks.length?techniqueDetails.acceptanceChecks:fallbackDone,agentDelegation:null};
   return{...task,agentDelegation:t.method==='delegate_to_agent'?delegationGuide(task,input):null};
  });
 }
-function score(seed:Seed,input:ProjectInput,known:string[],required:string[],capacity:number,kind:string):CandidatePath{
+function score(seed:Seed,input:ProjectInput,known:string[],required:string[],capacity:number,kind:string,requestedTechniques:string[]):CandidatePath{
  const missing=required.filter((id)=>!seed.apps.includes(id)),viable=!missing.length,knownCount=seed.apps.filter((id)=>known.includes(id)).length,newApps=seed.apps.length-knownCount,learn=Math.max(0,seed.learning-knownCount*20),work=seed.human+learn,resourceMatches=seed.apps.filter((id)=>official[id]).length;
  const b:ScoreBreakdown={requirements:viable?100:15,familiarity:clamp(44+knownCount/Math.max(1,seed.apps.length)*56),learningCost:clamp(100-learn/2.8),executionCost:clamp(100-seed.human/7.5),switchingCost:clamp(100-newApps*18),resourceQuality:clamp(58+resourceMatches*12),deadlineFit:clamp(capacity/Math.max(1,work)*100),risk:clamp(100-seed.risk*1.7)};
- const pathTasks=tasks(kind,seed,input.language,known,input),pathScore=viable?Math.round(Object.entries(WEIGHTS).reduce((sum,[key,w])=>sum+b[key as keyof ScoreBreakdown]*w,0)):0;
+ const pathTasks=tasks(kind,seed,input.language,known,input,requestedTechniques),pathScore=viable?Math.round(Object.entries(WEIGHTS).reduce((sum,[key,w])=>sum+b[key as keyof ScoreBreakdown]*w,0)):0;
  const strengths=[...(viable?[tr(input.language,'Satisfies every explicit software requirement','Đáp ứng mọi yêu cầu phần mềm')]:[]),...(knownCount?[tr(input.language,`Reuses ${knownCount} familiar tool${knownCount>1?'s':''}`,`Tái sử dụng ${knownCount} công cụ quen thuộc`)]:[]),...(b.deadlineFit>=100?[tr(input.language,'Fits the stated time capacity','Phù hợp quỹ thời gian')]:[])];
  const weaknesses=[...(newApps?[tr(input.language,`Introduces ${newApps} new tool${newApps>1?'s':''}`,`Giới thiệu ${newApps} công cụ mới`)]:[]),...(b.deadlineFit<100?[tr(input.language,'Exceeds the current time capacity','Vượt quỹ thời gian')]:[]),...(resourceMatches===0?[tr(input.language,'No matching verified local resource','Chưa có tài nguyên local phù hợp')]:[])];
  return{id:seed.id,title:seed.apps.length?seed.apps.map((id)=>APPS[id]).join(' → '):tr(input.language,'Clarify project requirements','Làm rõ yêu cầu dự án'),softwareIds:seed.apps,softwareLabels:seed.apps.map((id)=>APPS[id]),tasks:pathTasks,estimatedHumanMinutes:pathTasks.reduce((s,t)=>s+t.estimatedHumanMinutes,0),estimatedLearningMinutes:pathTasks.reduce((s,t)=>s+t.estimatedLearningMinutes,0),estimatedAgentMinutes:pathTasks.reduce((s,t)=>s+t.estimatedAgentMinutes,0),score:pathScore,scoreBreakdown:b,strengths,weaknesses,viable,rejectionReasons:missing.map((id)=>tr(input.language,`Missing required ${APPS[id]}`,`Thiếu ${APPS[id]} bắt buộc`))};
@@ -161,6 +192,7 @@ export function solveProject(input:ProjectInput,understanding?:ProjectAnalysisOu
  const text=`${explicitText} ${enrichment} ${understanding?.resolution.techniqueIds.join(' ')??''}`;
  const kind=kindOf(text),explicitRequired=mandatory(`${input.brief}. ${input.constraints}`.toLowerCase()),constraintSoftware=appMentions(input.constraints.toLowerCase()),analyzedRequired=(understanding?.resolution.mandatorySoftwareIds??[]).filter((id)=>constraintSoftware.includes(id)),required=[...new Set([...explicitRequired,...analyzedRequired])],known=[...new Set([...appMentions(input.skills.toLowerCase()),...(understanding?.resolution.softwareIds??[])])];
  const deadline=input.deadline?new Date(`${input.deadline}T23:59:59`):new Date(Date.now()+7*86400000),days=Math.max(1,Math.ceil((deadline.getTime()-Date.now())/86400000)),capacity=Math.round(days*Math.max(.5,input.hoursPerDay)*60);
- const all=seeds(kind).map((seed)=>score(seed,input,known,required,capacity,kind)),viable=all.filter((p)=>p.viable).sort((a,b)=>b.score-a.score),recommended=viable[0]??all.sort((a,b)=>b.score-a.score)[0];
- return{destination:understanding?.analysis.destination??input.brief.trim(),detectedKind:kind,capacityMinutes:capacity,daysAvailable:days,requirements:required.map((id)=>APPS[id]),knownSoftware:known.map((id)=>APPS[id]),recommended,alternatives:viable.slice(1),rejected:all.filter((p)=>!p.viable),skipped:['Maya','Houdini','Generic beginner courses'].filter((label)=>!recommended.softwareLabels.includes(label)).map((label)=>tr(input.language,`${label} — no required advantage for this route`,`${label} — không có lợi thế bắt buộc cho lộ trình này`)),solverVersion:'mvp-rules-1.3.0',scoringVersion:'deterministic-1.0.0'};
+ const requestedTechniques=understanding?.resolution.techniqueIds??[];
+ const all=seeds(kind).map((seed)=>score(seed,input,known,required,capacity,kind,requestedTechniques)),viable=all.filter((p)=>p.viable).sort((a,b)=>b.score-a.score),recommended=viable[0]??all.sort((a,b)=>b.score-a.score)[0];
+ return{destination:understanding?.analysis.destination??input.brief.trim(),detectedKind:kind,capacityMinutes:capacity,daysAvailable:days,requirements:required.map((id)=>APPS[id]),knownSoftware:known.map((id)=>APPS[id]),recommended,alternatives:viable.slice(1),rejected:all.filter((p)=>!p.viable),skipped:['Maya','Houdini','Generic beginner courses'].filter((label)=>!recommended.softwareLabels.includes(label)).map((label)=>tr(input.language,`${label} — no required advantage for this route`,`${label} — không có lợi thế bắt buộc cho lộ trình này`)),solverVersion:'mvp-rules-1.4.0',scoringVersion:'deterministic-1.0.0'};
 }
