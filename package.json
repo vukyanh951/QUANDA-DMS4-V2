@@ -12,9 +12,11 @@
     "lint": "eslint . --ignore-pattern .next",
     "compile:ontology": "node scripts/compile-ontology.mjs",
     "migrate:resources": "node scripts/migrate-v1-resources.mjs",
+    "test:analysis": "node --import tsx --test src/project-analysis/project-analysis.test.ts",
     "test:solver": "node --import tsx --test src/solver/solver.test.ts"
   },
   "dependencies": {
+    "@google/genai": "2.18.0",
     "next": "16.2.6",
     "react": "19.2.6",
     "react-dom": "19.2.6",
