@@ -1,0 +1,1070 @@
+{
+  "resourceSchemaVersion": "2.0.0",
+  "source": "knowledge/v1-verified-resources.json",
+  "migrationPolicy": "Reusable knowledge only; no V1 ranking or architecture imported.",
+  "resourceCount": 16,
+  "resources": [
+    {
+      "id": "blender-5-beginner",
+      "type": "tutorial_video",
+      "title": "Blender 5.0 Beginner Tutorial",
+      "url": "https://www.youtube.com/watch?v=K7__BjW4UWE",
+      "provider": "YouTube",
+      "creator": "Polygon Runway",
+      "softwareIds": [
+        "blender"
+      ],
+      "techniqueIds": [],
+      "skillIds": [],
+      "language": "en",
+      "durationMinutes": 72,
+      "reliability": "curated",
+      "verifiedAt": null,
+      "versionInfo": [
+        "Blender 5.0"
+      ],
+      "status": "available",
+      "provenance": [
+        {
+          "sourceFile": "tutorial-recommender.mjs",
+          "sourceField": "CURATED_TUTORIALS[0]",
+          "sourceType": "curated",
+          "arrayIndex": 0,
+          "manuallyCurated": true
+        },
+        {
+          "sourceFile": "public/tutorial-recommender.mjs",
+          "sourceField": "CURATED_TUTORIALS[0]",
+          "sourceType": "generated_copy",
+          "arrayIndex": 0
+        },
+        {
+          "sourceFile": "dist/client/tutorial-recommender.mjs",
+          "sourceField": "CURATED_TUTORIALS[0]",
+          "sourceType": "build_copy",
+          "arrayIndex": 0
+        },
+        {
+          "sourceFile": "app.js",
+          "sourceRevision": "da3e32d",
+          "sourceField": "tutorialsByStage[0][0]",
+          "sourceType": "historical_production",
+          "manuallyCurated": true
+        }
+      ],
+      "sourceVerification": {
+        "status": "curated",
+        "trustedSource": null,
+        "verifiedAt": null
+      },
+      "originalMetadata": {
+        "youtubeVideoId": "K7__BjW4UWE",
+        "application": "Blender",
+        "version": "Blender 5.0",
+        "language": "en",
+        "minutes": 72,
+        "stageIndexes": [
+          0
+        ],
+        "topics": [
+          "beginner",
+          "interface",
+          "setup",
+          "workflow",
+          "modeling"
+        ]
+      },
+      "migration": {
+        "source": "QUANDA V1 reusable knowledge export",
+        "sourceSchemaVersion": "1.0",
+        "migratedWithoutRankingLogic": true
+      }
+    },
+    {
+      "id": "blender-download-vi",
+      "type": "tutorial_video",
+      "title": "Download and Get Familiar with Blender",
+      "url": "https://www.youtube.com/watch?v=zNPhUvszRi4",
+      "provider": "YouTube",
+      "creator": "Dstudioooo",
+      "softwareIds": [
+        "blender"
+      ],
+      "techniqueIds": [],
+      "skillIds": [],
+      "language": "vi",
+      "durationMinutes": 9,
+      "reliability": "curated",
+      "verifiedAt": null,
+      "versionInfo": [
+        "Blender 4.x–5.x"
+      ],
+      "status": "available",
+      "provenance": [
+        {
+          "sourceFile": "tutorial-recommender.mjs",
+          "sourceField": "CURATED_TUTORIALS[1]",
+          "sourceType": "curated",
+          "arrayIndex": 1,
+          "manuallyCurated": true
+        },
+        {
+          "sourceFile": "public/tutorial-recommender.mjs",
+          "sourceField": "CURATED_TUTORIALS[1]",
+          "sourceType": "generated_copy",
+          "arrayIndex": 1
+        },
+        {
+          "sourceFile": "dist/client/tutorial-recommender.mjs",
+          "sourceField": "CURATED_TUTORIALS[1]",
+          "sourceType": "build_copy",
+          "arrayIndex": 1
+        },
+        {
+          "sourceFile": "app.js",
+          "sourceRevision": "da3e32d",
+          "sourceField": "tutorialsByStage[0][1]",
+          "sourceType": "historical_production",
+          "manuallyCurated": true
+        }
+      ],
+      "sourceVerification": {
+        "status": "curated",
+        "trustedSource": null,
+        "verifiedAt": null
+      },
+      "originalMetadata": {
+        "youtubeVideoId": "zNPhUvszRi4",
+        "application": "Blender",
+        "version": "Blender 4.x–5.x",
+        "language": "vi",
+        "minutes": 9,
+        "stageIndexes": [
+          0
+        ],
+        "topics": [
+          "beginner",
+          "install",
+          "interface",
+          "setup"
+        ]
+      },
+      "migration": {
+        "source": "QUANDA V1 reusable knowledge export",
+        "sourceSchemaVersion": "1.0",
+        "migratedWithoutRankingLogic": true
+      }
+    },
+    {
+      "id": "blender-beginner-2026",
+      "type": "tutorial_video",
+      "title": "Beginner Blender Tutorial (2026)",
+      "url": "https://www.youtube.com/watch?v=z-Xl9tGqH14",
+      "provider": "YouTube",
+      "creator": "Blender Guru",
+      "softwareIds": [
+        "blender"
+      ],
+      "techniqueIds": [],
+      "skillIds": [],
+      "language": "en",
+      "durationMinutes": 260,
+      "reliability": "curated",
+      "verifiedAt": null,
+      "versionInfo": [
+        "Blender 5.x"
+      ],
+      "status": "available",
+      "provenance": [
+        {
+          "sourceFile": "tutorial-recommender.mjs",
+          "sourceField": "CURATED_TUTORIALS[2]",
+          "sourceType": "curated",
+          "arrayIndex": 2,
+          "manuallyCurated": true
+        },
+        {
+          "sourceFile": "public/tutorial-recommender.mjs",
+          "sourceField": "CURATED_TUTORIALS[2]",
+          "sourceType": "generated_copy",
+          "arrayIndex": 2
+        },
+        {
+          "sourceFile": "dist/client/tutorial-recommender.mjs",
+          "sourceField": "CURATED_TUTORIALS[2]",
+          "sourceType": "build_copy",
+          "arrayIndex": 2
+        },
+        {
+          "sourceFile": "app.js",
+          "sourceRevision": "da3e32d",
+          "sourceField": "tutorialsByStage[1][0]",
+          "sourceType": "historical_production",
+          "manuallyCurated": true
+        }
+      ],
+      "sourceVerification": {
+        "status": "curated",
+        "trustedSource": null,
+        "verifiedAt": null
+      },
+      "originalMetadata": {
+        "youtubeVideoId": "z-Xl9tGqH14",
+        "application": "Blender",
+        "version": "Blender 5.x",
+        "language": "en",
+        "minutes": 260,
+        "stageIndexes": [
+          0
+        ],
+        "topics": [
+          "beginner",
+          "interface",
+          "workflow",
+          "modeling",
+          "materials"
+        ]
+      },
+      "migration": {
+        "source": "QUANDA V1 reusable knowledge export",
+        "sourceSchemaVersion": "1.0",
+        "migratedWithoutRankingLogic": true
+      }
+    },
+    {
+      "id": "blender-flag-animation-vi",
+      "type": "tutorial_video",
+      "title": "Animate a Vietnamese Flag in Blender",
+      "url": "https://www.youtube.com/watch?v=pRnDdRzVz6k",
+      "provider": "YouTube",
+      "creator": "Đình Văn Media",
+      "softwareIds": [
+        "blender"
+      ],
+      "techniqueIds": [],
+      "skillIds": [],
+      "language": "vi",
+      "durationMinutes": 11,
+      "reliability": "curated",
+      "verifiedAt": null,
+      "versionInfo": [
+        "Blender 4.x–5.x"
+      ],
+      "status": "available",
+      "provenance": [
+        {
+          "sourceFile": "tutorial-recommender.mjs",
+          "sourceField": "CURATED_TUTORIALS[3]",
+          "sourceType": "curated",
+          "arrayIndex": 3,
+          "manuallyCurated": true
+        },
+        {
+          "sourceFile": "public/tutorial-recommender.mjs",
+          "sourceField": "CURATED_TUTORIALS[3]",
+          "sourceType": "generated_copy",
+          "arrayIndex": 3
+        },
+        {
+          "sourceFile": "dist/client/tutorial-recommender.mjs",
+          "sourceField": "CURATED_TUTORIALS[3]",
+          "sourceType": "build_copy",
+          "arrayIndex": 3
+        },
+        {
+          "sourceFile": "app.js",
+          "sourceRevision": "da3e32d",
+          "sourceField": "tutorialsByStage[1][1]",
+          "sourceType": "historical_production",
+          "manuallyCurated": true
+        }
+      ],
+      "sourceVerification": {
+        "status": "curated",
+        "trustedSource": null,
+        "verifiedAt": null
+      },
+      "originalMetadata": {
+        "youtubeVideoId": "pRnDdRzVz6k",
+        "application": "Blender",
+        "version": "Blender 4.x–5.x",
+        "language": "vi",
+        "minutes": 11,
+        "stageIndexes": [
+          1
+        ],
+        "topics": [
+          "animation",
+          "cloth",
+          "fabric",
+          "flag",
+          "keyframes"
+        ],
+        "specializedTerms": [
+          "cloth",
+          "fabric",
+          "flag",
+          "cờ",
+          "vải"
+        ]
+      },
+      "migration": {
+        "source": "QUANDA V1 reusable knowledge export",
+        "sourceSchemaVersion": "1.0",
+        "migratedWithoutRankingLogic": true
+      }
+    },
+    {
+      "id": "blender-color-textures",
+      "type": "tutorial_video",
+      "title": "Add Color and Basic Textures in Blender",
+      "url": "https://www.youtube.com/watch?v=KMjTLE0z80k",
+      "provider": "YouTube",
+      "creator": "SpaceCat 3D",
+      "softwareIds": [
+        "blender"
+      ],
+      "techniqueIds": [],
+      "skillIds": [],
+      "language": "en",
+      "durationMinutes": 7,
+      "reliability": "curated",
+      "verifiedAt": null,
+      "versionInfo": [
+        "Blender 4.x–5.x"
+      ],
+      "status": "available",
+      "provenance": [
+        {
+          "sourceFile": "tutorial-recommender.mjs",
+          "sourceField": "CURATED_TUTORIALS[4]",
+          "sourceType": "curated",
+          "arrayIndex": 4,
+          "manuallyCurated": true
+        },
+        {
+          "sourceFile": "public/tutorial-recommender.mjs",
+          "sourceField": "CURATED_TUTORIALS[4]",
+          "sourceType": "generated_copy",
+          "arrayIndex": 4
+        },
+        {
+          "sourceFile": "dist/client/tutorial-recommender.mjs",
+          "sourceField": "CURATED_TUTORIALS[4]",
+          "sourceType": "build_copy",
+          "arrayIndex": 4
+        },
+        {
+          "sourceFile": "app.js",
+          "sourceRevision": "da3e32d",
+          "sourceField": "tutorialsByStage[2][0]",
+          "sourceType": "historical_production",
+          "manuallyCurated": true
+        }
+      ],
+      "sourceVerification": {
+        "status": "curated",
+        "trustedSource": null,
+        "verifiedAt": null
+      },
+      "originalMetadata": {
+        "youtubeVideoId": "KMjTLE0z80k",
+        "application": "Blender",
+        "version": "Blender 4.x–5.x",
+        "language": "en",
+        "minutes": 7,
+        "stageIndexes": [
+          1,
+          2
+        ],
+        "topics": [
+          "color",
+          "materials",
+          "shading",
+          "textures"
+        ]
+      },
+      "migration": {
+        "source": "QUANDA V1 reusable knowledge export",
+        "sourceSchemaVersion": "1.0",
+        "migratedWithoutRankingLogic": true
+      }
+    },
+    {
+      "id": "blender-texture-errors-vi",
+      "type": "tutorial_video",
+      "title": "Five Common Blender Texture Errors and Fixes",
+      "url": "https://www.youtube.com/watch?v=vamZ-hAQQnY",
+      "provider": "YouTube",
+      "creator": "Blender Player",
+      "softwareIds": [
+        "blender"
+      ],
+      "techniqueIds": [],
+      "skillIds": [],
+      "language": "vi",
+      "durationMinutes": 4,
+      "reliability": "curated",
+      "verifiedAt": null,
+      "versionInfo": [
+        "Blender 4.x–5.x"
+      ],
+      "status": "available",
+      "provenance": [
+        {
+          "sourceFile": "tutorial-recommender.mjs",
+          "sourceField": "CURATED_TUTORIALS[5]",
+          "sourceType": "curated",
+          "arrayIndex": 5,
+          "manuallyCurated": true
+        },
+        {
+          "sourceFile": "public/tutorial-recommender.mjs",
+          "sourceField": "CURATED_TUTORIALS[5]",
+          "sourceType": "generated_copy",
+          "arrayIndex": 5
+        },
+        {
+          "sourceFile": "dist/client/tutorial-recommender.mjs",
+          "sourceField": "CURATED_TUTORIALS[5]",
+          "sourceType": "build_copy",
+          "arrayIndex": 5
+        },
+        {
+          "sourceFile": "app.js",
+          "sourceRevision": "da3e32d",
+          "sourceField": "tutorialsByStage[3][0]",
+          "sourceType": "historical_production",
+          "manuallyCurated": true
+        }
+      ],
+      "sourceVerification": {
+        "status": "curated",
+        "trustedSource": null,
+        "verifiedAt": null
+      },
+      "originalMetadata": {
+        "youtubeVideoId": "vamZ-hAQQnY",
+        "application": "Blender",
+        "version": "Blender 4.x–5.x",
+        "language": "vi",
+        "minutes": 4,
+        "stageIndexes": [
+          3
+        ],
+        "topics": [
+          "errors",
+          "materials",
+          "review",
+          "textures",
+          "troubleshooting"
+        ]
+      },
+      "migration": {
+        "source": "QUANDA V1 reusable knowledge export",
+        "sourceSchemaVersion": "1.0",
+        "migratedWithoutRankingLogic": true
+      }
+    },
+    {
+      "id": "official-blender",
+      "type": "official_documentation",
+      "title": "Official Blender Tutorials",
+      "url": "https://www.blender.org/support/tutorials/",
+      "provider": "Blender Foundation",
+      "creator": "Blender Foundation",
+      "softwareIds": [
+        "blender"
+      ],
+      "techniqueIds": [],
+      "skillIds": [],
+      "language": "en",
+      "durationMinutes": null,
+      "reliability": "official",
+      "verifiedAt": null,
+      "versionInfo": [],
+      "status": "available",
+      "provenance": [
+        {
+          "sourceFile": "tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS.blender",
+          "sourceType": "curated_fallback",
+          "manuallyCurated": true,
+          "fallbackData": true
+        },
+        {
+          "sourceFile": "public/tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS.blender",
+          "sourceType": "generated_copy",
+          "fallbackData": true
+        },
+        {
+          "sourceFile": "dist/client/tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS.blender",
+          "sourceType": "build_copy",
+          "fallbackData": true
+        }
+      ],
+      "sourceVerification": {
+        "status": "trusted_source",
+        "trustedSource": true,
+        "verifiedAt": null
+      },
+      "originalMetadata": {
+        "catalogKey": "blender",
+        "application": "Blender",
+        "runtimeSourceType": "official",
+        "runtimeLanguage": "en",
+        "runtimeVersionLabels": {
+          "en": "Continuously updated",
+          "vi": "Luôn cập nhật"
+        }
+      },
+      "migration": {
+        "source": "QUANDA V1 reusable knowledge export",
+        "sourceSchemaVersion": "1.0",
+        "migratedWithoutRankingLogic": true
+      }
+    },
+    {
+      "id": "official-adobe-photoshop",
+      "type": "official_documentation",
+      "title": "Photoshop tutorials",
+      "url": "https://helpx.adobe.com/photoshop/view-all-tutorials.html",
+      "provider": "Adobe",
+      "creator": "Adobe",
+      "softwareIds": [
+        "photoshop"
+      ],
+      "techniqueIds": [],
+      "skillIds": [],
+      "language": "en",
+      "durationMinutes": null,
+      "reliability": "official",
+      "verifiedAt": null,
+      "versionInfo": [],
+      "status": "available",
+      "provenance": [
+        {
+          "sourceFile": "tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS[\"adobe photoshop\"]",
+          "sourceType": "curated_fallback",
+          "manuallyCurated": true,
+          "fallbackData": true
+        },
+        {
+          "sourceFile": "public/tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS[\"adobe photoshop\"]",
+          "sourceType": "generated_copy",
+          "fallbackData": true
+        },
+        {
+          "sourceFile": "dist/client/tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS[\"adobe photoshop\"]",
+          "sourceType": "build_copy",
+          "fallbackData": true
+        }
+      ],
+      "sourceVerification": {
+        "status": "trusted_source",
+        "trustedSource": true,
+        "verifiedAt": null
+      },
+      "originalMetadata": {
+        "catalogKey": "adobe photoshop",
+        "application": "Adobe Photoshop",
+        "runtimeSourceType": "official",
+        "runtimeLanguage": "en",
+        "runtimeVersionLabels": {
+          "en": "Continuously updated",
+          "vi": "Luôn cập nhật"
+        }
+      },
+      "migration": {
+        "source": "QUANDA V1 reusable knowledge export",
+        "sourceSchemaVersion": "1.0",
+        "migratedWithoutRankingLogic": true
+      }
+    },
+    {
+      "id": "official-adobe-illustrator",
+      "type": "official_documentation",
+      "title": "Illustrator tutorials",
+      "url": "https://helpx.adobe.com/illustrator/view-all-tutorials.html",
+      "provider": "Adobe",
+      "creator": "Adobe",
+      "softwareIds": [
+        "illustrator"
+      ],
+      "techniqueIds": [],
+      "skillIds": [],
+      "language": "en",
+      "durationMinutes": null,
+      "reliability": "official",
+      "verifiedAt": null,
+      "versionInfo": [],
+      "status": "available",
+      "provenance": [
+        {
+          "sourceFile": "tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS[\"adobe illustrator\"]",
+          "sourceType": "curated_fallback",
+          "manuallyCurated": true,
+          "fallbackData": true
+        },
+        {
+          "sourceFile": "public/tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS[\"adobe illustrator\"]",
+          "sourceType": "generated_copy",
+          "fallbackData": true
+        },
+        {
+          "sourceFile": "dist/client/tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS[\"adobe illustrator\"]",
+          "sourceType": "build_copy",
+          "fallbackData": true
+        }
+      ],
+      "sourceVerification": {
+        "status": "trusted_source",
+        "trustedSource": true,
+        "verifiedAt": null
+      },
+      "originalMetadata": {
+        "catalogKey": "adobe illustrator",
+        "application": "Adobe Illustrator",
+        "runtimeSourceType": "official",
+        "runtimeLanguage": "en",
+        "runtimeVersionLabels": {
+          "en": "Continuously updated",
+          "vi": "Luôn cập nhật"
+        }
+      },
+      "migration": {
+        "source": "QUANDA V1 reusable knowledge export",
+        "sourceSchemaVersion": "1.0",
+        "migratedWithoutRankingLogic": true
+      }
+    },
+    {
+      "id": "official-adobe-after-effects",
+      "type": "official_documentation",
+      "title": "After Effects tutorials",
+      "url": "https://helpx.adobe.com/after-effects/view-all-tutorials.html",
+      "provider": "Adobe",
+      "creator": "Adobe",
+      "softwareIds": [
+        "after-effects"
+      ],
+      "techniqueIds": [],
+      "skillIds": [],
+      "language": "en",
+      "durationMinutes": null,
+      "reliability": "official",
+      "verifiedAt": null,
+      "versionInfo": [],
+      "status": "available",
+      "provenance": [
+        {
+          "sourceFile": "tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS[\"adobe after effects\"]",
+          "sourceType": "curated_fallback",
+          "manuallyCurated": true,
+          "fallbackData": true
+        },
+        {
+          "sourceFile": "public/tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS[\"adobe after effects\"]",
+          "sourceType": "generated_copy",
+          "fallbackData": true
+        },
+        {
+          "sourceFile": "dist/client/tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS[\"adobe after effects\"]",
+          "sourceType": "build_copy",
+          "fallbackData": true
+        }
+      ],
+      "sourceVerification": {
+        "status": "trusted_source",
+        "trustedSource": true,
+        "verifiedAt": null
+      },
+      "originalMetadata": {
+        "catalogKey": "adobe after effects",
+        "application": "Adobe After Effects",
+        "runtimeSourceType": "official",
+        "runtimeLanguage": "en",
+        "runtimeVersionLabels": {
+          "en": "Continuously updated",
+          "vi": "Luôn cập nhật"
+        }
+      },
+      "migration": {
+        "source": "QUANDA V1 reusable knowledge export",
+        "sourceSchemaVersion": "1.0",
+        "migratedWithoutRankingLogic": true
+      }
+    },
+    {
+      "id": "official-adobe-premiere-pro",
+      "type": "official_documentation",
+      "title": "Premiere Pro tutorials",
+      "url": "https://helpx.adobe.com/premiere-pro/view-all-tutorials.html",
+      "provider": "Adobe",
+      "creator": "Adobe",
+      "softwareIds": [
+        "premiere-pro"
+      ],
+      "techniqueIds": [],
+      "skillIds": [],
+      "language": "en",
+      "durationMinutes": null,
+      "reliability": "official",
+      "verifiedAt": null,
+      "versionInfo": [],
+      "status": "available",
+      "provenance": [
+        {
+          "sourceFile": "tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS[\"adobe premiere pro\"]",
+          "sourceType": "curated_fallback",
+          "manuallyCurated": true,
+          "fallbackData": true
+        },
+        {
+          "sourceFile": "public/tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS[\"adobe premiere pro\"]",
+          "sourceType": "generated_copy",
+          "fallbackData": true
+        },
+        {
+          "sourceFile": "dist/client/tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS[\"adobe premiere pro\"]",
+          "sourceType": "build_copy",
+          "fallbackData": true
+        }
+      ],
+      "sourceVerification": {
+        "status": "trusted_source",
+        "trustedSource": true,
+        "verifiedAt": null
+      },
+      "originalMetadata": {
+        "catalogKey": "adobe premiere pro",
+        "application": "Adobe Premiere Pro",
+        "runtimeSourceType": "official",
+        "runtimeLanguage": "en",
+        "runtimeVersionLabels": {
+          "en": "Continuously updated",
+          "vi": "Luôn cập nhật"
+        }
+      },
+      "migration": {
+        "source": "QUANDA V1 reusable knowledge export",
+        "sourceSchemaVersion": "1.0",
+        "migratedWithoutRankingLogic": true
+      }
+    },
+    {
+      "id": "official-davinci-resolve",
+      "type": "official_documentation",
+      "title": "DaVinci Resolve training",
+      "url": "https://www.blackmagicdesign.com/products/davinciresolve/training",
+      "provider": "Blackmagic Design",
+      "creator": "Blackmagic Design",
+      "softwareIds": [
+        "davinci-resolve"
+      ],
+      "techniqueIds": [],
+      "skillIds": [],
+      "language": "en",
+      "durationMinutes": null,
+      "reliability": "official",
+      "verifiedAt": null,
+      "versionInfo": [],
+      "status": "available",
+      "provenance": [
+        {
+          "sourceFile": "tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS[\"davinci resolve\"]",
+          "sourceType": "curated_fallback",
+          "manuallyCurated": true,
+          "fallbackData": true
+        },
+        {
+          "sourceFile": "public/tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS[\"davinci resolve\"]",
+          "sourceType": "generated_copy",
+          "fallbackData": true
+        },
+        {
+          "sourceFile": "dist/client/tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS[\"davinci resolve\"]",
+          "sourceType": "build_copy",
+          "fallbackData": true
+        }
+      ],
+      "sourceVerification": {
+        "status": "trusted_source",
+        "trustedSource": true,
+        "verifiedAt": null
+      },
+      "originalMetadata": {
+        "catalogKey": "davinci resolve",
+        "application": "DaVinci Resolve",
+        "runtimeSourceType": "official",
+        "runtimeLanguage": "en",
+        "runtimeVersionLabels": {
+          "en": "Continuously updated",
+          "vi": "Luôn cập nhật"
+        }
+      },
+      "migration": {
+        "source": "QUANDA V1 reusable knowledge export",
+        "sourceSchemaVersion": "1.0",
+        "migratedWithoutRankingLogic": true
+      }
+    },
+    {
+      "id": "official-figma",
+      "type": "official_documentation",
+      "title": "Figma Design learning resources",
+      "url": "https://help.figma.com/hc/en-us/categories/360002042553-Figma-design",
+      "provider": "Figma",
+      "creator": "Figma",
+      "softwareIds": [
+        "figma"
+      ],
+      "techniqueIds": [],
+      "skillIds": [],
+      "language": "en",
+      "durationMinutes": null,
+      "reliability": "official",
+      "verifiedAt": null,
+      "versionInfo": [],
+      "status": "available",
+      "provenance": [
+        {
+          "sourceFile": "tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS.figma",
+          "sourceType": "curated_fallback",
+          "manuallyCurated": true,
+          "fallbackData": true
+        },
+        {
+          "sourceFile": "public/tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS.figma",
+          "sourceType": "generated_copy",
+          "fallbackData": true
+        },
+        {
+          "sourceFile": "dist/client/tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS.figma",
+          "sourceType": "build_copy",
+          "fallbackData": true
+        }
+      ],
+      "sourceVerification": {
+        "status": "trusted_source",
+        "trustedSource": true,
+        "verifiedAt": null
+      },
+      "originalMetadata": {
+        "catalogKey": "figma",
+        "application": "Figma",
+        "runtimeSourceType": "official",
+        "runtimeLanguage": "en",
+        "runtimeVersionLabels": {
+          "en": "Continuously updated",
+          "vi": "Luôn cập nhật"
+        }
+      },
+      "migration": {
+        "source": "QUANDA V1 reusable knowledge export",
+        "sourceSchemaVersion": "1.0",
+        "migratedWithoutRankingLogic": true
+      }
+    },
+    {
+      "id": "official-procreate",
+      "type": "official_documentation",
+      "title": "Procreate Handbook",
+      "url": "https://help.procreate.com/procreate/handbook",
+      "provider": "Procreate",
+      "creator": "Procreate",
+      "softwareIds": [
+        "procreate"
+      ],
+      "techniqueIds": [],
+      "skillIds": [],
+      "language": "en",
+      "durationMinutes": null,
+      "reliability": "official",
+      "verifiedAt": null,
+      "versionInfo": [],
+      "status": "available",
+      "provenance": [
+        {
+          "sourceFile": "tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS.procreate",
+          "sourceType": "curated_fallback",
+          "manuallyCurated": true,
+          "fallbackData": true
+        },
+        {
+          "sourceFile": "public/tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS.procreate",
+          "sourceType": "generated_copy",
+          "fallbackData": true
+        },
+        {
+          "sourceFile": "dist/client/tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS.procreate",
+          "sourceType": "build_copy",
+          "fallbackData": true
+        }
+      ],
+      "sourceVerification": {
+        "status": "trusted_source",
+        "trustedSource": true,
+        "verifiedAt": null
+      },
+      "originalMetadata": {
+        "catalogKey": "procreate",
+        "application": "Procreate",
+        "runtimeSourceType": "official",
+        "runtimeLanguage": "en",
+        "runtimeVersionLabels": {
+          "en": "Continuously updated",
+          "vi": "Luôn cập nhật"
+        }
+      },
+      "migration": {
+        "source": "QUANDA V1 reusable knowledge export",
+        "sourceSchemaVersion": "1.0",
+        "migratedWithoutRankingLogic": true
+      }
+    },
+    {
+      "id": "official-audacity",
+      "type": "official_documentation",
+      "title": "Audacity Support tutorials",
+      "url": "https://support.audacityteam.org/",
+      "provider": "Audacity",
+      "creator": "Audacity",
+      "softwareIds": [
+        "audacity"
+      ],
+      "techniqueIds": [],
+      "skillIds": [],
+      "language": "en",
+      "durationMinutes": null,
+      "reliability": "official",
+      "verifiedAt": null,
+      "versionInfo": [],
+      "status": "available",
+      "provenance": [
+        {
+          "sourceFile": "tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS.audacity",
+          "sourceType": "curated_fallback",
+          "manuallyCurated": true,
+          "fallbackData": true
+        },
+        {
+          "sourceFile": "public/tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS.audacity",
+          "sourceType": "generated_copy",
+          "fallbackData": true
+        },
+        {
+          "sourceFile": "dist/client/tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS.audacity",
+          "sourceType": "build_copy",
+          "fallbackData": true
+        }
+      ],
+      "sourceVerification": {
+        "status": "trusted_source",
+        "trustedSource": true,
+        "verifiedAt": null
+      },
+      "originalMetadata": {
+        "catalogKey": "audacity",
+        "application": "Audacity",
+        "runtimeSourceType": "official",
+        "runtimeLanguage": "en",
+        "runtimeVersionLabels": {
+          "en": "Continuously updated",
+          "vi": "Luôn cập nhật"
+        }
+      },
+      "migration": {
+        "source": "QUANDA V1 reusable knowledge export",
+        "sourceSchemaVersion": "1.0",
+        "migratedWithoutRankingLogic": true
+      }
+    },
+    {
+      "id": "official-fl-studio",
+      "type": "official_documentation",
+      "title": "FL Studio learning manual",
+      "url": "https://www.image-line.com/fl-studio-learning/fl-studio-online-manual/",
+      "provider": "Image-Line",
+      "creator": "Image-Line",
+      "softwareIds": [
+        "fl-studio"
+      ],
+      "techniqueIds": [],
+      "skillIds": [],
+      "language": "en",
+      "durationMinutes": null,
+      "reliability": "official",
+      "verifiedAt": null,
+      "versionInfo": [],
+      "status": "available",
+      "provenance": [
+        {
+          "sourceFile": "tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS[\"fl studio\"]",
+          "sourceType": "curated_fallback",
+          "manuallyCurated": true,
+          "fallbackData": true
+        },
+        {
+          "sourceFile": "public/tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS[\"fl studio\"]",
+          "sourceType": "generated_copy",
+          "fallbackData": true
+        },
+        {
+          "sourceFile": "dist/client/tutorial-recommender.mjs",
+          "sourceField": "OFFICIAL_LEARNING_HUBS[\"fl studio\"]",
+          "sourceType": "build_copy",
+          "fallbackData": true
+        }
+      ],
+      "sourceVerification": {
+        "status": "trusted_source",
+        "trustedSource": true,
+        "verifiedAt": null
+      },
+      "originalMetadata": {
+        "catalogKey": "fl studio",
+        "application": "FL Studio",
+        "runtimeSourceType": "official",
+        "runtimeLanguage": "en",
+        "runtimeVersionLabels": {
+          "en": "Continuously updated",
+          "vi": "Luôn cập nhật"
+        }
+      },
+      "migration": {
+        "source": "QUANDA V1 reusable knowledge export",
+        "sourceSchemaVersion": "1.0",
+        "migratedWithoutRankingLogic": true
+      }
+    }
+  ]
+}

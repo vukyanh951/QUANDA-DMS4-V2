@@ -1,0 +1,8 @@
+{"benchmarkVersion":"1.0.0","cases":[
+  {"id":"blender-familiarity","brief":"I need a cel-shaded product animation. I already know Blender.","mustRecommend":["blender"]},
+  {"id":"geometry-nodes","brief":"I know Blender modelling but not Geometry Nodes. I want procedural vegetation.","mustRecommend":["blender"]},
+  {"id":"touchdesigner","brief":"TouchDesigner is mandatory. Webcam hand tracking controls flower growth.","mustRecommend":["touchdesigner"]},
+  {"id":"creative-coding","brief":"I know Illustrator but have never coded. I want an audio-reactive Bauhaus poster.","mustRecommend":["p5js"]},
+  {"id":"agentic-coding","brief":"I need an interactive Three.js portfolio. I have Codex and 3 days.","mustRecommend":["threejs"]}
+]}
+
