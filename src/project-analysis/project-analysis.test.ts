@@ -9,6 +9,8 @@ import {
 import { resolveProjectAnalysis } from './resolve';
 import { solveProject } from '@/src/solver/solve';
 import type { ProjectInput } from '@/src/solver/types';
+import ontologyData from '@/knowledge/ontology.compiled.json';
+import playbookData from '@/knowledge/technique-playbooks.json';
 
 const deadline = new Date(Date.now() + 7 * 86_400_000).toISOString().slice(0, 10);
 const input: ProjectInput = {
@@ -33,6 +35,12 @@ const validAnalysis: ProjectAnalysis = {
   highImpactUncertainties: [],
   unknownTerminology: [],
 };
+
+test('every technique playbook references a canonical quanda.skills concept', () => {
+  const canonicalIds = new Set(ontologyData.concepts.map((concept) => concept.id));
+  assert(playbookData.playbooks.length >= 10);
+  assert(playbookData.playbooks.every((playbook) => canonicalIds.has(playbook.techniqueId)));
+});
 
 test('accepts valid structured Gemini analysis', () => {
   assert.deepEqual(parseProjectAnalysisJson(JSON.stringify(validAnalysis)), validAnalysis);
@@ -150,6 +158,11 @@ test('Three.js benchmark keeps agent delegation and human review', async () => {
   assert(!solution.knownSoftware.includes('Three.js'));
   assert(solution.recommended.estimatedAgentMinutes > 0);
   assert(solution.recommended.tasks.some((task) => task.method === 'human_review'));
+  const sameStackAlternative = solution.alternatives.find((path) => path.softwareIds.join('|') === solution.recommended.softwareIds.join('|'));
+  assert(sameStackAlternative);
+  assert.notEqual(sameStackAlternative.strategyLabel, solution.recommended.strategyLabel);
+  assert.match(solution.recommended.strategyLabel, /Agent-assisted/);
+  assert.match(sameStackAlternative.strategyLabel, /Learn-first/);
 });
 
 test('messy Y2K brief resolves concepts before deterministic ranking', async () => {
@@ -181,7 +194,7 @@ test('messy Y2K brief resolves concepts before deterministic ranking', async () 
 
 test('creative-coding lyrics website resolves to a web path instead of Blender', async () => {
   const creativeWebInput: ProjectInput = {
-    brief: 'I know Illustrator but have never coded. I want a web to displays a song lyrics with creative coding techniques',
+    brief: 'I know Illustrator and Photoshop and Blender but have never coded. I want to make a website to display song lyrics with creative web scrolling animations and interactive visuals.',
     deadline,
     hoursPerDay: 2,
     skills: 'Illustrator — advanced; Coding — none',
@@ -196,8 +209,8 @@ test('creative-coding lyrics website resolves to a web path instead of Blender',
     mandatoryRequirements: ['Prefer free tools'],
     knownSoftware: ['Illustrator'],
     knownSkills: ['Illustrator — advanced', 'Coding — none'],
-    requiredCapabilities: ['Web publishing', 'Text rendering', 'Generative typography', 'Interactive web graphics'],
-    likelyTechniques: [],
+    requiredCapabilities: ['Web publishing', 'Text rendering', 'Generative typography', 'Interactive web graphics', 'Scroll interaction'],
+    likelyTechniques: ['Scroll-linked animation', 'Character stagger', 'Scroll reveal'],
   });
   const outcome = await runProjectAnalysis(creativeWebInput, async () => analysis);
   const solution = solveProject(creativeWebInput, outcome);
@@ -213,7 +226,25 @@ test('creative-coding lyrics website resolves to a web path instead of Blender',
   assert(delegatedTasks.every((task) => task.agentDelegation?.compatibleAgents.join(' ') === 'Claude Codex Kimi'));
   assert(delegatedTasks.every((task) => task.agentDelegation?.prompt.includes(creativeWebInput.brief)));
   assert(delegatedTasks.every((task) => task.agentDelegation?.prompt.includes(task.objective)));
-  assert(delegatedTasks.every((task) => task.agentDelegation?.expectedOutputs.length === 4));
+  assert(delegatedTasks.every((task) => (task.agentDelegation?.expectedOutputs.length ?? 0) > 4));
+  assert(delegatedTasks.every((task) => task.agentDelegation?.prompt.includes('REQUIRED TECHNIQUE PLAN')));
+  assert(delegatedTasks.every((task) => task.agentDelegation?.prompt.includes('IMPLEMENTATION SEQUENCE')));
+  assert(delegatedTasks.every((task) => task.agentDelegation?.prompt.includes('FAILURE MODES TO PREVENT')));
+  assert(delegatedTasks.every((task) => task.agentDelegation?.summary.approach.length === task.agentDelegation.techniquePlan.length));
+  assert(delegatedTasks.every((task) => (task.agentDelegation?.summary.keyActions.length ?? 0) > 1));
+  assert(delegatedTasks.every((task) => (task.agentDelegation?.summary.outputs.length ?? 0) > 1));
+  assert(delegatedTasks.every((task) => (task.agentDelegation?.summary.checks.length ?? 0) > 1));
+  const scaffold = delegatedTasks.find((task) => task.id === 'scaffold');
+  const typography = delegatedTasks.find((task) => task.id === 'typography');
+  assert(scaffold?.agentDelegation?.techniquePlan.some((plan) => plan.label === 'Semantic HTML structure'));
+  assert(scaffold?.agentDelegation?.techniquePlan.some((plan) => plan.label === 'p5.js visual runtime'));
+  assert(typography?.agentDelegation?.techniquePlan.some((plan) => plan.label === 'Normalized scroll progress'));
+  assert(typography?.agentDelegation?.techniquePlan.some((plan) => plan.label === 'Scroll-linked kinetic typography'));
+  assert(typography?.agentDelegation?.techniquePlan.some((plan) => plan.label === 'Accessible character staggering'));
+  assert.deepEqual(typography?.prerequisiteTaskIds, ['scaffold']);
+  assert.notDeepEqual(scaffold?.techniqueIds, typography?.techniqueIds);
+  assert.notDeepEqual(scaffold?.definitionOfDone, typography?.definitionOfDone);
+  assert.notEqual(scaffold?.agentDelegation?.prompt, typography?.agentDelegation?.prompt);
   assert(solution.recommended.tasks.filter((task) => task.method !== 'delegate_to_agent').every((task) => task.agentDelegation === null));
   assert(everyCandidate.every((path) => !path.softwareIds.includes('blender')));
   assert(everyCandidate.every((path) => !path.softwareIds.includes('maya')));
@@ -237,6 +268,69 @@ test('creative-coding website remains a web path when Gemini is unavailable', as
   assert.equal(solution.detectedKind, 'creative-web');
   assert(solution.recommended.softwareIds.includes('p5js'));
   assert(!solution.recommended.softwareIds.includes('blender'));
+});
+
+test('dating language chatbot resolves to an executable web-app path', async () => {
+  const chatbotInput: ProjectInput = {
+    brief: 'I want to make a dating chatbot website that helps people train their language skills.',
+    deadline: '2026-12-31',
+    hoursPerDay: 4,
+    skills: 'none',
+    constraints: 'Free to build and use free response models.',
+    language: 'en',
+  };
+  const analysis = ProjectAnalysisSchema.parse({
+    ...validAnalysis,
+    destination: 'AI role-play chatbot for language conversation practice',
+    deliverables: ['Deployed responsive web application'],
+    creativeDirection: ['Dating-scenario role-play'],
+    mandatoryRequirements: ['Free to build', 'Use a free response-model option'],
+    knownSoftware: [],
+    knownSkills: [],
+    requiredCapabilities: ['Chatbot', 'Multilingual conversation', 'Language correction', 'Moderation'],
+    likelyTechniques: ['Chat model', 'Multilingual model', 'Role prompting', 'Streaming API'],
+    highImpactUncertainties: ['AI simulation versus real-person matching'],
+  });
+  const outcome = await runProjectAnalysis(chatbotInput, async () => analysis);
+  const solution = solveProject(chatbotInput, outcome);
+
+  assert.equal(solution.detectedKind, 'ai-chatbot');
+  assert.equal(solution.recommended.id, 'next-gemini-agent');
+  assert.deepEqual(solution.recommended.softwareIds, ['nextjs', 'gemini-api', 'vercel']);
+  assert.notEqual(solution.recommended.title, 'Clarify project requirements');
+  assert(solution.recommended.tasks.some((task) => task.id === 'scope' && task.method === 'human_review'));
+  assert(solution.recommended.tasks.some((task) => task.id === 'safety'));
+  const conversation = solution.recommended.tasks.find((task) => task.id === 'conversation');
+  assert(conversation?.agentDelegation?.techniquePlan.some((plan) => plan.label === 'Bounded chat-model integration'));
+  assert(conversation?.agentDelegation?.techniquePlan.some((plan) => plan.label === 'Multilingual tutoring behavior'));
+  assert(conversation?.agentDelegation?.techniquePlan.some((plan) => plan.label === 'Scenario and tutor role contract'));
+  assert(conversation?.agentDelegation?.prompt.includes('GEMINI_API_KEY'));
+  assert(conversation?.agentDelegation?.prompt.includes('never provide secret values'));
+  assert(solution.alternatives.some((path) => path.softwareIds.includes('browser-llm')));
+  const sameStack = solution.alternatives.find((path) => path.id === 'next-gemini-learn');
+  assert(sameStack);
+  assert.notEqual(sameStack.strategyLabel, solution.recommended.strategyLabel);
+});
+
+test('dating language chatbot remains actionable when Gemini is unavailable', async () => {
+  const chatbotInput: ProjectInput = {
+    brief: 'I want to make a dating chatbot website that helps people train their language skills.',
+    deadline,
+    hoursPerDay: 4,
+    skills: 'none',
+    constraints: 'Free to build and use free response models.',
+    language: 'en',
+  };
+  const outcome = await runProjectAnalysis(chatbotInput, async () => {
+    throw new Error('offline');
+  });
+  const solution = solveProject(chatbotInput, outcome);
+
+  assert.equal(outcome.source, 'fallback');
+  assert.equal(solution.detectedKind, 'ai-chatbot');
+  assert.equal(solution.recommended.id, 'next-gemini-agent');
+  assert(outcome.resolution.techniqueIds.includes('project-requirements.required-interaction.chatbot'));
+  assert(outcome.resolution.techniqueIds.includes('ai-computational-creativity.ai-task.moderation'));
 });
 
 test('unrecognized briefs request clarification instead of defaulting to animation', () => {
