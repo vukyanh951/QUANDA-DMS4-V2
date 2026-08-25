@@ -5,14 +5,15 @@
 
 # builds
 /.next/
-/.vinext/
-/dist/
 /out/
-/.wrangler/
+/coverage/
+/.turbo/
+*.tsbuildinfo
 
 # local tooling and environment
 .DS_Store
 .env*
+!.env.example
 .vercel
 next-env.d.ts
 *.pem

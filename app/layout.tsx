@@ -1,8 +1,13 @@
 import type { Metadata } from 'next';
 import './globals.css';
 
+const metadataOrigin = process.env.SITE_URL
+  ?? (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : 'http://localhost:3000');
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://quanda-v2-mvp.vutuankiet6htd.chatgpt.site'),
+  metadataBase: new URL(metadataOrigin),
   title: 'QUANDA — Find your best path',
   description: 'An evidence-backed creative pipeline solver for finishing ambitious projects.',
   openGraph: {
