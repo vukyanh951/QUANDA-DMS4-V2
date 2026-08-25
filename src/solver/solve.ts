@@ -1,6 +1,6 @@
 import resourcesData from '@/knowledge/resources.json';
 import type { ProjectAnalysisOutcome } from '@/src/project-analysis/schema';
-import type { CandidatePath, ExecutionMethod, Language, PipelineTask, ProjectInput, ScoreBreakdown, Solution } from './types';
+import type { AgentDelegationGuide, CandidatePath, ExecutionMethod, Language, PipelineTask, ProjectInput, ScoreBreakdown, Solution } from './types';
 
 const APPS:Record<string,string>={blender:'Blender',touchdesigner:'TouchDesigner','davinci-resolve':'DaVinci Resolve','python-opencv':'Python + OpenCV',p5js:'p5.js',threejs:'Three.js','after-effects':'After Effects',houdini:'Houdini',maya:'Maya',illustrator:'Illustrator',vercel:'Vercel'};
 const WEIGHTS:Record<keyof ScoreBreakdown,number>={requirements:.24,familiarity:.16,learningCost:.14,executionCost:.11,switchingCost:.1,resourceQuality:.08,deadlineFit:.1,risk:.07};
@@ -67,11 +67,90 @@ function taskSeeds(kind:string,seed:Seed,known:string[]):TaskSeed[]{
  ];
 }
 
-function tasks(kind:string,seed:Seed,lang:Language,known:string[]):PipelineTask[]{return taskSeeds(kind,seed,known).map((t)=>({id:t.id,title:tr(lang,...t.title),objective:tr(lang,...t.objective),techniqueIds:t.tech,recommendedSoftwareId:t.app,softwareLabel:t.app?APPS[t.app]:tr(lang,'Software-agnostic','Không phụ thuộc phần mềm'),softwareAgnostic:t.app===null,method:t.method,methodLabel:methodLabel(lang,t.method),resourceIds:(t.method==='read_documentation'||t.method==='follow_tutorial')&&t.app&&official[t.app]?[official[t.app]]:[],estimatedHumanMinutes:t.human,estimatedLearningMinutes:t.learn,estimatedAgentMinutes:t.agent,whyIncluded:tr(lang,...t.why),definitionOfDone:[tr(lang,'The required behavior works.','Hành vi bắt buộc hoạt động.'),tr(lang,'The output can be reviewed or exported.','Đầu ra có thể duyệt hoặc xuất.')]}))}
+function delegationGuide(task:PipelineTask,input:ProjectInput):AgentDelegationGuide{
+ const techniques=task.techniqueIds.length?task.techniqueIds.map((id)=>id.split('.').at(-1)).join(', '):tr(input.language,'None specified','Không chỉ định');
+ const deadline=input.deadline||tr(input.language,'Not specified','Không chỉ định');
+ const contextChecklist=input.language==='vi'?
+  ['Brief dự án và người xem mục tiêu','File, asset hiện có và quyền truy cập repository','Phần mềm, runtime và phiên bản mục tiêu','Deadline, ràng buộc và phần việc đã hoàn thành']:
+  ['Project brief and intended audience','Existing files, assets, and repository access','Target software, runtime, and version','Deadline, constraints, and work already completed'];
+ const expectedOutputs=input.language==='vi'?
+  [`Kết quả ${task.softwareLabel} hoạt động đúng phạm vi`,'Nhật ký thay đổi ngắn gọn kèm file hoặc asset đã sửa','Lệnh, test hoặc kiểm tra trực quan chứng minh kết quả','Giả định, rủi ro và quyết định còn cần con người']:
+  [`A working ${task.softwareLabel} result within scope`,'A concise change log naming files or assets changed','Commands, tests, or visual checks that prove the result','Remaining assumptions, risks, and human decisions'];
+ const reviewChecklist=input.language==='vi'?
+  ['Kết quả đúng mục tiêu, không tự ý redesign rộng','Mỗi điều kiện hoàn thành đều có bằng chứng','Không làm yếu đi ràng buộc đã nêu','Người dùng có thể hiểu, chỉnh sửa và tiếp tục công việc']:
+  ['The result matches the objective without a broad redesign','Every definition-of-done item has evidence','No stated constraint was weakened','The user can understand, edit, and continue the work'];
+ const prompt=input.language==='vi'?`Bạn là một implementation agent phụ trách đúng một bước có phạm vi rõ ràng. Có thể dùng Claude, Codex hoặc Kimi, nhưng phải tuân thủ cùng hợp đồng công việc này.
+
+BỐI CẢNH DỰ ÁN
+Mục tiêu tổng thể: ${input.brief.trim()}
+Hạn chót: ${deadline}
+Thời gian khả dụng: ${input.hoursPerDay} giờ/ngày
+Kỹ năng hiện có: ${input.skills.trim()||'Không nêu'}
+Ràng buộc: ${input.constraints.trim()||'Không nêu'}
+
+NHIỆM VỤ CỦA BẠN
+Tên bước: ${task.title}
+Mục tiêu: ${task.objective}
+Công cụ chính: ${task.softwareLabel}
+Kỹ thuật liên quan: ${techniques}
+
+QUY ƯỚC LÀM VIỆC
+1. Chỉ xử lý nhiệm vụ này; không redesign hoặc refactor phần không liên quan.
+2. Đọc file, repository, asset và hướng dẫn được cung cấp trước khi thay đổi.
+3. Chỉ hỏi khi thực sự bị chặn; nếu không, nêu rõ giả định hợp lý và tiếp tục.
+4. Thay đổi theo từng phần nhỏ, giữ nguyên công việc hiện có và mọi ràng buộc.
+5. Kiểm tra kết quả bằng test, lệnh build/chạy hoặc kiểm tra trực quan phù hợp.
+6. Không tuyên bố hoàn thành nếu chưa đưa ra bằng chứng; kết quả cuối vẫn cần con người duyệt.
+
+ĐẦU RA BẮT BUỘC
+${expectedOutputs.map((item,index)=>`${index+1}. ${item}`).join('\n')}
+
+ĐIỀU KIỆN CHẤP NHẬN
+${task.definitionOfDone.map((item,index)=>`${index+1}. ${item}`).join('\n')}
+
+Bắt đầu bằng kế hoạch ngắn, các đầu vào bạn đã có và blocker thật sự nếu có. Sau đó hoàn thành nhiệm vụ, kiểm tra kết quả và kết thúc bằng change log, bằng chứng kiểm tra, giả định và rủi ro còn lại.`:`You are an implementation agent responsible for one bounded project step. You may be Claude, Codex, or Kimi, but you must follow the same working contract.
+
+PROJECT CONTEXT
+Overall goal: ${input.brief.trim()}
+Deadline: ${deadline}
+Available time: ${input.hoursPerDay} hours/day
+Existing skills: ${input.skills.trim()||'Not stated'}
+Constraints: ${input.constraints.trim()||'None stated'}
+
+YOUR ASSIGNMENT
+Step: ${task.title}
+Objective: ${task.objective}
+Primary tool: ${task.softwareLabel}
+Relevant techniques: ${techniques}
+
+WORKING AGREEMENT
+1. Keep scope limited to this assignment; do not redesign or refactor unrelated work.
+2. Inspect supplied files, repository, assets, and instructions before changing anything.
+3. Ask only when genuinely blocked; otherwise state reasonable assumptions and proceed.
+4. Work incrementally while preserving existing work and every stated constraint.
+5. Validate the result with appropriate tests, build/run commands, or visual checks.
+6. Do not claim completion without evidence; the final result still requires human review.
+
+REQUIRED DELIVERABLES
+${expectedOutputs.map((item,index)=>`${index+1}. ${item}`).join('\n')}
+
+ACCEPTANCE CRITERIA
+${task.definitionOfDone.map((item,index)=>`${index+1}. ${item}`).join('\n')}
+
+Start with a short plan, the inputs you have, and any genuine blockers. Then complete the assignment, validate it, and finish with a change log, validation evidence, assumptions, and remaining risks.`;
+ return{compatibleAgents:['Claude','Codex','Kimi'],prompt,contextChecklist,expectedOutputs,reviewChecklist};
+}
+
+function tasks(kind:string,seed:Seed,lang:Language,known:string[],input:ProjectInput):PipelineTask[]{
+ return taskSeeds(kind,seed,known).map((t)=>{
+  const task:PipelineTask={id:t.id,title:tr(lang,...t.title),objective:tr(lang,...t.objective),techniqueIds:t.tech,recommendedSoftwareId:t.app,softwareLabel:t.app?APPS[t.app]:tr(lang,'Software-agnostic','Không phụ thuộc phần mềm'),softwareAgnostic:t.app===null,method:t.method,methodLabel:methodLabel(lang,t.method),resourceIds:(t.method==='read_documentation'||t.method==='follow_tutorial')&&t.app&&official[t.app]?[official[t.app]]:[],estimatedHumanMinutes:t.human,estimatedLearningMinutes:t.learn,estimatedAgentMinutes:t.agent,whyIncluded:tr(lang,...t.why),definitionOfDone:[tr(lang,'The required behavior works.','Hành vi bắt buộc hoạt động.'),tr(lang,'The output can be reviewed or exported.','Đầu ra có thể duyệt hoặc xuất.')],agentDelegation:null};
+  return{...task,agentDelegation:t.method==='delegate_to_agent'?delegationGuide(task,input):null};
+ });
+}
 function score(seed:Seed,input:ProjectInput,known:string[],required:string[],capacity:number,kind:string):CandidatePath{
  const missing=required.filter((id)=>!seed.apps.includes(id)),viable=!missing.length,knownCount=seed.apps.filter((id)=>known.includes(id)).length,newApps=seed.apps.length-knownCount,learn=Math.max(0,seed.learning-knownCount*20),work=seed.human+learn,resourceMatches=seed.apps.filter((id)=>official[id]).length;
  const b:ScoreBreakdown={requirements:viable?100:15,familiarity:clamp(44+knownCount/Math.max(1,seed.apps.length)*56),learningCost:clamp(100-learn/2.8),executionCost:clamp(100-seed.human/7.5),switchingCost:clamp(100-newApps*18),resourceQuality:clamp(58+resourceMatches*12),deadlineFit:clamp(capacity/Math.max(1,work)*100),risk:clamp(100-seed.risk*1.7)};
- const pathTasks=tasks(kind,seed,input.language,known),pathScore=viable?Math.round(Object.entries(WEIGHTS).reduce((sum,[key,w])=>sum+b[key as keyof ScoreBreakdown]*w,0)):0;
+ const pathTasks=tasks(kind,seed,input.language,known,input),pathScore=viable?Math.round(Object.entries(WEIGHTS).reduce((sum,[key,w])=>sum+b[key as keyof ScoreBreakdown]*w,0)):0;
  const strengths=[...(viable?[tr(input.language,'Satisfies every explicit software requirement','Đáp ứng mọi yêu cầu phần mềm')]:[]),...(knownCount?[tr(input.language,`Reuses ${knownCount} familiar tool${knownCount>1?'s':''}`,`Tái sử dụng ${knownCount} công cụ quen thuộc`)]:[]),...(b.deadlineFit>=100?[tr(input.language,'Fits the stated time capacity','Phù hợp quỹ thời gian')]:[])];
  const weaknesses=[...(newApps?[tr(input.language,`Introduces ${newApps} new tool${newApps>1?'s':''}`,`Giới thiệu ${newApps} công cụ mới`)]:[]),...(b.deadlineFit<100?[tr(input.language,'Exceeds the current time capacity','Vượt quỹ thời gian')]:[]),...(resourceMatches===0?[tr(input.language,'No matching verified local resource','Chưa có tài nguyên local phù hợp')]:[])];
  return{id:seed.id,title:seed.apps.length?seed.apps.map((id)=>APPS[id]).join(' → '):tr(input.language,'Clarify project requirements','Làm rõ yêu cầu dự án'),softwareIds:seed.apps,softwareLabels:seed.apps.map((id)=>APPS[id]),tasks:pathTasks,estimatedHumanMinutes:pathTasks.reduce((s,t)=>s+t.estimatedHumanMinutes,0),estimatedLearningMinutes:pathTasks.reduce((s,t)=>s+t.estimatedLearningMinutes,0),estimatedAgentMinutes:pathTasks.reduce((s,t)=>s+t.estimatedAgentMinutes,0),score:pathScore,scoreBreakdown:b,strengths,weaknesses,viable,rejectionReasons:missing.map((id)=>tr(input.language,`Missing required ${APPS[id]}`,`Thiếu ${APPS[id]} bắt buộc`))};
@@ -83,5 +162,5 @@ export function solveProject(input:ProjectInput,understanding?:ProjectAnalysisOu
  const kind=kindOf(text),explicitRequired=mandatory(`${input.brief}. ${input.constraints}`.toLowerCase()),constraintSoftware=appMentions(input.constraints.toLowerCase()),analyzedRequired=(understanding?.resolution.mandatorySoftwareIds??[]).filter((id)=>constraintSoftware.includes(id)),required=[...new Set([...explicitRequired,...analyzedRequired])],known=[...new Set([...appMentions(input.skills.toLowerCase()),...(understanding?.resolution.softwareIds??[])])];
  const deadline=input.deadline?new Date(`${input.deadline}T23:59:59`):new Date(Date.now()+7*86400000),days=Math.max(1,Math.ceil((deadline.getTime()-Date.now())/86400000)),capacity=Math.round(days*Math.max(.5,input.hoursPerDay)*60);
  const all=seeds(kind).map((seed)=>score(seed,input,known,required,capacity,kind)),viable=all.filter((p)=>p.viable).sort((a,b)=>b.score-a.score),recommended=viable[0]??all.sort((a,b)=>b.score-a.score)[0];
- return{destination:understanding?.analysis.destination??input.brief.trim(),detectedKind:kind,capacityMinutes:capacity,daysAvailable:days,requirements:required.map((id)=>APPS[id]),knownSoftware:known.map((id)=>APPS[id]),recommended,alternatives:viable.slice(1),rejected:all.filter((p)=>!p.viable),skipped:['Maya','Houdini','Generic beginner courses'].filter((label)=>!recommended.softwareLabels.includes(label)).map((label)=>tr(input.language,`${label} — no required advantage for this route`,`${label} — không có lợi thế bắt buộc cho lộ trình này`)),solverVersion:'mvp-rules-1.2.0',scoringVersion:'deterministic-1.0.0'};
+ return{destination:understanding?.analysis.destination??input.brief.trim(),detectedKind:kind,capacityMinutes:capacity,daysAvailable:days,requirements:required.map((id)=>APPS[id]),knownSoftware:known.map((id)=>APPS[id]),recommended,alternatives:viable.slice(1),rejected:all.filter((p)=>!p.viable),skipped:['Maya','Houdini','Generic beginner courses'].filter((label)=>!recommended.softwareLabels.includes(label)).map((label)=>tr(input.language,`${label} — no required advantage for this route`,`${label} — không có lợi thế bắt buộc cho lộ trình này`)),solverVersion:'mvp-rules-1.3.0',scoringVersion:'deterministic-1.0.0'};
 }
