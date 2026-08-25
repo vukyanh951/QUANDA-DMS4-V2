@@ -22,6 +22,9 @@ const softwareAliases: Record<string, string[]> = {
   houdini: ['houdini'],
   maya: ['maya', 'autodesk maya'],
   illustrator: ['illustrator', 'adobe illustrator'],
+  nextjs: ['next.js', 'next js', 'nextjs'],
+  'gemini-api': ['gemini api', 'google gemini', 'gemini model'],
+  'browser-llm': ['browser llm', 'browser local llm', 'webllm', 'local browser model'],
   vercel: ['vercel'],
 };
 

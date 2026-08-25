@@ -1,8 +1,8 @@
 {
-  "capabilitySchemaVersion": "1.0.0",
+  "capabilitySchemaVersion": "1.1.0",
   "source": "QUANDA V2 curated MVP seed",
   "software": [
-    {"id":"blender","label":"Blender"},{"id":"touchdesigner","label":"TouchDesigner"},{"id":"davinci-resolve","label":"DaVinci Resolve"},{"id":"python-opencv","label":"Python + OpenCV"},{"id":"p5js","label":"p5.js"},{"id":"threejs","label":"Three.js"},{"id":"after-effects","label":"After Effects"},{"id":"houdini","label":"Houdini"},{"id":"maya","label":"Maya"},{"id":"illustrator","label":"Illustrator"},{"id":"vercel","label":"Vercel"}
+    {"id":"blender","label":"Blender"},{"id":"touchdesigner","label":"TouchDesigner"},{"id":"davinci-resolve","label":"DaVinci Resolve"},{"id":"python-opencv","label":"Python + OpenCV"},{"id":"p5js","label":"p5.js"},{"id":"threejs","label":"Three.js"},{"id":"after-effects","label":"After Effects"},{"id":"houdini","label":"Houdini"},{"id":"maya","label":"Maya"},{"id":"illustrator","label":"Illustrator"},{"id":"nextjs","label":"Next.js"},{"id":"gemini-api","label":"Gemini API"},{"id":"browser-llm","label":"Browser-local LLM"},{"id":"vercel","label":"Vercel"}
   ],
   "capabilities": [
     {"techniqueId":"3d-production.npr-technique.cel-shading","softwareOptions":[{"softwareId":"blender","method":"Shader Nodes with a toon ramp","support":"strong"},{"softwareId":"maya","method":"toon materials and contour rendering","support":"strong"}]},
@@ -11,6 +11,14 @@
     {"techniqueId":"audio-and-music.audio-reactive-technique.frequency-bands","softwareOptions":[{"softwareId":"p5js","method":"Web Audio FFT mapped to shape parameters","support":"strong"},{"softwareId":"touchdesigner","method":"Audio Spectrum CHOP","support":"strong"},{"softwareId":"after-effects","method":"audio amplitude keyframes","support":"moderate"}]},
     {"techniqueId":"web-and-creative-coding.library.three-js","softwareOptions":[{"softwareId":"threejs","method":"Three.js scene graph and WebGL renderer","support":"strong"}]},
     {"techniqueId":"web-and-creative-coding.library.p5-js","softwareOptions":[{"softwareId":"p5js","method":"p5.js draw loop and browser inputs","support":"strong"}]},
-    {"techniqueId":"traditional-and-physical-media.installation-technique.projection-mapping","softwareOptions":[{"softwareId":"touchdesigner","method":"projector output with calibrated transform","support":"strong"}]}
+    {"techniqueId":"traditional-and-physical-media.installation-technique.projection-mapping","softwareOptions":[{"softwareId":"touchdesigner","method":"projector output with calibrated transform","support":"strong"}]},
+    {"techniqueId":"web-and-creative-coding.framework.next-js","softwareOptions":[{"softwareId":"nextjs","method":"App Router UI with server-only route handlers","support":"strong"}]},
+    {"techniqueId":"project-requirements.required-interaction.chatbot","softwareOptions":[{"softwareId":"nextjs","method":"accessible chat interface with explicit transcript state","support":"strong"}]},
+    {"techniqueId":"ai-computational-creativity.language-model.chat-model","softwareOptions":[{"softwareId":"gemini-api","method":"server-side Gemini chat generation","support":"strong"},{"softwareId":"browser-llm","method":"quantized chat model executed in the browser","support":"moderate"}]},
+    {"techniqueId":"ai-computational-creativity.language-model.multilingual-model","softwareOptions":[{"softwareId":"gemini-api","method":"multilingual response generation and correction","support":"strong"},{"softwareId":"browser-llm","method":"small multilingual model constrained by device memory","support":"moderate"}]},
+    {"techniqueId":"ai-computational-creativity.prompting-technique.role-prompting","softwareOptions":[{"softwareId":"gemini-api","method":"server-owned scenario and tutor-role instructions","support":"strong"},{"softwareId":"browser-llm","method":"client-owned scenario and tutor-role instructions","support":"moderate"}]},
+    {"techniqueId":"web-and-creative-coding.real-time-technology.streaming-api","softwareOptions":[{"softwareId":"gemini-api","method":"stream model tokens through a server route","support":"strong"},{"softwareId":"browser-llm","method":"stream local token callbacks into UI state","support":"moderate"}]},
+    {"techniqueId":"ai-computational-creativity.prompting-technique.structured-instruction","softwareOptions":[{"softwareId":"gemini-api","method":"versioned system instruction with explicit output contract","support":"strong"},{"softwareId":"browser-llm","method":"compact system instruction adapted to local model limits","support":"moderate"}]},
+    {"techniqueId":"ai-computational-creativity.ai-task.moderation","softwareOptions":[{"softwareId":"gemini-api","method":"input/output policy checks and safe refusal handling","support":"moderate"},{"softwareId":"browser-llm","method":"local rule-based boundary checks with limited classifier support","support":"limited"}]}
   ]
 }

@@ -270,6 +270,69 @@ test('creative-coding website remains a web path when Gemini is unavailable', as
   assert(!solution.recommended.softwareIds.includes('blender'));
 });
 
+test('dating language chatbot resolves to an executable web-app path', async () => {
+  const chatbotInput: ProjectInput = {
+    brief: 'I want to make a dating chatbot website that helps people train their language skills.',
+    deadline: '2026-12-31',
+    hoursPerDay: 4,
+    skills: 'none',
+    constraints: 'Free to build and use free response models.',
+    language: 'en',
+  };
+  const analysis = ProjectAnalysisSchema.parse({
+    ...validAnalysis,
+    destination: 'AI role-play chatbot for language conversation practice',
+    deliverables: ['Deployed responsive web application'],
+    creativeDirection: ['Dating-scenario role-play'],
+    mandatoryRequirements: ['Free to build', 'Use a free response-model option'],
+    knownSoftware: [],
+    knownSkills: [],
+    requiredCapabilities: ['Chatbot', 'Multilingual conversation', 'Language correction', 'Moderation'],
+    likelyTechniques: ['Chat model', 'Multilingual model', 'Role prompting', 'Streaming API'],
+    highImpactUncertainties: ['AI simulation versus real-person matching'],
+  });
+  const outcome = await runProjectAnalysis(chatbotInput, async () => analysis);
+  const solution = solveProject(chatbotInput, outcome);
+
+  assert.equal(solution.detectedKind, 'ai-chatbot');
+  assert.equal(solution.recommended.id, 'next-gemini-agent');
+  assert.deepEqual(solution.recommended.softwareIds, ['nextjs', 'gemini-api', 'vercel']);
+  assert.notEqual(solution.recommended.title, 'Clarify project requirements');
+  assert(solution.recommended.tasks.some((task) => task.id === 'scope' && task.method === 'human_review'));
+  assert(solution.recommended.tasks.some((task) => task.id === 'safety'));
+  const conversation = solution.recommended.tasks.find((task) => task.id === 'conversation');
+  assert(conversation?.agentDelegation?.techniquePlan.some((plan) => plan.label === 'Bounded chat-model integration'));
+  assert(conversation?.agentDelegation?.techniquePlan.some((plan) => plan.label === 'Multilingual tutoring behavior'));
+  assert(conversation?.agentDelegation?.techniquePlan.some((plan) => plan.label === 'Scenario and tutor role contract'));
+  assert(conversation?.agentDelegation?.prompt.includes('GEMINI_API_KEY'));
+  assert(conversation?.agentDelegation?.prompt.includes('never provide secret values'));
+  assert(solution.alternatives.some((path) => path.softwareIds.includes('browser-llm')));
+  const sameStack = solution.alternatives.find((path) => path.id === 'next-gemini-learn');
+  assert(sameStack);
+  assert.notEqual(sameStack.strategyLabel, solution.recommended.strategyLabel);
+});
+
+test('dating language chatbot remains actionable when Gemini is unavailable', async () => {
+  const chatbotInput: ProjectInput = {
+    brief: 'I want to make a dating chatbot website that helps people train their language skills.',
+    deadline,
+    hoursPerDay: 4,
+    skills: 'none',
+    constraints: 'Free to build and use free response models.',
+    language: 'en',
+  };
+  const outcome = await runProjectAnalysis(chatbotInput, async () => {
+    throw new Error('offline');
+  });
+  const solution = solveProject(chatbotInput, outcome);
+
+  assert.equal(outcome.source, 'fallback');
+  assert.equal(solution.detectedKind, 'ai-chatbot');
+  assert.equal(solution.recommended.id, 'next-gemini-agent');
+  assert(outcome.resolution.techniqueIds.includes('project-requirements.required-interaction.chatbot'));
+  assert(outcome.resolution.techniqueIds.includes('ai-computational-creativity.ai-task.moderation'));
+});
+
 test('unrecognized briefs request clarification instead of defaulting to animation', () => {
   const solution = solveProject({
     brief: 'I want to make something meaningful for a small community event.',
