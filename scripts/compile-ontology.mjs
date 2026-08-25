@@ -22,4 +22,3 @@ for (const [index, line] of source.split(/\r?\n/).entries()) {
 }
 await writeFile('knowledge/ontology.compiled.json', `${JSON.stringify({ ontologySchemaVersion: '1.0.0', source: 'knowledge/quanda.skills', conceptCount: concepts.length, concepts }, null, 2)}\n`);
 console.log(`Compiled ${concepts.length} ontology concepts.`);
-

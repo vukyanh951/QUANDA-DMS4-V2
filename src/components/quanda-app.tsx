@@ -14,7 +14,7 @@ const format=(n:number,l:Language)=>n<60?`${n} ${ui[l].min}`:`${Math.floor(n/60)
 
 export default function QuandaApp(){
  const [input,setInput]=useState<ProjectInput>(initial),[solution,setSolution]=useState<Solution|null>(null),[error,setError]=useState('');const l=input.language,c=ui[l];
- useEffect(()=>{const saved=localStorage.getItem('quanda-v2-draft');if(saved)try{setInput({...initial,...JSON.parse(saved)})}catch{}},[]);
+ useEffect(()=>{const saved=localStorage.getItem('quanda-v2-draft');if(!saved)return;const timer=window.setTimeout(()=>{try{setInput({...initial,...JSON.parse(saved)})}catch{}},0);return()=>window.clearTimeout(timer)},[]);
  useEffect(()=>{localStorage.setItem('quanda-v2-draft',JSON.stringify(input))},[input]);
  const resources=useMemo(()=>Object.fromEntries(resourcesData.resources.map((r)=>[r.id,r])),[]);
  const update=<K extends keyof ProjectInput>(key:K,value:ProjectInput[K])=>setInput((v)=>({...v,[key]:value}));

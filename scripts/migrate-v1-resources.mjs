@@ -13,4 +13,3 @@ const resources = input.resources.map((r) => ({
 }));
 await writeFile('knowledge/resources.json', `${JSON.stringify({ resourceSchemaVersion:'2.0.0', source:'knowledge/v1-verified-resources.json', migrationPolicy:'Reusable knowledge only; no V1 ranking or architecture imported.', resourceCount:resources.length, resources }, null, 2)}\n`);
 console.log(`Migrated ${resources.length} V1 resources.`);
-

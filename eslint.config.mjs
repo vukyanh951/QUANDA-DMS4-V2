@@ -7,4 +7,3 @@ export default defineConfig([
   ...nextTs,
   globalIgnores(['.next/**', 'dist/**', 'out/**', 'next-env.d.ts']),
 ]);
-
