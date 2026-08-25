@@ -1,0 +1,19 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# builds
+/.next/
+/.vinext/
+/dist/
+/out/
+/.wrangler/
+
+# local tooling and environment
+.DS_Store
+.env*
+.vercel
+next-env.d.ts
+*.pem
+*.log

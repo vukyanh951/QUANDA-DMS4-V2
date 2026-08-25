@@ -1,0 +1,16 @@
+{
+  "capabilitySchemaVersion": "1.0.0",
+  "source": "QUANDA V2 curated MVP seed",
+  "software": [
+    {"id":"blender","label":"Blender"},{"id":"touchdesigner","label":"TouchDesigner"},{"id":"davinci-resolve","label":"DaVinci Resolve"},{"id":"python-opencv","label":"Python + OpenCV"},{"id":"p5js","label":"p5.js"},{"id":"threejs","label":"Three.js"},{"id":"after-effects","label":"After Effects"},{"id":"houdini","label":"Houdini"},{"id":"maya","label":"Maya"},{"id":"illustrator","label":"Illustrator"},{"id":"vercel","label":"Vercel"}
+  ],
+  "capabilities": [
+    {"techniqueId":"3d-production.npr-technique.cel-shading","softwareOptions":[{"softwareId":"blender","method":"Shader Nodes with a toon ramp","support":"strong"},{"softwareId":"maya","method":"toon materials and contour rendering","support":"strong"}]},
+    {"techniqueId":"3d-production.geometry-nodes-technique.vegetation-scatter","softwareOptions":[{"softwareId":"blender","method":"Geometry Nodes point distribution and instancing","support":"strong"},{"softwareId":"houdini","method":"SOP networks and procedural instancing","support":"strong"}]},
+    {"techniqueId":"motion-and-animation.interaction-reactive-motion.hand-tracking","softwareOptions":[{"softwareId":"touchdesigner","method":"MediaPipe component or tracking input","support":"strong"},{"softwareId":"python-opencv","method":"MediaPipe landmarks with OpenCV capture","support":"strong"},{"softwareId":"threejs","method":"MediaPipe web feeding scene parameters","support":"moderate"}]},
+    {"techniqueId":"audio-and-music.audio-reactive-technique.frequency-bands","softwareOptions":[{"softwareId":"p5js","method":"Web Audio FFT mapped to shape parameters","support":"strong"},{"softwareId":"touchdesigner","method":"Audio Spectrum CHOP","support":"strong"},{"softwareId":"after-effects","method":"audio amplitude keyframes","support":"moderate"}]},
+    {"techniqueId":"web-and-creative-coding.library.three-js","softwareOptions":[{"softwareId":"threejs","method":"Three.js scene graph and WebGL renderer","support":"strong"}]},
+    {"techniqueId":"web-and-creative-coding.library.p5-js","softwareOptions":[{"softwareId":"p5js","method":"p5.js draw loop and browser inputs","support":"strong"}]},
+    {"techniqueId":"traditional-and-physical-media.installation-technique.projection-mapping","softwareOptions":[{"softwareId":"touchdesigner","method":"projector output with calibrated transform","support":"strong"}]}
+  ]
+}
