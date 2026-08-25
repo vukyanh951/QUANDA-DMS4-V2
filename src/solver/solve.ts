@@ -4,6 +4,13 @@ import { flattenTechniquePlans, resolveTechniquePlans } from './playbooks';
 import type { AgentDelegationGuide, CandidatePath, ExecutionMethod, Language, PipelineTask, ProjectInput, ScoreBreakdown, Solution } from './types';
 
 const APPS:Record<string,string>={blender:'Blender',touchdesigner:'TouchDesigner','davinci-resolve':'DaVinci Resolve','python-opencv':'Python + OpenCV',p5js:'p5.js',threejs:'Three.js','after-effects':'After Effects',houdini:'Houdini',maya:'Maya',illustrator:'Illustrator',vercel:'Vercel'};
+const STRATEGIES:Record<string,[string,string]>={
+ 'td-native':['Integrated visual-tool workflow','Quy trình tích hợp bằng công cụ hình ảnh'],'td-python':['Python-assisted tracking workflow','Quy trình tracking hỗ trợ bằng Python'],'td-lean':['Lean TouchDesigner workflow','Quy trình TouchDesigner tinh gọn'],'unity-route':['High-learning alternative','Phương án cần học nhiều'],
+ 'p5-illustrator-site':['Design-led, agent-assisted build','Bản dựng ưu tiên thiết kế, có agent hỗ trợ'],'p5-site':['Lean p5.js build','Bản dựng p5.js tinh gọn'],'three-creative-site':['3D web alternative','Phương án web 3D'],'three-agent':['Agent-assisted implementation','Triển khai có agent hỗ trợ'],'three-learn':['Learn-first implementation','Triển khai ưu tiên tự học'],
+ 'p5-poster':['Code-assisted audio mapping','Ánh xạ audio có code hỗ trợ'],'td-poster':['Node-based realtime workflow','Quy trình realtime dạng node'],'ae-poster':['Timeline-based motion workflow','Quy trình motion theo timeline'],
+ 'blender-geo':['Procedural Geometry Nodes workflow','Quy trình Geometry Nodes procedural'],'blender-manual':['Manual Blender workflow','Quy trình Blender thủ công'],'houdini-geo':['Houdini procedural alternative','Phương án procedural bằng Houdini'],
+ 'blender-only':['Single-app focused workflow','Quy trình tập trung một ứng dụng'],'blender-resolve':['Blender plus finishing workflow','Quy trình Blender kèm hậu kỳ'],'maya-ae':['Multi-app animation alternative','Phương án animation đa ứng dụng'],'clarify-project':['Requirements clarification','Làm rõ yêu cầu']
+};
 const WEIGHTS:Record<keyof ScoreBreakdown,number>={requirements:.24,familiarity:.16,learningCost:.14,executionCost:.11,switchingCost:.1,resourceQuality:.08,deadlineFit:.1,risk:.07};
 const official=Object.fromEntries(resourcesData.resources.filter((r)=>r.reliability==='official').flatMap((r)=>r.softwareIds.map((id)=>[id,r.id])));
 const tr=(lang:Language,en:string,vi:string)=>lang==='vi'?vi:en;
@@ -89,6 +96,13 @@ function delegationGuide(task:PipelineTask,input:ProjectInput):AgentDelegationGu
  const reviewChecklist=unique([...details.acceptanceChecks,tr(input.language,'The result stays in scope without redesigning unrelated work','Kết quả đúng phạm vi và không redesign phần không liên quan'),tr(input.language,'The user can understand, edit, and continue the work','Người dùng có thể hiểu, chỉnh sửa và tiếp tục công việc')]);
  const dependencyText=task.prerequisiteTaskIds.length?task.prerequisiteTaskIds.join(', '):tr(input.language,'Không có','None');
  const techniqueText=techniquePlan.map((plan,index)=>`${index+1}. ${plan.label}\n   ${plan.method}`).join('\n');
+ const summary={
+  approach:techniquePlan.map((plan)=>plan.label),
+  keyActions:techniquePlan.map((plan)=>plan.implementationSteps[0]).filter(Boolean),
+  outputs:techniquePlan.map((plan)=>plan.artifacts[0]).filter(Boolean),
+  checks:techniquePlan.map((plan)=>plan.acceptanceChecks[0]).filter(Boolean),
+  avoid:techniquePlan.map((plan)=>plan.failureModes[0]).filter(Boolean),
+ };
  const prompt=input.language==='vi'?`Bạn là một implementation agent phụ trách đúng một bước có phạm vi rõ ràng. Có thể dùng Claude, Codex hoặc Kimi, nhưng phải tuân thủ cùng hợp đồng công việc này.
 
 BỐI CẢNH DỰ ÁN
@@ -166,7 +180,7 @@ FAILURE MODES TO PREVENT
 ${details.failureModes.map((item,index)=>`${index+1}. ${item}`).join('\n')}
 
 Start by inspecting the prerequisite outputs, repository, and supplied assets. State a short plan that follows the implementation sequence above and identify only genuine blockers. Then complete the assignment, verify every acceptance criterion, and finish with a change log, validation evidence, assumptions, and remaining risks.`;
- return{compatibleAgents:['Claude','Codex','Kimi'],prompt,prerequisiteTaskIds:task.prerequisiteTaskIds,techniquePlan:techniquePlan.map(({techniqueId,label,method})=>({techniqueId,label,method})),implementationSteps:details.implementationSteps,contextChecklist,expectedOutputs,reviewChecklist,failureModes:details.failureModes};
+ return{compatibleAgents:['Claude','Codex','Kimi'],prompt,summary,prerequisiteTaskIds:task.prerequisiteTaskIds,techniquePlan:techniquePlan.map(({techniqueId,label,method})=>({techniqueId,label,method})),implementationSteps:details.implementationSteps,contextChecklist,expectedOutputs,reviewChecklist,failureModes:details.failureModes};
 }
 
 function tasks(kind:string,seed:Seed,lang:Language,known:string[],input:ProjectInput,requestedTechniques:string[]):PipelineTask[]{
@@ -184,7 +198,7 @@ function score(seed:Seed,input:ProjectInput,known:string[],required:string[],cap
  const pathTasks=tasks(kind,seed,input.language,known,input,requestedTechniques),pathScore=viable?Math.round(Object.entries(WEIGHTS).reduce((sum,[key,w])=>sum+b[key as keyof ScoreBreakdown]*w,0)):0;
  const strengths=[...(viable?[tr(input.language,'Satisfies every explicit software requirement','Đáp ứng mọi yêu cầu phần mềm')]:[]),...(knownCount?[tr(input.language,`Reuses ${knownCount} familiar tool${knownCount>1?'s':''}`,`Tái sử dụng ${knownCount} công cụ quen thuộc`)]:[]),...(b.deadlineFit>=100?[tr(input.language,'Fits the stated time capacity','Phù hợp quỹ thời gian')]:[])];
  const weaknesses=[...(newApps?[tr(input.language,`Introduces ${newApps} new tool${newApps>1?'s':''}`,`Giới thiệu ${newApps} công cụ mới`)]:[]),...(b.deadlineFit<100?[tr(input.language,'Exceeds the current time capacity','Vượt quỹ thời gian')]:[]),...(resourceMatches===0?[tr(input.language,'No matching verified local resource','Chưa có tài nguyên local phù hợp')]:[])];
- return{id:seed.id,title:seed.apps.length?seed.apps.map((id)=>APPS[id]).join(' → '):tr(input.language,'Clarify project requirements','Làm rõ yêu cầu dự án'),softwareIds:seed.apps,softwareLabels:seed.apps.map((id)=>APPS[id]),tasks:pathTasks,estimatedHumanMinutes:pathTasks.reduce((s,t)=>s+t.estimatedHumanMinutes,0),estimatedLearningMinutes:pathTasks.reduce((s,t)=>s+t.estimatedLearningMinutes,0),estimatedAgentMinutes:pathTasks.reduce((s,t)=>s+t.estimatedAgentMinutes,0),score:pathScore,scoreBreakdown:b,strengths,weaknesses,viable,rejectionReasons:missing.map((id)=>tr(input.language,`Missing required ${APPS[id]}`,`Thiếu ${APPS[id]} bắt buộc`))};
+ return{id:seed.id,title:seed.apps.length?seed.apps.map((id)=>APPS[id]).join(' → '):tr(input.language,'Clarify project requirements','Làm rõ yêu cầu dự án'),strategyLabel:tr(input.language,...(STRATEGIES[seed.id]??['Standard execution','Triển khai tiêu chuẩn'])),softwareIds:seed.apps,softwareLabels:seed.apps.map((id)=>APPS[id]),tasks:pathTasks,estimatedHumanMinutes:pathTasks.reduce((s,t)=>s+t.estimatedHumanMinutes,0),estimatedLearningMinutes:pathTasks.reduce((s,t)=>s+t.estimatedLearningMinutes,0),estimatedAgentMinutes:pathTasks.reduce((s,t)=>s+t.estimatedAgentMinutes,0),score:pathScore,scoreBreakdown:b,strengths,weaknesses,viable,rejectionReasons:missing.map((id)=>tr(input.language,`Missing required ${APPS[id]}`,`Thiếu ${APPS[id]} bắt buộc`))};
 }
 export function solveProject(input:ProjectInput,understanding?:ProjectAnalysisOutcome):Solution{
  const explicitText=`${input.brief} ${input.skills} ${input.constraints}`.toLowerCase();

@@ -158,6 +158,11 @@ test('Three.js benchmark keeps agent delegation and human review', async () => {
   assert(!solution.knownSoftware.includes('Three.js'));
   assert(solution.recommended.estimatedAgentMinutes > 0);
   assert(solution.recommended.tasks.some((task) => task.method === 'human_review'));
+  const sameStackAlternative = solution.alternatives.find((path) => path.softwareIds.join('|') === solution.recommended.softwareIds.join('|'));
+  assert(sameStackAlternative);
+  assert.notEqual(sameStackAlternative.strategyLabel, solution.recommended.strategyLabel);
+  assert.match(solution.recommended.strategyLabel, /Agent-assisted/);
+  assert.match(sameStackAlternative.strategyLabel, /Learn-first/);
 });
 
 test('messy Y2K brief resolves concepts before deterministic ranking', async () => {
@@ -225,6 +230,10 @@ test('creative-coding lyrics website resolves to a web path instead of Blender',
   assert(delegatedTasks.every((task) => task.agentDelegation?.prompt.includes('REQUIRED TECHNIQUE PLAN')));
   assert(delegatedTasks.every((task) => task.agentDelegation?.prompt.includes('IMPLEMENTATION SEQUENCE')));
   assert(delegatedTasks.every((task) => task.agentDelegation?.prompt.includes('FAILURE MODES TO PREVENT')));
+  assert(delegatedTasks.every((task) => task.agentDelegation?.summary.approach.length === task.agentDelegation.techniquePlan.length));
+  assert(delegatedTasks.every((task) => (task.agentDelegation?.summary.keyActions.length ?? 0) > 1));
+  assert(delegatedTasks.every((task) => (task.agentDelegation?.summary.outputs.length ?? 0) > 1));
+  assert(delegatedTasks.every((task) => (task.agentDelegation?.summary.checks.length ?? 0) > 1));
   const scaffold = delegatedTasks.find((task) => task.id === 'scaffold');
   const typography = delegatedTasks.find((task) => task.id === 'typography');
   assert(scaffold?.agentDelegation?.techniquePlan.some((plan) => plan.label === 'Semantic HTML structure'));
