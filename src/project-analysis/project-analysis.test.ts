@@ -208,6 +208,13 @@ test('creative-coding lyrics website resolves to a web path instead of Blender',
   assert.deepEqual(solution.recommended.softwareIds, ['illustrator', 'p5js', 'vercel']);
   assert(solution.recommended.tasks.some((task) => task.recommendedSoftwareId === 'p5js'));
   assert(solution.recommended.tasks.some((task) => task.method === 'delegate_to_agent'));
+  const delegatedTasks = solution.recommended.tasks.filter((task) => task.method === 'delegate_to_agent');
+  assert(delegatedTasks.every((task) => task.agentDelegation));
+  assert(delegatedTasks.every((task) => task.agentDelegation?.compatibleAgents.join(' ') === 'Claude Codex Kimi'));
+  assert(delegatedTasks.every((task) => task.agentDelegation?.prompt.includes(creativeWebInput.brief)));
+  assert(delegatedTasks.every((task) => task.agentDelegation?.prompt.includes(task.objective)));
+  assert(delegatedTasks.every((task) => task.agentDelegation?.expectedOutputs.length === 4));
+  assert(solution.recommended.tasks.filter((task) => task.method !== 'delegate_to_agent').every((task) => task.agentDelegation === null));
   assert(everyCandidate.every((path) => !path.softwareIds.includes('blender')));
   assert(everyCandidate.every((path) => !path.softwareIds.includes('maya')));
 });
