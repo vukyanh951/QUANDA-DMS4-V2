@@ -111,6 +111,22 @@ function groundedTechniqueIds(kind:string,task:TaskSeed):string[]{
  return unique([...task.tech,...phaseIds]);
 }
 
+function taskBoundary(kind:string,task:TaskSeed,lang:Language):{responsibility:string;nonGoals:string[]}{
+ const boundaries:Record<string,{en:[string,string[]];vi:[string,string[]]}>= {
+  'installation.bridge':{en:['Own the normalized tracking packet and the reliable transport boundary into TouchDesigner.',['Do not redesign the visual scene or gesture mapping.','Do not hard-code venue calibration or final projection behavior.']],vi:['Phụ trách packet tracking chuẩn hóa và ranh giới truyền dữ liệu tin cậy vào TouchDesigner.',['Không redesign cảnh hình ảnh hoặc ánh xạ cử chỉ.','Không hard-code hiệu chỉnh địa điểm hoặc hành vi trình chiếu cuối.']]},
+  'creative-web.scaffold':{en:["Own the brief's structured content model, semantic page shell, responsive layout, controls, and one stable DOM-to-canvas state boundary.",['Do not design the final motion grammar or per-section animation.','Do not deploy or rewrite the approved art direction.']],vi:['Phụ trách mô hình nội dung có cấu trúc từ brief, khung trang ngữ nghĩa, layout responsive, control và một ranh giới trạng thái DOM-to-canvas ổn định.',['Không thiết kế motion grammar cuối hoặc animation từng section.','Không deploy hoặc viết lại art direction đã duyệt.']]},
+  'creative-web.typography':{en:['Consume the approved scaffold and own only the reversible motion grammar, state mappings, and reduced-motion equivalents for the requested content.',['Do not rebuild the page shell, content schema, or renderer lifecycle.','Do not replace approved copy, assets, or art direction.']],vi:['Dùng scaffold đã duyệt và chỉ phụ trách motion grammar đảo ngược được, ánh xạ trạng thái và phương án giảm chuyển động cho nội dung yêu cầu.',['Không dựng lại page shell, schema nội dung hoặc lifecycle renderer.','Không thay copy, asset hoặc art direction đã duyệt.']]},
+  'threejs.scaffold':{en:["Own the portfolio's semantic content model, responsive shell, Three.js renderer lifecycle, camera boundary, resize behavior, and teardown.",['Do not implement the signature pointer or scroll behavior.','Do not invent portfolio projects, copy, or final art direction.']],vi:['Phụ trách mô hình nội dung portfolio có ngữ nghĩa, shell responsive, lifecycle renderer Three.js, ranh giới camera, resize và teardown.',['Không triển khai hành vi pointer hoặc scroll đặc trưng.','Không tự tạo dự án portfolio, copy hoặc art direction cuối.']]},
+  'threejs.interaction':{en:['Consume the approved scene shell and own the normalized pointer state, scroll state, bounded mappings, damping, and accessible fallback for the signature interaction.',['Do not rebuild semantic content, routing, renderer setup, or disposal.','Do not add unrelated interactions or replace the approved scene composition.']],vi:['Dùng scene shell đã duyệt và phụ trách trạng thái pointer chuẩn hóa, trạng thái scroll, ánh xạ giới hạn, damping và fallback dễ tiếp cận cho tương tác đặc trưng.',['Không dựng lại nội dung ngữ nghĩa, routing, thiết lập renderer hoặc disposal.','Không thêm tương tác không liên quan hoặc thay bố cục scene đã duyệt.']]},
+  'ai-chatbot.shell':{en:['Own the typed conversation UI, scenario controls, transcript state, feedback surface, and server-safe provider boundary.',['Do not design the model prompt, tutoring policy, or moderation rules.','Do not place provider credentials or SDKs in client code.']],vi:['Phụ trách UI hội thoại có type, control kịch bản, trạng thái transcript, bề mặt feedback và ranh giới provider an toàn phía server.',['Không thiết kế model prompt, policy dạy học hoặc quy tắc moderation.','Không đặt credential hoặc SDK provider trong client code.']]},
+  'ai-chatbot.conversation':{en:['Consume the application shell and own the bounded model adapter, scenario role contract, multilingual tutoring response, streaming states, and provider-independent response schema.',['Do not rebuild the chat UI or introduce real-person matching.','Do not own product-wide age, privacy, or abuse policy.']],vi:['Dùng application shell và phụ trách adapter model có giới hạn, hợp đồng vai trò kịch bản, phản hồi dạy học đa ngôn ngữ, trạng thái streaming và schema phản hồi độc lập provider.',['Không dựng lại UI chat hoặc thêm ghép đôi người thật.','Không phụ trách policy độ tuổi, riêng tư hoặc chống lạm dụng toàn sản phẩm.']]},
+  'ai-chatbot.safety':{en:['Consume the conversation contract and own deterministic request limits, privacy handling, refusal behavior, and safety evaluation cases.',['Do not rewrite the learning experience or model provider adapter.','Do not log complete private conversations or expose provider errors.']],vi:['Dùng contract hội thoại và phụ trách giới hạn request tất định, xử lý riêng tư, hành vi từ chối và case đánh giá an toàn.',['Không viết lại trải nghiệm học tập hoặc adapter model provider.','Không log toàn bộ hội thoại riêng tư hoặc lộ lỗi provider.']]},
+  'poster.audio':{en:['Own the documented audio-feature extraction and bounded mapping from named frequency bands to the approved visual parameters.',['Do not redesign the approved composition or introduce unrelated visual effects.','Do not own final aesthetic tuning or export approval.']],vi:['Phụ trách trích xuất feature audio có tài liệu và ánh xạ giới hạn từ dải tần có tên tới tham số hình ảnh đã duyệt.',['Không redesign bố cục đã duyệt hoặc thêm hiệu ứng hình ảnh không liên quan.','Không phụ trách tinh chỉnh thẩm mỹ cuối hoặc duyệt export.']]},
+ };
+ const boundary=boundaries[`${kind}.${task.id}`]?.[lang];
+ return boundary?{responsibility:boundary[0],nonGoals:boundary[1]}:{responsibility:tr(lang,`Own only this step's stated objective and its verifiable deliverables.`,`Chỉ phụ trách mục tiêu đã nêu của bước này và đầu ra có thể kiểm chứng.`),nonGoals:[tr(lang,'Do not redesign approved outputs from prerequisite steps.','Không redesign output đã duyệt từ bước phụ thuộc.'),tr(lang,'Do not implement later pipeline steps early.','Không triển khai sớm các bước sau trong pipeline.')]};
+}
+
 function compatibleAgentsFor(decision:ReturnType<typeof selectAIModel>):string[]{
  const named=decision.candidates.filter((candidate)=>candidate.accessMatched).flatMap((candidate)=>
   candidate.modelId.includes('.openai.')?['Codex']:
@@ -118,6 +134,12 @@ function compatibleAgentsFor(decision:ReturnType<typeof selectAIModel>):string[]
   candidate.modelId.includes('.moonshot.')?['Kimi']:[],
  );
  return unique(named.length?named:['Claude','Codex','Kimi']);
+}
+
+export function delegationActionOverlap(left:PipelineTask,right:PipelineTask):number{
+ const signature=(task:PipelineTask)=>new Set([task.responsibility,...task.nonGoals,...(task.agentDelegation?.summary.keyActions??[]),...(task.agentDelegation?.summary.outputs??[])].join(' ').toLowerCase().match(/[a-z0-9-]{3,}/g)??[]);
+ const a=signature(left),b=signature(right),intersection=[...a].filter((token)=>b.has(token)).length,union=new Set([...a,...b]).size;
+ return union?intersection/union:0;
 }
 
 function delegationGuide(task:PipelineTask,input:ProjectInput):AgentDelegationGuide{
@@ -133,8 +155,8 @@ function delegationGuide(task:PipelineTask,input:ProjectInput):AgentDelegationGu
  const baseContextChecklist=isChatbotTask?(input.language==='vi'?
   ['Output đã duyệt từ các bước phụ thuộc','Repository, file và test hiện có','Ngôn ngữ mục tiêu, kịch bản hội thoại, chính sách độ tuổi và nội dung đã duyệt','Ranh giới client/server, tên biến môi trường như GEMINI_API_KEY khi dùng và giới hạn quota; không cung cấp giá trị secret']:
   ['Approved outputs from prerequisite steps','Existing repository, files, and tests','Target languages, conversation scenarios, and approved age/content policy','Client/server boundary, required environment-variable names such as GEMINI_API_KEY when used, and quota limits; never provide secret values']):(input.language==='vi'?
-  ['Output đã duyệt từ các bước phụ thuộc','Repository, file và asset hiện có','Lời bài hát, audio được phép sử dụng và art direction đã duyệt','Runtime mục tiêu, deadline và mọi ràng buộc']:
-  ['Approved outputs from prerequisite steps','Existing repository, files, and assets','Licensed lyric/audio content and approved art direction','Target runtime, deadline, and every stated constraint']);
+  ['Output đã duyệt từ các bước phụ thuộc','Repository, file và asset hiện có','Nội dung, copy, media, dữ liệu và art direction được brief duyệt rõ ràng','Runtime mục tiêu, deadline và mọi ràng buộc']:
+  ['Approved outputs from prerequisite steps','Existing repository, files, and assets',"Project content, copy, media, data, and creative direction explicitly approved by the brief",'Target runtime, deadline, and every stated constraint']);
  const contextChecklist=visualContext?[...baseContextChecklist,visualContext]:baseContextChecklist;
  const expectedOutputs=unique([...details.artifacts,tr(input.language,'A change log naming every file or asset changed','Nhật ký thay đổi nêu rõ file hoặc asset đã sửa'),tr(input.language,'Test, build, and visual-validation evidence','Bằng chứng test, build và kiểm tra trực quan'),tr(input.language,'Remaining assumptions, risks, and human decisions','Giả định, rủi ro và quyết định còn cần con người')]);
  const reviewChecklist=unique([...details.acceptanceChecks,tr(input.language,'The result stays in scope without redesigning unrelated work','Kết quả đúng phạm vi và không redesign phần không liên quan'),tr(input.language,'The user can understand, edit, and continue the work','Người dùng có thể hiểu, chỉnh sửa và tiếp tục công việc')]);
@@ -192,6 +214,11 @@ Mục tiêu: ${task.objective}
 Công cụ chính: ${task.softwareLabel}
 Bước phụ thuộc cần hoàn tất trước: ${dependencyText}
 
+RANH GIỚI TRÁCH NHIỆM
+Phụ trách: ${task.responsibility}
+Không làm trong bước này:
+${task.nonGoals.map((item,index)=>`${index+1}. ${item}`).join('\n')}
+
 TUYẾN AI ĐỀ XUẤT
 ${aiRoute?`${aiRoute.label} qua ${aiRoute.accessRoute}. Lý do: ${aiRoute.reasons.slice(0,2).join(' ')} Điểm mạnh phù hợp: ${aiRoute.strongFor.slice(0,2).join('; ')}. Cần lưu ý: ${aiRoute.watchFor[0]??'kiểm tra giới hạn provider hiện tại'}.`:`Chưa xác nhận quyền truy cập implementation agent nên không tự động chọn model. Các tuyến để so sánh:\n${candidateComparison}`}
 Ranh giới: ${productionModelBoundary}
@@ -240,6 +267,11 @@ Objective: ${task.objective}
 Primary tool: ${task.softwareLabel}
 Prerequisite task outputs required first: ${dependencyText}
 
+RESPONSIBILITY BOUNDARY
+Own: ${task.responsibility}
+Do not do in this step:
+${task.nonGoals.map((item,index)=>`${index+1}. ${item}`).join('\n')}
+
 RECOMMENDED AI ROUTE
 ${aiRoute?`${aiRoute.label} via ${aiRoute.accessRoute}. Why: ${aiRoute.reasons.slice(0,2).join(' ')} Relevant strengths: ${aiRoute.strongFor.slice(0,2).join('; ')}. Watch for: ${aiRoute.watchFor[0]??'current provider limits'}.`:`Implementation-agent access is not confirmed, so no model is auto-selected. Compare these viable routes:\n${candidateComparison}`}
 Boundary: ${productionModelBoundary}
@@ -279,15 +311,22 @@ Start by inspecting the prerequisite outputs, repository, and supplied assets. S
 
 function tasks(kind:string,seed:Seed,lang:Language,known:string[],input:ProjectInput,requestedTechniques:string[]):PipelineTask[]{
  const seeds=taskSeeds(kind,seed,known,requestedTechniques);
- return seeds.map((t,index)=>{
+ const built=seeds.map((t,index)=>{
+  const boundary=taskBoundary(kind,t,lang);
   const techniqueIds=groundedTechniqueIds(kind,t);
   const plans=resolveTechniquePlans(techniqueIds,t.app,lang);
   const techniqueDetails=flattenTechniquePlans(plans);
   const fallbackDone=[tr(lang,'The required behavior works.','Hành vi bắt buộc hoạt động.'),tr(lang,'The output can be reviewed or exported.','Đầu ra có thể duyệt hoặc xuất.')];
   const playbookIds=plans.map((plan)=>plan.techniqueId);
-  const task:PipelineTask={id:t.id,title:tr(lang,...t.title),objective:tr(lang,...t.objective),techniqueIds,knowledgeGrounding:{source:'knowledge/quanda.skills',status:playbookIds.length===techniqueIds.length?'grounded':'partial',conceptIds:techniqueIds,playbookIds},prerequisiteTaskIds:t.prerequisites??(index?[seeds[index-1].id]:[]),recommendedSoftwareId:t.app,softwareLabel:t.app?APPS[t.app]:tr(lang,'Software-agnostic','Không phụ thuộc phần mềm'),softwareAgnostic:t.app===null,method:t.method,methodLabel:methodLabel(lang,t.method),resourceIds:(t.method==='read_documentation'||t.method==='follow_tutorial')&&t.app&&official[t.app]?[official[t.app]]:[],estimatedHumanMinutes:t.human,estimatedLearningMinutes:t.learn,estimatedAgentMinutes:t.agent,whyIncluded:tr(lang,...t.why),definitionOfDone:techniqueDetails.acceptanceChecks.length?techniqueDetails.acceptanceChecks:fallbackDone,agentDelegation:null};
+  const task:PipelineTask={id:t.id,title:tr(lang,...t.title),objective:tr(lang,...t.objective),responsibility:boundary.responsibility,nonGoals:boundary.nonGoals,techniqueIds,knowledgeGrounding:{source:'knowledge/quanda.skills',status:playbookIds.length===techniqueIds.length?'grounded':'partial',conceptIds:techniqueIds,playbookIds},prerequisiteTaskIds:t.prerequisites??(index?[seeds[index-1].id]:[]),recommendedSoftwareId:t.app,softwareLabel:t.app?APPS[t.app]:tr(lang,'Software-agnostic','Không phụ thuộc phần mềm'),softwareAgnostic:t.app===null,method:t.method,methodLabel:methodLabel(lang,t.method),resourceIds:(t.method==='read_documentation'||t.method==='follow_tutorial')&&t.app&&official[t.app]?[official[t.app]]:[],estimatedHumanMinutes:t.human,estimatedLearningMinutes:t.learn,estimatedAgentMinutes:t.agent,whyIncluded:tr(lang,...t.why),definitionOfDone:techniqueDetails.acceptanceChecks.length?techniqueDetails.acceptanceChecks:fallbackDone,agentDelegation:null};
   return{...task,agentDelegation:t.method==='delegate_to_agent'?delegationGuide(task,input):null};
  });
+ const delegated=built.filter((task)=>task.agentDelegation);
+ for(let index=1;index<delegated.length;index++){
+  const overlap=delegationActionOverlap(delegated[index-1],delegated[index]);
+  if(overlap>=.72)throw new Error(`Delegation knowledge is insufficiently distinct for ${delegated[index-1].id} and ${delegated[index].id}.`);
+ }
+ return built;
 }
 function score(seed:Seed,input:ProjectInput,known:string[],required:string[],capacity:number,kind:string,requestedTechniques:string[]):CandidatePath{
  const missing=required.filter((id)=>!seed.apps.includes(id)),viable=!missing.length,knownCount=seed.apps.filter((id)=>known.includes(id)).length,newApps=seed.apps.length-knownCount,learn=Math.max(0,seed.learning-knownCount*20),work=seed.human+learn,resourceMatches=seed.apps.filter((id)=>official[id]).length;
@@ -326,5 +365,5 @@ export function solveProject(input:ProjectInput,understanding?:ProjectAnalysisOu
  const deadline=input.deadline?new Date(`${input.deadline}T23:59:59`):new Date(Date.now()+7*86400000),days=Math.max(1,Math.ceil((deadline.getTime()-Date.now())/86400000)),capacity=Math.round(days*Math.max(.5,input.hoursPerDay)*60);
  const requestedTechniques=understanding?.resolution.techniqueIds??[];
  const all=seeds(kind).map((seed)=>score(seed,input,known,required,capacity,kind,requestedTechniques)),viable=all.filter((p)=>p.viable).sort((a,b)=>b.score-a.score),recommended=viable[0]??all.sort((a,b)=>b.score-a.score)[0],rejected=all.filter((p)=>!p.viable);
- return{destination:understanding?.analysis.destination??input.brief.trim(),detectedKind:kind,capacityMinutes:capacity,daysAvailable:days,requirements:required.map((id)=>APPS[id]),knownSoftware:known.map((id)=>APPS[id]),recommended,alternatives:viable.slice(1),rejected,detours:detourDecisions(rejected,recommended,input.language),solverVersion:'mvp-rules-1.7.0',scoringVersion:'deterministic-1.0.0'};
+ return{destination:understanding?.analysis.destination??input.brief.trim(),detectedKind:kind,capacityMinutes:capacity,daysAvailable:days,requirements:required.map((id)=>APPS[id]),knownSoftware:known.map((id)=>APPS[id]),recommended,alternatives:viable.slice(1),rejected,detours:detourDecisions(rejected,recommended,input.language),solverVersion:'mvp-rules-1.7.1',scoringVersion:'deterministic-1.0.0'};
 }

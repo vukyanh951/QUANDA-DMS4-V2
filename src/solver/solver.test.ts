@@ -1,4 +1,4 @@
-import assert from 'node:assert/strict';import test from 'node:test';import {solveProject} from './solve';
+import assert from 'node:assert/strict';import test from 'node:test';import playbookData from '@/knowledge/technique-playbooks.json';import {delegationActionOverlap,solveProject} from './solve';
 const deadline=new Date(Date.now()+7*86400000).toISOString().slice(0,10);
 test('keeps mandatory TouchDesigner',()=>{const s=solveProject({brief:'TouchDesigner is mandatory. Hand tracking controls a projected flower.',deadline,hoursPerDay:2,skills:'Blender, TouchDesigner, DaVinci Resolve',constraints:'Must use TouchDesigner',language:'en'});assert(s.recommended.softwareIds.includes('touchdesigner'));assert(s.alternatives.every((p)=>p.softwareIds.includes('touchdesigner')));assert(s.rejected.length>0)});
 test('prefers familiar Blender',()=>{const s=solveProject({brief:'Cel-shaded product animation',deadline,hoursPerDay:3,skills:'Blender modelling materials lighting keyframes',constraints:'Do not introduce another 3D package',language:'en'});assert.equal(s.recommended.softwareIds[0],'blender');assert(!s.recommended.softwareIds.includes('maya'))});
@@ -76,4 +76,55 @@ test('creative lyric route has distinct grounded phases and no invented agent ac
  assert(delegated.every((task)=>(task.agentDelegation?.aiModelDecision.candidates.length??0)>=3));
  assert(delegated.every((task)=>task.agentDelegation?.prompt.includes('REQUIRED QUANDA KNOWLEDGE SOURCES')));
  assert.notDeepEqual(delegated[0]?.techniqueIds,delegated[1]?.techniqueIds);
+});
+test('shared web playbooks remain project-neutral',()=>{
+ const sharedIds=new Set([
+  'web-and-creative-coding.markup-language.html',
+  'web-and-creative-coding.styling-language.css',
+  'web-and-creative-coding.rendering-technology.dom',
+  'web-and-creative-coding.library.p5-js',
+  'web-and-creative-coding.web-standard.accessibility-aria',
+  'ui-ux-interaction.accessibility-pattern.reduced-motion',
+ ]);
+ const shared=playbookData.playbooks.filter((playbook)=>sharedIds.has(playbook.techniqueId));
+ assert.equal(shared.length,sharedIds.size);
+ for(const playbook of shared){
+  const text=JSON.stringify(playbook).toLowerCase();
+  assert.doesNotMatch(text,/\b(lyric|lyrics|verse|chorus|song|portfolio|dating|flower)\b/,playbook.techniqueId);
+ }
+});
+test('Three.js task briefs are project-correct and operationally distinct',()=>{
+ const solution=solveProject({
+  brief:'Build an interactive Three.js portfolio with pointer and scroll motion.',
+  deadline,
+  hoursPerDay:3,
+  skills:'HTML CSS basics; Codex available',
+  constraints:'Must deploy to Vercel.',
+  language:'en',
+ });
+ const scaffold=solution.recommended.tasks.find((task)=>task.id==='scaffold');
+ const interaction=solution.recommended.tasks.find((task)=>task.id==='interaction');
+ assert(scaffold?.agentDelegation&&interaction?.agentDelegation);
+ assert.match(scaffold.agentDelegation.prompt,/RESPONSIBILITY BOUNDARY/);
+ assert.match(scaffold.responsibility,/renderer lifecycle/);
+ assert.match(interaction.responsibility,/normalized pointer state/);
+ assert(scaffold.nonGoals.some((item)=>item.includes('signature pointer')));
+ assert(interaction.nonGoals.some((item)=>item.includes('renderer setup')));
+ assert.doesNotMatch(scaffold.agentDelegation.prompt,/\b(lyric|lyrics|verse|chorus|song|dating|flower)\b/i);
+ assert.doesNotMatch(interaction.agentDelegation.prompt,/\b(lyric|lyrics|verse|chorus|song|dating|flower)\b/i);
+ assert(delegationActionOverlap(scaffold,interaction)<.35);
+});
+test('delegated prompts do not inherit unrelated project subjects',()=>{
+ const cases=[
+  {brief:'Dating chatbot for language practice',skills:'none',constraints:'Free to build',forbidden:/\b(lyric|lyrics|portfolio|flower|bauhaus)\b/i},
+  {brief:'Projected installation where hand tracking controls flowers',skills:'Blender basics',constraints:'TouchDesigner required',forbidden:/\b(lyric|lyrics|portfolio|dating|bauhaus)\b/i},
+  {brief:'Bauhaus poster reacting to music',skills:'Illustrator advanced',constraints:'Free tools',forbidden:/\b(lyric|lyrics|portfolio|dating|flower)\b/i},
+ ];
+ for(const item of cases){
+  const solution=solveProject({...item,deadline,hoursPerDay:3,language:'en'});
+  for(const task of solution.recommended.tasks.filter((candidate)=>candidate.agentDelegation)){
+   assert.doesNotMatch(task.agentDelegation?.prompt??'',item.forbidden,`${item.brief}: ${task.id}`);
+   assert.match(task.agentDelegation?.prompt??'',/RESPONSIBILITY BOUNDARY/);
+  }
+ }
 });
