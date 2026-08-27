@@ -97,6 +97,21 @@ test('existing Codex access reduces switching cost and favors the OpenAI route',
   assert(openAI.breakdown.switching > claude.breakdown.switching);
 });
 
+test('implementation-agent routing compares models without inventing access', () => {
+  const decision = selectAIModel({
+    executionMethod: 'delegate_to_agent',
+    requiredCapabilities: ['agentic-coding', 'repository-scale-coding'],
+    userAccess: 'Illustrator advanced; coding none',
+    constraints: 'Prefer free tools.',
+    requireKnownAccess: true,
+  });
+  assert.equal(decision.recommended, null);
+  assert(decision.candidates.length >= 3);
+  assert(decision.candidates.every((candidate) => !candidate.accessMatched));
+  assert(decision.candidates.every((candidate) => candidate.strongFor.length > 0 && candidate.watchFor.length > 0));
+  assert(decision.uncertainties.some((uncertainty) => uncertainty.includes('access')));
+});
+
 test('non-AI execution remains a first-class deterministic choice', () => {
   const decision = selectAIModel({ executionMethod: 'deterministic_implementation' });
   assert.equal(decision.aiNeeded, false);

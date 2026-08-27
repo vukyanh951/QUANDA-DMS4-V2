@@ -122,6 +122,10 @@ function candidateFor(model: AIModelRecord, input: AIModelSelectionInput): AIMod
     accessRoute: matchedAccess
       ? model.accessModes.find((route) => accessText.includes(normalize(route))) ?? model.accessModes[0] ?? 'Access route not recorded'
       : model.accessModes[0] ?? 'Access route not recorded',
+    accessMatched: matchedAccess,
+    roleSummary: model.roles,
+    strongFor: model.strongFor,
+    watchFor: model.watchFor,
     freshnessStatus: model.currentVerification.status,
   };
 }
@@ -139,7 +143,7 @@ export function selectAIModel(input: AIModelSelectionInput): AIModelSelectionDec
       rejected: [],
       uncertainties: [],
       nonAIReason: `The selected execution method (${input.executionMethod}) does not require an AI model.`,
-      selectorVersion: 'deterministic-ai-selector-1.0.0',
+      selectorVersion: 'deterministic-ai-selector-1.1.0',
     };
   }
 
@@ -154,9 +158,12 @@ export function selectAIModel(input: AIModelSelectionInput): AIModelSelectionDec
   const candidates = evaluated.filter((candidate) => candidate.viable).sort((left, right) => right.score - left.score || left.modelId.localeCompare(right.modelId));
   const rejected = evaluated.filter((candidate) => !candidate.viable).sort((left, right) => left.modelId.localeCompare(right.modelId));
   const localRequired = hardFilters.includes('Local deployment required');
+  const knownAccessCandidates = candidates.filter((candidate) => candidate.accessMatched);
+  const accessRequiredButUnknown = input.requireKnownAccess === true && knownAccessCandidates.length === 0;
   const uncertainties = unique([
     'Catalog access, lifecycle, context, and pricing facts are a 2026B snapshot; verify current provider documentation before deployment.',
     ...(localRequired && !input.hardware?.trim() ? ['Local hardware was not supplied; model size, quantization, RAM, and VRAM fit remain unverified.'] : []),
+    ...(accessRequiredButUnknown ? ['No implementation-agent access was stated. Compare the viable routes, but do not present a model as selected until access is confirmed.'] : []),
     ...(candidates.length === 0 ? ['No catalog model satisfies every hard filter. Keep the execution method unresolved until constraints change or evidence is updated.'] : []),
   ]);
 
@@ -165,11 +172,11 @@ export function selectAIModel(input: AIModelSelectionInput): AIModelSelectionDec
     executionMethod: input.executionMethod,
     requestedCapabilities,
     hardFilters,
-    recommended: candidates[0] ?? null,
+    recommended: accessRequiredButUnknown ? null : (knownAccessCandidates[0] ?? candidates[0] ?? null),
     candidates,
     rejected,
     uncertainties,
     nonAIReason: null,
-    selectorVersion: 'deterministic-ai-selector-1.0.0',
+    selectorVersion: 'deterministic-ai-selector-1.1.0',
   };
 }

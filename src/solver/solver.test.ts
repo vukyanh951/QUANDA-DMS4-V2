@@ -36,3 +36,44 @@ test('every current delegated route has an actionable playbook',()=>{
  assert(delegated.every((task)=>(task.agentDelegation?.reviewChecklist.length??0)>2));
  assert(delegated.every((task)=>task.agentDelegation?.prompt.includes('FAILURE MODES TO PREVENT')));
 });
+test('every recommended step is grounded across supported request families',()=>{
+ const inputs=[
+  {brief:'Projected installation where hand tracking controls flowers',skills:'Blender basics',constraints:'TouchDesigner required'},
+  {brief:'Cel-shaded product animation',skills:'Blender advanced',constraints:'No new 3D software'},
+  {brief:'Lyrics website with creative scrolling typography',skills:'Illustrator advanced; coding none',constraints:'Prefer free tools'},
+  {brief:'Interactive Three.js portfolio',skills:'HTML CSS basics; Codex available',constraints:'Deploy to Vercel'},
+  {brief:'Dating chatbot for language practice',skills:'none',constraints:'Free to build'},
+  {brief:'Bauhaus poster reacting to music',skills:'Illustrator advanced',constraints:'Free tools'},
+  {brief:'Procedural vegetation with Geometry Nodes',skills:'Blender intermediate',constraints:''},
+  {brief:'Something meaningful for a small community event',skills:'',constraints:''},
+ ];
+ for(const input of inputs){
+  const solution=solveProject({...input,deadline,hoursPerDay:3,language:'en'});
+  assert(solution.recommended.tasks.length>0,input.brief);
+  assert(solution.recommended.tasks.every((task)=>task.knowledgeGrounding.source==='knowledge/quanda.skills'),input.brief);
+  assert(solution.recommended.tasks.every((task)=>task.knowledgeGrounding.status==='grounded'),input.brief);
+  assert(solution.recommended.tasks.every((task)=>task.knowledgeGrounding.playbookIds.length>0),input.brief);
+  assert(solution.recommended.tasks.every((task)=>task.definitionOfDone.length>2),input.brief);
+ }
+});
+test('creative lyric route has distinct grounded phases and no invented agent access',()=>{
+ const solution=solveProject({
+  brief:'I know Illustrator but have never coded. I want a website that displays song lyrics with creative web scrolling animations and interactive visuals.',
+  deadline,
+  hoursPerDay:2,
+  skills:'Illustrator advanced; coding none',
+  constraints:'Prefer free tools.',
+  language:'en',
+ });
+ const tasks=solution.recommended.tasks;
+ assert.deepEqual(tasks.map((task)=>task.id),['direction','scaffold','typography','review','deploy']);
+ assert(tasks.every((task)=>task.knowledgeGrounding.status==='grounded'));
+ assert(tasks.find((task)=>task.id==='direction')?.techniqueIds.includes('graphic-design.visual-system.color-system'));
+ assert(tasks.find((task)=>task.id==='review')?.techniqueIds.includes('ui-ux-interaction.accessibility-pattern.reduced-motion'));
+ assert(tasks.find((task)=>task.id==='deploy')?.techniqueIds.includes('web-and-creative-coding.deployment-platform.vercel'));
+ const delegated=tasks.filter((task)=>task.method==='delegate_to_agent');
+ assert(delegated.every((task)=>task.agentDelegation?.aiModelDecision.recommended===null));
+ assert(delegated.every((task)=>(task.agentDelegation?.aiModelDecision.candidates.length??0)>=3));
+ assert(delegated.every((task)=>task.agentDelegation?.prompt.includes('REQUIRED QUANDA KNOWLEDGE SOURCES')));
+ assert.notDeepEqual(delegated[0]?.techniqueIds,delegated[1]?.techniqueIds);
+});

@@ -100,6 +100,26 @@ function taskSeeds(kind:string,seed:Seed,known:string[],requestedTechniques:stri
  ];
 }
 
+function groundedTechniqueIds(kind:string,task:TaskSeed):string[]{
+ const phaseIds:string[]=[];
+ if(['clarify','scope','block','direction','design'].includes(task.id))phaseIds.push('production-workflow.production-stage.brief-analysis');
+ if(['direction','design','block'].includes(task.id))phaseIds.push('graphic-design.visual-system.color-system');
+ if(task.method==='human_review'||['review','tune','finish'].includes(task.id))phaseIds.push('production-workflow.production-stage.review');
+ if(['capture','tune','finish'].includes(task.id))phaseIds.push('production-workflow.production-stage.export');
+ if(task.id==='deploy'||task.app==='vercel')phaseIds.push('project-requirements.assessment-criterion.testing','web-and-creative-coding.deployment-platform.vercel');
+ if(task.id==='review'&&(kind==='creative-web'||kind==='threejs'||kind==='ai-chatbot'))phaseIds.push('ui-ux-interaction.accessibility-pattern.reduced-motion');
+ return unique([...task.tech,...phaseIds]);
+}
+
+function compatibleAgentsFor(decision:ReturnType<typeof selectAIModel>):string[]{
+ const named=decision.candidates.filter((candidate)=>candidate.accessMatched).flatMap((candidate)=>
+  candidate.modelId.includes('.openai.')?['Codex']:
+  candidate.modelId.includes('.anthropic.')?['Claude']:
+  candidate.modelId.includes('.moonshot.')?['Kimi']:[],
+ );
+ return unique(named.length?named:['Claude','Codex','Kimi']);
+}
+
 function delegationGuide(task:PipelineTask,input:ProjectInput):AgentDelegationGuide{
  const techniquePlan=resolveTechniquePlans(task.techniqueIds,task.recommendedSoftwareId,input.language);
  const details=flattenTechniquePlans(techniquePlan);
@@ -120,13 +140,16 @@ function delegationGuide(task:PipelineTask,input:ProjectInput):AgentDelegationGu
  const reviewChecklist=unique([...details.acceptanceChecks,tr(input.language,'The result stays in scope without redesigning unrelated work','Kết quả đúng phạm vi và không redesign phần không liên quan'),tr(input.language,'The user can understand, edit, and continue the work','Người dùng có thể hiểu, chỉnh sửa và tiếp tục công việc')]);
  const dependencyText=task.prerequisiteTaskIds.length?task.prerequisiteTaskIds.join(', '):tr(input.language,'Không có','None');
  const aiTaskText=`${task.title} ${task.objective} ${task.techniqueIds.join(' ')}`.toLowerCase();
+ const implementationApp=task.recommendedSoftwareId;
  const aiCapabilities=unique([
   'agentic-coding',
   'coding-assistance',
-  ...(has(aiTaskText,['repository','codebase','full-stack','full stack','project folder'])?['repository-scale-coding']:[]),
+  ...(['p5js','threejs','nextjs','python-opencv'].includes(implementationApp??'')||has(aiTaskText,['repository','codebase','full-stack','full stack','project folder'])?['repository-scale-coding']:[]),
   ...(has(aiTaskText,['multilingual','translation','localization'])?['multilingual-work']:[]),
-  ...(has(aiTaskText,['structured','json','schema'])?['structured-output']:[]),
-  ...(has(aiTaskText,['image analysis','screenshot analysis','pdf analysis','multimodal'])?['multimodal-analysis']:[]),
+  ...(has(aiTaskText,['structured','json','schema','server route','chatbot','contract'])?['structured-output']:[]),
+  ...(has(aiTaskText,['api','streaming','integration','tracking bridge'])?['tool-use']:[]),
+  ...(visualProfile||has(aiTaskText,['image analysis','screenshot analysis','pdf analysis','multimodal'])?['multimodal-analysis']:[]),
+  ...(task.techniqueIds.length>=6?['long-context-analysis']:[]),
  ]);
  const aiModelDecision=selectAIModel({
   executionMethod:'delegate_to_agent',
@@ -137,9 +160,16 @@ function delegationGuide(task:PipelineTask,input:ProjectInput):AgentDelegationGu
   hardware:has(`${input.skills} ${input.constraints}`.toLowerCase(),['ram','vram','gpu','apple silicon','nvidia'])?`${input.skills} ${input.constraints}`:'',
   preferredLanguage:input.language,
   taskDescription:`${task.title}. ${task.objective}`,
+  requireKnownAccess:true,
  });
  const aiRoute=aiModelDecision.recommended;
+ const compatibleAgents=compatibleAgentsFor(aiModelDecision);
+ const candidateComparison=aiModelDecision.candidates.slice(0,3).map((candidate)=>`${candidate.label}: ${candidate.strongFor.slice(0,2).join('; ')||'capability match'}; access ${candidate.accessMatched?'confirmed':'not confirmed'}; watch for ${candidate.watchFor[0]??'current provider limits'}`).join('\n');
+ const productionModelBoundary=task.recommendedSoftwareId==='gemini-api'||task.recommendedSoftwareId==='browser-llm'
+  ?tr(input.language,`${task.softwareLabel} is the product's production inference runtime. The implementation agent edits and validates the application; it is not automatically the same model as the production runtime.`,`${task.softwareLabel} là runtime suy luận của sản phẩm. Agent triển khai chỉnh sửa và kiểm tra ứng dụng; nó không tự động là cùng model với runtime sản phẩm.`)
+  :tr(input.language,'This AI route is for the implementation agent only. Do not add a production AI dependency unless the assignment explicitly requires one.','Tuyến AI này chỉ dành cho agent triển khai. Không thêm phụ thuộc AI production nếu nhiệm vụ không yêu cầu rõ.');
  const techniqueText=techniquePlan.map((plan,index)=>`${index+1}. ${plan.label}\n   ${plan.method}`).join('\n');
+ const groundingText=task.knowledgeGrounding.playbookIds.join('\n');
  const summary={
   approach:techniquePlan.map((plan)=>plan.label),
   keyActions:techniquePlan.map((plan)=>plan.implementationSteps[0]).filter(Boolean),
@@ -163,7 +193,11 @@ Công cụ chính: ${task.softwareLabel}
 Bước phụ thuộc cần hoàn tất trước: ${dependencyText}
 
 TUYẾN AI ĐỀ XUẤT
-${aiRoute?`${aiRoute.label} qua ${aiRoute.accessRoute}. Lý do: ${aiRoute.reasons.slice(0,2).join(' ')} Đây là dữ liệu snapshot; hãy kiểm tra lại tên model và quyền truy cập hiện tại trước khi dùng.`:'Chưa có model nào trong catalog đáp ứng mọi ràng buộc. Không được bỏ qua ràng buộc để ép chọn model.'}
+${aiRoute?`${aiRoute.label} qua ${aiRoute.accessRoute}. Lý do: ${aiRoute.reasons.slice(0,2).join(' ')} Điểm mạnh phù hợp: ${aiRoute.strongFor.slice(0,2).join('; ')}. Cần lưu ý: ${aiRoute.watchFor[0]??'kiểm tra giới hạn provider hiện tại'}.`:`Chưa xác nhận quyền truy cập implementation agent nên không tự động chọn model. Các tuyến để so sánh:\n${candidateComparison}`}
+Ranh giới: ${productionModelBoundary}
+
+NGUỒN KIẾN THỨC QUANDA BẮT BUỘC
+${groundingText}
 
 KẾ HOẠCH KỸ THUẬT BẮT BUỘC
 ${techniqueText}
@@ -207,7 +241,11 @@ Primary tool: ${task.softwareLabel}
 Prerequisite task outputs required first: ${dependencyText}
 
 RECOMMENDED AI ROUTE
-${aiRoute?`${aiRoute.label} via ${aiRoute.accessRoute}. Why: ${aiRoute.reasons.slice(0,2).join(' ')} This is snapshot evidence; verify the current model name and access route before use.`:'No catalog model currently satisfies every constraint. Do not bypass a constraint to force a model choice.'}
+${aiRoute?`${aiRoute.label} via ${aiRoute.accessRoute}. Why: ${aiRoute.reasons.slice(0,2).join(' ')} Relevant strengths: ${aiRoute.strongFor.slice(0,2).join('; ')}. Watch for: ${aiRoute.watchFor[0]??'current provider limits'}.`:`Implementation-agent access is not confirmed, so no model is auto-selected. Compare these viable routes:\n${candidateComparison}`}
+Boundary: ${productionModelBoundary}
+
+REQUIRED QUANDA KNOWLEDGE SOURCES
+${groundingText}
 
 REQUIRED TECHNIQUE PLAN
 ${techniqueText}
@@ -236,15 +274,18 @@ FAILURE MODES TO PREVENT
 ${details.failureModes.map((item,index)=>`${index+1}. ${item}`).join('\n')}
 
 Start by inspecting the prerequisite outputs, repository, and supplied assets. State a short plan that follows the implementation sequence above and identify only genuine blockers. Then complete the assignment, verify every acceptance criterion, and finish with a change log, validation evidence, assumptions, and remaining risks.`;
- return{compatibleAgents:['Claude','Codex','Kimi'],prompt,summary,prerequisiteTaskIds:task.prerequisiteTaskIds,techniquePlan:techniquePlan.map(({techniqueId,label,method})=>({techniqueId,label,method})),implementationSteps:details.implementationSteps,contextChecklist,expectedOutputs,reviewChecklist,failureModes:details.failureModes,aiModelDecision};
+ return{compatibleAgents,prompt,summary,prerequisiteTaskIds:task.prerequisiteTaskIds,techniquePlan:techniquePlan.map(({techniqueId,label,method})=>({techniqueId,label,method})),implementationSteps:details.implementationSteps,contextChecklist,expectedOutputs,reviewChecklist,failureModes:details.failureModes,aiModelDecision};
 }
 
 function tasks(kind:string,seed:Seed,lang:Language,known:string[],input:ProjectInput,requestedTechniques:string[]):PipelineTask[]{
  const seeds=taskSeeds(kind,seed,known,requestedTechniques);
  return seeds.map((t,index)=>{
-  const techniqueDetails=flattenTechniquePlans(resolveTechniquePlans(t.tech,t.app,lang));
+  const techniqueIds=groundedTechniqueIds(kind,t);
+  const plans=resolveTechniquePlans(techniqueIds,t.app,lang);
+  const techniqueDetails=flattenTechniquePlans(plans);
   const fallbackDone=[tr(lang,'The required behavior works.','Hành vi bắt buộc hoạt động.'),tr(lang,'The output can be reviewed or exported.','Đầu ra có thể duyệt hoặc xuất.')];
-  const task:PipelineTask={id:t.id,title:tr(lang,...t.title),objective:tr(lang,...t.objective),techniqueIds:t.tech,prerequisiteTaskIds:t.prerequisites??(index?[seeds[index-1].id]:[]),recommendedSoftwareId:t.app,softwareLabel:t.app?APPS[t.app]:tr(lang,'Software-agnostic','Không phụ thuộc phần mềm'),softwareAgnostic:t.app===null,method:t.method,methodLabel:methodLabel(lang,t.method),resourceIds:(t.method==='read_documentation'||t.method==='follow_tutorial')&&t.app&&official[t.app]?[official[t.app]]:[],estimatedHumanMinutes:t.human,estimatedLearningMinutes:t.learn,estimatedAgentMinutes:t.agent,whyIncluded:tr(lang,...t.why),definitionOfDone:techniqueDetails.acceptanceChecks.length?techniqueDetails.acceptanceChecks:fallbackDone,agentDelegation:null};
+  const playbookIds=plans.map((plan)=>plan.techniqueId);
+  const task:PipelineTask={id:t.id,title:tr(lang,...t.title),objective:tr(lang,...t.objective),techniqueIds,knowledgeGrounding:{source:'knowledge/quanda.skills',status:playbookIds.length===techniqueIds.length?'grounded':'partial',conceptIds:techniqueIds,playbookIds},prerequisiteTaskIds:t.prerequisites??(index?[seeds[index-1].id]:[]),recommendedSoftwareId:t.app,softwareLabel:t.app?APPS[t.app]:tr(lang,'Software-agnostic','Không phụ thuộc phần mềm'),softwareAgnostic:t.app===null,method:t.method,methodLabel:methodLabel(lang,t.method),resourceIds:(t.method==='read_documentation'||t.method==='follow_tutorial')&&t.app&&official[t.app]?[official[t.app]]:[],estimatedHumanMinutes:t.human,estimatedLearningMinutes:t.learn,estimatedAgentMinutes:t.agent,whyIncluded:tr(lang,...t.why),definitionOfDone:techniqueDetails.acceptanceChecks.length?techniqueDetails.acceptanceChecks:fallbackDone,agentDelegation:null};
   return{...task,agentDelegation:t.method==='delegate_to_agent'?delegationGuide(task,input):null};
  });
 }
@@ -285,5 +326,5 @@ export function solveProject(input:ProjectInput,understanding?:ProjectAnalysisOu
  const deadline=input.deadline?new Date(`${input.deadline}T23:59:59`):new Date(Date.now()+7*86400000),days=Math.max(1,Math.ceil((deadline.getTime()-Date.now())/86400000)),capacity=Math.round(days*Math.max(.5,input.hoursPerDay)*60);
  const requestedTechniques=understanding?.resolution.techniqueIds??[];
  const all=seeds(kind).map((seed)=>score(seed,input,known,required,capacity,kind,requestedTechniques)),viable=all.filter((p)=>p.viable).sort((a,b)=>b.score-a.score),recommended=viable[0]??all.sort((a,b)=>b.score-a.score)[0],rejected=all.filter((p)=>!p.viable);
- return{destination:understanding?.analysis.destination??input.brief.trim(),detectedKind:kind,capacityMinutes:capacity,daysAvailable:days,requirements:required.map((id)=>APPS[id]),knownSoftware:known.map((id)=>APPS[id]),recommended,alternatives:viable.slice(1),rejected,detours:detourDecisions(rejected,recommended,input.language),solverVersion:'mvp-rules-1.6.0',scoringVersion:'deterministic-1.0.0'};
+ return{destination:understanding?.analysis.destination??input.brief.trim(),detectedKind:kind,capacityMinutes:capacity,daysAvailable:days,requirements:required.map((id)=>APPS[id]),knownSoftware:known.map((id)=>APPS[id]),recommended,alternatives:viable.slice(1),rejected,detours:detourDecisions(rejected,recommended,input.language),solverVersion:'mvp-rules-1.7.0',scoringVersion:'deterministic-1.0.0'};
 }
