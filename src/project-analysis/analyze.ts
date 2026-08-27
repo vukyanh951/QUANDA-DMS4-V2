@@ -1,4 +1,5 @@
 import type { ProjectInput } from '@/src/solver/types';
+import { visualStyleContext } from '@/src/visual-analysis/schema';
 import { ProjectAnalysisSchema, type ProjectAnalysis, type ProjectAnalysisOutcome } from './schema';
 import { findSoftwareLabels, resolveProjectAnalysis } from './resolve';
 
@@ -10,7 +11,8 @@ const splitFacts = (value: string) => value
   .filter(Boolean);
 
 export function createFallbackProjectAnalysis(input: ProjectInput): ProjectAnalysis {
-  const combined = `${input.brief} ${input.skills} ${input.constraints}`;
+  const visualContext = input.visualStyleProfile ? visualStyleContext(input.visualStyleProfile) : [];
+  const combined = `${input.brief} ${input.skills} ${input.constraints} ${visualContext.join(' ')}`;
   const constraintFacts = splitFacts(input.constraints);
   const forbiddenConstraints = constraintFacts.filter((constraint) =>
     /\b(do not|don't|avoid|without|no\s|không|đừng)\b/i.test(constraint),
@@ -26,7 +28,9 @@ export function createFallbackProjectAnalysis(input: ProjectInput): ProjectAnaly
   return ProjectAnalysisSchema.parse({
     destination: input.brief.trim(),
     deliverables: [],
-    creativeDirection: [],
+    creativeDirection: input.visualStyleProfile
+      ? [input.visualStyleProfile.summary, ...input.visualStyleProfile.moodKeywords].slice(0, 20)
+      : [],
     mandatoryRequirements: [...new Set(explicitRequirements)],
     forbiddenConstraints,
     knownSoftware: findSoftwareLabels([input.skills]),
@@ -48,7 +52,9 @@ export function createFallbackProjectAnalysis(input: ProjectInput): ProjectAnaly
       /language practice|language learning|multilingual|translation/i.test(combined) ? 'multilingual model' : '',
       /dating chatbot|role[- ]?play|conversation scenario/i.test(combined) ? 'role prompting' : '',
       /chatbot|chat bot/i.test(combined) ? 'moderation' : '',
-    ].filter(Boolean),
+      ...(input.visualStyleProfile?.motion.suggestedBehaviors ?? []),
+      ...(input.visualStyleProfile?.designPrinciples.map((item) => item.application) ?? []),
+    ].filter(Boolean).slice(0, 20),
     highImpactUncertainties: [],
     unknownTerminology: [],
   });
@@ -59,7 +65,20 @@ export async function runProjectAnalysis(
   analyzer: ProjectAnalyzer,
 ): Promise<ProjectAnalysisOutcome> {
   try {
-    const analysis = ProjectAnalysisSchema.parse(await analyzer(input));
+    const analyzed = ProjectAnalysisSchema.parse(await analyzer(input));
+    const analysis = ProjectAnalysisSchema.parse(input.visualStyleProfile ? {
+      ...analyzed,
+      creativeDirection: [...new Set([
+        ...analyzed.creativeDirection,
+        input.visualStyleProfile.summary,
+        ...input.visualStyleProfile.moodKeywords,
+      ])].slice(0, 20),
+      likelyTechniques: [...new Set([
+        ...analyzed.likelyTechniques,
+        ...input.visualStyleProfile.motion.suggestedBehaviors,
+        ...input.visualStyleProfile.designPrinciples.map((item) => item.application),
+      ])].slice(0, 20),
+    } : analyzed);
     return { source: 'gemini', analysis, resolution: resolveProjectAnalysis(analysis) };
   } catch {
     const analysis = createFallbackProjectAnalysis(input);

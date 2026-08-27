@@ -1,0 +1,1196 @@
+{
+  "aiModelSchemaVersion": "1.0.0",
+  "source": "knowledge/quanda-ai-models.skills",
+  "sourceVersion": "1.0",
+  "snapshotLabel": "DMS4 Client Solutions — Models tab, 2026B screenshots supplied by user",
+  "freshnessStates": [
+    "verified_current",
+    "snapshot_only",
+    "possibly_stale",
+    "deprecated",
+    "unknown"
+  ],
+  "modelCount": 10,
+  "models": [
+    {
+      "id": "ai-model.openai.gpt-5-5",
+      "label": "OpenAI GPT-5.5",
+      "family": "GPT",
+      "providers": [
+        "OpenAI"
+      ],
+      "providerType": "proprietary",
+      "lifecycleStatus": null,
+      "aliases": [
+        "OpenAI GPT-5.5",
+        "GPT",
+        "OpenAI"
+      ],
+      "accessModes": [
+        "hosted API",
+        "ChatGPT ecosystem",
+        "Codex ecosystem"
+      ],
+      "licenseType": "proprietary API",
+      "licenseNotes": null,
+      "contextWindowSnapshot": [
+        "1,048,576 tokens"
+      ],
+      "maxOutputSnapshot": [
+        "up to 128,000 tokens"
+      ],
+      "roles": [
+        "frontier hosted reasoning model",
+        "senior coding collaborator",
+        "agentic coding model",
+        "long-context project reviewer",
+        "structured-output model",
+        "tool-using model"
+      ],
+      "strongFor": [
+        "complex full-stack builds requiring careful edits across multiple files",
+        "repository-scale reasoning",
+        "tool-heavy agent workflows",
+        "debugging",
+        "technical architecture",
+        "UI critique",
+        "reasoning-heavy product decisions",
+        "long-context review of project folders",
+        "briefs",
+        "user research",
+        "assessment evidence"
+      ],
+      "executionMethods": [
+        "delegate_to_agent",
+        "code_generation",
+        "code_review",
+        "repository_analysis",
+        "structured_extraction",
+        "planning",
+        "debugging"
+      ],
+      "typicalUses": [
+        "primary implementation partner in Codex or compatible coding agents",
+        "turn research or survey findings into prioritized implementation tasks",
+        "produce structured JSON, issue lists, test plans, and deployment checklists",
+        "use lower reasoning effort for routine edits and higher effort for architecture, difficult bugs, or final verification"
+      ],
+      "watchFor": [
+        "paid hosted usage",
+        "token cost",
+        "data handling",
+        "quota limits",
+        "higher pricing for unusually large prompts",
+        "capable output still requires human review and testing"
+      ],
+      "capabilities": [
+        "agentic-coding",
+        "coding-assistance",
+        "long-context-analysis",
+        "multilingual-work",
+        "multimodal-analysis",
+        "repository-scale-coding",
+        "structured-output",
+        "tool-use"
+      ],
+      "localDeployable": false,
+      "hostedAvailable": true,
+      "hardwareRequirements": [],
+      "volatility": "high",
+      "freshnessPolicy": "verify provider docs before production use",
+      "currentVerification": {
+        "status": "snapshot_only",
+        "lastVerifiedAt": null,
+        "currentStatus": null,
+        "deprecatedAliases": [],
+        "currentContextWindow": null,
+        "currentAccess": [],
+        "currentPricingTier": null
+      },
+      "provenance": {
+        "source": "DMS4 Client Solutions — Models tab",
+        "sourceTerm": "2026B",
+        "sourceSnapshot": "DMS4 Client Solutions — Models tab, 2026B screenshots supplied by user",
+        "capturedDateContext": "2026-08-26",
+        "sourceType": "course_resource_screenshot"
+      },
+      "extensions": {}
+    },
+    {
+      "id": "ai-model.anthropic.claude-opus-4-8",
+      "label": "Claude Opus 4.8",
+      "family": "Claude",
+      "providers": [
+        "Anthropic"
+      ],
+      "providerType": "proprietary",
+      "lifecycleStatus": null,
+      "aliases": [
+        "Claude Opus 4.8",
+        "Claude",
+        "Anthropic"
+      ],
+      "accessModes": [
+        "hosted API",
+        "Claude app",
+        "Claude Code",
+        "supported cloud platforms"
+      ],
+      "licenseType": "proprietary API",
+      "licenseNotes": null,
+      "contextWindowSnapshot": [
+        "up to 1,000,000 tokens on Anthropic API, Amazon Bedrock, and Google Cloud",
+        "200,000 tokens on Microsoft Foundry"
+      ],
+      "maxOutputSnapshot": [
+        "up to 128,000 tokens"
+      ],
+      "roles": [
+        "high-autonomy reasoning model",
+        "coding model",
+        "long-horizon coding assistant",
+        "technical writing model",
+        "design critique partner"
+      ],
+      "strongFor": [
+        "long coding sessions where project intent must remain stable",
+        "large codebase work",
+        "design critique",
+        "prose refinement",
+        "brief rewriting",
+        "explaining tradeoffs",
+        "long document review",
+        "repository review",
+        "turning vague requirements into implementation steps"
+      ],
+      "executionMethods": [
+        "delegate_to_agent",
+        "code_generation",
+        "code_review",
+        "document_analysis",
+        "writing_assistance",
+        "planning"
+      ],
+      "typicalUses": [
+        "Claude Code or Anthropic-compatible coding workflows",
+        "role-based team task planning from assignment context",
+        "README files",
+        "project rationale",
+        "known-issues documentation",
+        "handover notes",
+        "higher-effort reasoning for agentic coding, lower effort for routine copy or summarization"
+      ],
+      "watchFor": [
+        "model naming changes quickly",
+        "availability and context vary by provider and plan",
+        "hosted frontier model costs and rate limits",
+        "exact model name should be checked before deployment"
+      ],
+      "capabilities": [
+        "agentic-coding",
+        "coding-assistance",
+        "document-analysis",
+        "long-context-analysis",
+        "multilingual-work",
+        "multimodal-analysis",
+        "repository-scale-coding",
+        "tool-use"
+      ],
+      "localDeployable": false,
+      "hostedAvailable": true,
+      "hardwareRequirements": [],
+      "volatility": "high",
+      "freshnessPolicy": "verify Anthropic model documentation at the start of each deployment cycle",
+      "currentVerification": {
+        "status": "snapshot_only",
+        "lastVerifiedAt": null,
+        "currentStatus": null,
+        "deprecatedAliases": [],
+        "currentContextWindow": null,
+        "currentAccess": [],
+        "currentPricingTier": null
+      },
+      "provenance": {
+        "source": "DMS4 Client Solutions — Models tab",
+        "sourceTerm": "2026B",
+        "sourceSnapshot": "DMS4 Client Solutions — Models tab, 2026B screenshots supplied by user",
+        "capturedDateContext": "2026-08-26",
+        "sourceType": "course_resource_screenshot"
+      },
+      "extensions": {}
+    },
+    {
+      "id": "ai-model.google.gemini-3-1-pro-preview",
+      "label": "Gemini 3.1 Pro Preview",
+      "family": "Gemini",
+      "providers": [
+        "Google"
+      ],
+      "providerType": "proprietary",
+      "lifecycleStatus": "preview",
+      "aliases": [
+        "Gemini 3.1 Pro Preview",
+        "Gemini",
+        "Google"
+      ],
+      "accessModes": [
+        "Google AI Studio",
+        "Gemini API",
+        "Google Cloud integrations"
+      ],
+      "licenseType": "proprietary API",
+      "licenseNotes": null,
+      "contextWindowSnapshot": [
+        "1,048,576 input tokens"
+      ],
+      "maxOutputSnapshot": [
+        "up to 65,536 output tokens"
+      ],
+      "roles": [
+        "multimodal reasoning model",
+        "research model",
+        "tool-using model",
+        "structured-output model",
+        "product intelligence model"
+      ],
+      "strongFor": [
+        "multimodal analysis of images",
+        "documents",
+        "screenshots",
+        "project evidence",
+        "agentic workflows with tool use",
+        "Google AI Studio prototyping",
+        "teams already using Google Cloud, Firebase, Google Drive, or Google Docs"
+      ],
+      "executionMethods": [
+        "multimodal_analysis",
+        "document_analysis",
+        "image_analysis",
+        "structured_extraction",
+        "agent_tool_use",
+        "prototyping"
+      ],
+      "typicalUses": [
+        "inspect UI screenshots",
+        "inspect survey exports",
+        "inspect client documents",
+        "compare user feedback themes with product goals",
+        "prototype prompts in AI Studio before wiring them into an app",
+        "multimodal features such as image understanding and content analysis"
+      ],
+      "watchFor": [
+        "preview-model rate limits",
+        "changing behavior",
+        "deprecation",
+        "recommended model names may change",
+        "pin specific model versions for important submissions where possible"
+      ],
+      "capabilities": [
+        "agentic-coding",
+        "document-analysis",
+        "google-ecosystem-integration",
+        "long-context-analysis",
+        "multilingual-work",
+        "multimodal-analysis",
+        "structured-output",
+        "tool-use"
+      ],
+      "localDeployable": false,
+      "hostedAvailable": true,
+      "hardwareRequirements": [],
+      "volatility": "very_high",
+      "freshnessPolicy": "verify current Gemini model names and preview status before each production deployment",
+      "currentVerification": {
+        "status": "snapshot_only",
+        "lastVerifiedAt": null,
+        "currentStatus": null,
+        "deprecatedAliases": [],
+        "currentContextWindow": null,
+        "currentAccess": [],
+        "currentPricingTier": null
+      },
+      "provenance": {
+        "source": "DMS4 Client Solutions — Models tab",
+        "sourceTerm": "2026B",
+        "sourceSnapshot": "DMS4 Client Solutions — Models tab, 2026B screenshots supplied by user",
+        "capturedDateContext": "2026-08-26",
+        "sourceType": "course_resource_screenshot"
+      },
+      "extensions": {}
+    },
+    {
+      "id": "ai-model.xai.grok-4-3",
+      "label": "Grok 4.3",
+      "family": "Grok",
+      "providers": [
+        "xAI"
+      ],
+      "providerType": "proprietary",
+      "lifecycleStatus": null,
+      "aliases": [
+        "Grok 4.3",
+        "Grok",
+        "xAI"
+      ],
+      "accessModes": [
+        "xAI API",
+        "Grok ecosystem"
+      ],
+      "licenseType": "proprietary API",
+      "licenseNotes": null,
+      "contextWindowSnapshot": [
+        "1,000,000 tokens"
+      ],
+      "maxOutputSnapshot": [
+        "text output; verify current xAI generation limits"
+      ],
+      "roles": [
+        "hosted reasoning model",
+        "tool-calling model",
+        "long-context assistant",
+        "provider-comparison model"
+      ],
+      "strongFor": [
+        "agentic tool-calling experiments",
+        "large-context assistants",
+        "provider-comparison prototypes",
+        "testing latency, cost, answer style, and configurable reasoning"
+      ],
+      "executionMethods": [
+        "agent_tool_use",
+        "long_context_analysis",
+        "provider_comparison",
+        "prototyping"
+      ],
+      "typicalUses": [
+        "compare against OpenAI, Claude, and Gemini using the same project task",
+        "test reasoning-effort tradeoffs",
+        "integrate through provider abstractions such as OpenRouter or Vercel AI SDK",
+        "use in model-comparison evidence for documentation"
+      ],
+      "watchFor": [
+        "xAI model list changes quickly",
+        "region availability may vary",
+        "tooling and rate limits may differ from other providers",
+        "Grok-specific capabilities should not be assumed portable"
+      ],
+      "capabilities": [
+        "agentic-coding",
+        "long-context-analysis",
+        "provider-comparison",
+        "tool-use"
+      ],
+      "localDeployable": false,
+      "hostedAvailable": true,
+      "hardwareRequirements": [],
+      "volatility": "very_high",
+      "freshnessPolicy": "check xAI model documentation directly before training demos or deployment",
+      "currentVerification": {
+        "status": "snapshot_only",
+        "lastVerifiedAt": null,
+        "currentStatus": null,
+        "deprecatedAliases": [],
+        "currentContextWindow": null,
+        "currentAccess": [],
+        "currentPricingTier": null
+      },
+      "provenance": {
+        "source": "DMS4 Client Solutions — Models tab",
+        "sourceTerm": "2026B",
+        "sourceSnapshot": "DMS4 Client Solutions — Models tab, 2026B screenshots supplied by user",
+        "capturedDateContext": "2026-08-26",
+        "sourceType": "course_resource_screenshot"
+      },
+      "extensions": {}
+    },
+    {
+      "id": "ai-model.meta.llama-4",
+      "label": "Llama 4",
+      "family": "Llama",
+      "providers": [
+        "Meta"
+      ],
+      "providerType": "open_weight",
+      "lifecycleStatus": null,
+      "aliases": [
+        "Llama 4",
+        "Llama",
+        "Meta"
+      ],
+      "accessModes": [
+        "open-weight downloads",
+        "Hugging Face",
+        "llama.com",
+        "hosting partners"
+      ],
+      "licenseType": "Meta Llama license; verify exact terms for the selected variant and use case",
+      "licenseNotes": null,
+      "contextWindowSnapshot": [
+        "up to 10,000,000 tokens on Llama 4 Scout",
+        "varies by model and deployment"
+      ],
+      "maxOutputSnapshot": [
+        "depends on runtime and serving stack"
+      ],
+      "roles": [
+        "open-weight multimodal model",
+        "self-hosting candidate",
+        "long-context model",
+        "model-architecture learning reference"
+      ],
+      "strongFor": [
+        "open-weight experimentation",
+        "projects needing more deployment control than hosted APIs",
+        "long-context prototypes",
+        "multimodal text-image work",
+        "learning MoE architecture",
+        "quantization and deployment tradeoffs"
+      ],
+      "executionMethods": [
+        "local_model",
+        "self_hosted_model",
+        "hosted_open_weight",
+        "multimodal_analysis",
+        "long_context_analysis"
+      ],
+      "typicalUses": [
+        "prototype with hosted Llama first",
+        "compare hosted vs local/GPU deployment",
+        "use Scout for long-context experiments",
+        "use Maverick when stronger quality is desired",
+        "evaluate licensing, model card, and deployment requirements as feasibility evidence"
+      ],
+      "watchFor": [
+        "large variants require significant GPU, memory, and serving infrastructure",
+        "open-weight does not mean unrestricted use",
+        "benchmark and context claims depend on exact variant and deployment"
+      ],
+      "capabilities": [
+        "cost-sensitive-ai",
+        "local-self-hosted-inference",
+        "long-context-analysis",
+        "multimodal-analysis",
+        "privacy-sensitive-local-inference"
+      ],
+      "localDeployable": true,
+      "hostedAvailable": false,
+      "hardwareRequirements": [
+        "large variants require significant GPU, memory, and serving infrastructure"
+      ],
+      "volatility": "high",
+      "freshnessPolicy": "verify exact Llama variant, license, context, and hosting requirements",
+      "currentVerification": {
+        "status": "snapshot_only",
+        "lastVerifiedAt": null,
+        "currentStatus": null,
+        "deprecatedAliases": [],
+        "currentContextWindow": null,
+        "currentAccess": [],
+        "currentPricingTier": null
+      },
+      "provenance": {
+        "source": "DMS4 Client Solutions — Models tab",
+        "sourceTerm": "2026B",
+        "sourceSnapshot": "DMS4 Client Solutions — Models tab, 2026B screenshots supplied by user",
+        "capturedDateContext": "2026-08-26",
+        "sourceType": "course_resource_screenshot"
+      },
+      "extensions": {
+        "architecture_notes": [
+          "multimodal Mixture-of-Experts family",
+          "Scout and Maverick highlighted in source snapshot",
+          "Behemoth described as a larger teacher model"
+        ]
+      }
+    },
+    {
+      "id": "ai-model.deepseek.v4-r1",
+      "label": "DeepSeek V4 / R1",
+      "family": "DeepSeek",
+      "providers": [
+        "DeepSeek AI"
+      ],
+      "providerType": "mixed_open_and_hosted",
+      "lifecycleStatus": null,
+      "aliases": [
+        "DeepSeek V4 / R1",
+        "DeepSeek",
+        "DeepSeek AI"
+      ],
+      "accessModes": [
+        "DeepSeek API",
+        "chat.deepseek.com",
+        "open-source checkpoints",
+        "compatible coding-agent routes"
+      ],
+      "licenseType": "model-specific open-source license; verify current checkpoint terms",
+      "licenseNotes": null,
+      "contextWindowSnapshot": [
+        "1,000,000 tokens for DeepSeek V4 Preview family"
+      ],
+      "maxOutputSnapshot": [
+        "depends on endpoint and model"
+      ],
+      "roles": [
+        "cost-efficient reasoning model",
+        "coding model",
+        "long-context model",
+        "reasoning-first reference family"
+      ],
+      "strongFor": [
+        "cost-sensitive prototypes needing strong reasoning",
+        "coding support",
+        "long-context assistants",
+        "coding-agent experiments through compatible provider routes",
+        "teaching quality / latency / context / price tradeoffs"
+      ],
+      "executionMethods": [
+        "code_generation",
+        "delegate_to_agent",
+        "long_context_analysis",
+        "cost_optimized_inference",
+        "provider_comparison"
+      ],
+      "typicalUses": [
+        "V4-Flash for cheaper iteration",
+        "V4-Pro for harder reasoning passes",
+        "compare outputs against GPT, Claude, Gemini, and open-weight models",
+        "use context caching and provider-compatible APIs when appropriate",
+        "document where cost reduction matters and where quality still needs verification"
+      ],
+      "watchFor": [
+        "verify endpoint availability",
+        "verify data policy",
+        "verify current model names",
+        "reasoning traces are not a substitute for project evidence",
+        "open-source, hosted, preview, and API-compatible variants may differ"
+      ],
+      "capabilities": [
+        "agentic-coding",
+        "coding-assistance",
+        "cost-sensitive-ai",
+        "local-self-hosted-inference",
+        "long-context-analysis",
+        "multilingual-work",
+        "privacy-sensitive-local-inference",
+        "provider-comparison",
+        "repository-scale-coding",
+        "tool-use"
+      ],
+      "localDeployable": true,
+      "hostedAvailable": true,
+      "hardwareRequirements": [],
+      "volatility": "very_high",
+      "freshnessPolicy": "verify exact endpoint, model, license, and data-policy details before use",
+      "currentVerification": {
+        "status": "snapshot_only",
+        "lastVerifiedAt": null,
+        "currentStatus": null,
+        "deprecatedAliases": [],
+        "currentContextWindow": null,
+        "currentAccess": [],
+        "currentPricingTier": null
+      },
+      "provenance": {
+        "source": "DMS4 Client Solutions — Models tab",
+        "sourceTerm": "2026B",
+        "sourceSnapshot": "DMS4 Client Solutions — Models tab, 2026B screenshots supplied by user",
+        "capturedDateContext": "2026-08-26",
+        "sourceType": "course_resource_screenshot"
+      },
+      "extensions": {
+        "source_snapshot_variants": [
+          "V4-Pro",
+          "V4-Flash",
+          "R1 lineage"
+        ]
+      }
+    },
+    {
+      "id": "ai-model.moonshot.kimi-k2-6",
+      "label": "Kimi / Kimi K2.6",
+      "family": "Kimi",
+      "providers": [
+        "Moonshot AI"
+      ],
+      "providerType": "open_weight_and_hosted",
+      "lifecycleStatus": null,
+      "aliases": [
+        "Kimi / Kimi K2.6",
+        "Kimi",
+        "Moonshot AI"
+      ],
+      "accessModes": [
+        "open-source / open-weight checkpoints",
+        "Hugging Face",
+        "Kimi services",
+        "compatible runtimes"
+      ],
+      "licenseType": "model-specific open-source license; verify current model card",
+      "licenseNotes": null,
+      "contextWindowSnapshot": [
+        "256,000 tokens for Kimi K2.6"
+      ],
+      "maxOutputSnapshot": [
+        "depends on runtime and endpoint"
+      ],
+      "roles": [
+        "advanced coding model",
+        "long-horizon implementation model",
+        "agentic orchestration model",
+        "open-MoE research reference"
+      ],
+      "strongFor": [
+        "complex code repair",
+        "long-horizon implementation",
+        "agentic prototypes coordinating tools and subtasks",
+        "multi-pass execution",
+        "comparing open MoE models with hosted frontier APIs"
+      ],
+      "executionMethods": [
+        "delegate_to_agent",
+        "code_generation",
+        "code_repair",
+        "multi_agent_orchestration",
+        "hosted_open_weight",
+        "self_hosted_model"
+      ],
+      "typicalUses": [
+        "prefer hosted inference unless suitable GPU infrastructure exists",
+        "compare K2.6 with newer Kimi coding variants when the project is specifically code-heavy",
+        "teach MoE, active parameters, inference cost, and infrastructure tradeoffs",
+        "test on one difficult code-repair task before trusting it for a whole project"
+      ],
+      "watchFor": [
+        "very large family can be impractical for normal local laptops",
+        "newer variants may supersede K2.6 for some code-agent tasks",
+        "verify exact license, checkpoint, and runtime requirements"
+      ],
+      "capabilities": [
+        "agentic-coding",
+        "coding-assistance",
+        "cost-sensitive-ai",
+        "local-self-hosted-inference",
+        "long-context-analysis",
+        "multimodal-analysis",
+        "privacy-sensitive-local-inference",
+        "repository-scale-coding",
+        "tool-use"
+      ],
+      "localDeployable": true,
+      "hostedAvailable": true,
+      "hardwareRequirements": [
+        "very large family can be impractical for normal local laptops"
+      ],
+      "volatility": "very_high",
+      "freshnessPolicy": "verify current Kimi coding variants and exact checkpoint requirements",
+      "currentVerification": {
+        "status": "snapshot_only",
+        "lastVerifiedAt": null,
+        "currentStatus": null,
+        "deprecatedAliases": [],
+        "currentContextWindow": null,
+        "currentAccess": [],
+        "currentPricingTier": null
+      },
+      "provenance": {
+        "source": "DMS4 Client Solutions — Models tab",
+        "sourceTerm": "2026B",
+        "sourceSnapshot": "DMS4 Client Solutions — Models tab, 2026B screenshots supplied by user",
+        "capturedDateContext": "2026-08-26",
+        "sourceType": "course_resource_screenshot"
+      },
+      "extensions": {
+        "architecture_notes": [
+          "large multimodal Mixture-of-Experts family",
+          "source snapshot describes K2.6 as a long-horizon coding / agentic reference model"
+        ]
+      }
+    },
+    {
+      "id": "ai-model.alibaba.qwen3",
+      "label": "Qwen / Qwen3",
+      "family": "Qwen",
+      "providers": [
+        "Alibaba Qwen Team"
+      ],
+      "providerType": "open_weight",
+      "lifecycleStatus": null,
+      "aliases": [
+        "Qwen / Qwen3",
+        "Qwen",
+        "Alibaba Qwen Team"
+      ],
+      "accessModes": [
+        "open-weight checkpoints",
+        "Qwen services",
+        "Hugging Face",
+        "local runtimes"
+      ],
+      "licenseType": "mostly Apache 2.0 across Qwen3 family in source snapshot; verify exact checkpoint",
+      "licenseNotes": null,
+      "contextWindowSnapshot": [
+        "32,000 to 256,000 native tokens on many variants",
+        "some variants may extend higher with YaRN"
+      ],
+      "maxOutputSnapshot": [
+        "depends on runtime and model variant"
+      ],
+      "roles": [
+        "local model",
+        "multilingual model",
+        "reasoning model",
+        "coding model",
+        "agentic coding model"
+      ],
+      "strongFor": [
+        "local deployment with Ollama",
+        "LM Studio",
+        "llama.cpp",
+        "vLLM",
+        "Transformers",
+        "multilingual tools",
+        "translation helpers",
+        "culturally broader user-facing prototypes",
+        "agentic coding experiments with Qwen Code or compatible IDE / CLI tools"
+      ],
+      "executionMethods": [
+        "local_model",
+        "code_generation",
+        "delegate_to_agent",
+        "multilingual_assistance",
+        "privacy_sensitive_local_inference",
+        "hosted_open_weight"
+      ],
+      "typicalUses": [
+        "start with a small Qwen3 model locally",
+        "move to larger or hosted variants when needed",
+        "use thinking mode for planning, math, logic, or debugging",
+        "use non-thinking mode for UI copy and fast chat",
+        "compare local Qwen outputs with hosted frontier APIs",
+        "privacy-sensitive demos where local inference is preferred"
+      ],
+      "watchFor": [
+        "family changes rapidly",
+        "model-card details should be checked for current recommended variants",
+        "local performance depends on quantization, RAM, VRAM, and runtime",
+        "instruction-only and thinking-oriented variants may use different prompt formats"
+      ],
+      "capabilities": [
+        "agentic-coding",
+        "coding-assistance",
+        "cost-sensitive-ai",
+        "local-self-hosted-inference",
+        "long-context-analysis",
+        "multilingual-work",
+        "privacy-sensitive-local-inference",
+        "tool-use"
+      ],
+      "localDeployable": true,
+      "hostedAvailable": true,
+      "hardwareRequirements": [
+        "local performance depends on quantization, RAM, VRAM, and runtime"
+      ],
+      "volatility": "very_high",
+      "freshnessPolicy": "verify exact Qwen variant, context, license, and prompt format",
+      "currentVerification": {
+        "status": "snapshot_only",
+        "lastVerifiedAt": null,
+        "currentStatus": null,
+        "deprecatedAliases": [],
+        "currentContextWindow": null,
+        "currentAccess": [],
+        "currentPricingTier": null
+      },
+      "provenance": {
+        "source": "DMS4 Client Solutions — Models tab",
+        "sourceTerm": "2026B",
+        "sourceSnapshot": "DMS4 Client Solutions — Models tab, 2026B screenshots supplied by user",
+        "capturedDateContext": "2026-08-26",
+        "sourceType": "course_resource_screenshot"
+      },
+      "extensions": {
+        "architecture_notes": [
+          "family includes small local models",
+          "strong MoE variants",
+          "multilingual variants",
+          "agentic coding variants",
+          "thinking and non-thinking modes"
+        ]
+      }
+    },
+    {
+      "id": "ai-model.google.gemma-4",
+      "label": "Gemma / Gemma 4",
+      "family": "Gemma",
+      "providers": [
+        "Google DeepMind"
+      ],
+      "providerType": "open_model",
+      "lifecycleStatus": null,
+      "aliases": [
+        "Gemma / Gemma 4",
+        "Gemma",
+        "Google DeepMind"
+      ],
+      "accessModes": [
+        "Google AI",
+        "Hugging Face",
+        "local runtimes",
+        "Google Cloud"
+      ],
+      "licenseType": "source snapshot lists Apache 2.0 for Gemma 4; verify exact model-card terms before deployment",
+      "licenseNotes": null,
+      "contextWindowSnapshot": [
+        "128,000 to 256,000 tokens across Gemma 4 variants"
+      ],
+      "maxOutputSnapshot": [
+        "depends on runtime and model variant"
+      ],
+      "roles": [
+        "local AI model",
+        "multimodal model",
+        "teaching model family",
+        "privacy-aware prototype model"
+      ],
+      "strongFor": [
+        "local demos",
+        "privacy-aware prototypes",
+        "small apps running a model on the builder's own machine",
+        "multimodal text-image work",
+        "selected audio-capable variants",
+        "teaching model sizes and hardware-aware design",
+        "local / cloud / browser / mobile / edge deployment comparisons"
+      ],
+      "executionMethods": [
+        "local_model",
+        "multimodal_analysis",
+        "privacy_sensitive_local_inference",
+        "hosted_open_weight",
+        "prototyping"
+      ],
+      "typicalUses": [
+        "smaller variants for local AI features that do not depend on a hosted API key",
+        "larger variants for stronger reasoning, UI critique, coding help, or document assistance",
+        "choose variant based on modality and context rather than hype",
+        "compare runtime stacks such as Transformers, llama.cpp, Ollama, and LM Studio"
+      ],
+      "watchFor": [
+        "variants differ in size, modality, and context",
+        "local inference can be slow or memory-heavy without suitable hardware or quantization",
+        "exact license and model terms should be verified before client-facing use"
+      ],
+      "capabilities": [
+        "coding-assistance",
+        "cost-sensitive-ai",
+        "google-ecosystem-integration",
+        "local-self-hosted-inference",
+        "long-context-analysis",
+        "multilingual-work",
+        "multimodal-analysis",
+        "privacy-sensitive-local-inference"
+      ],
+      "localDeployable": true,
+      "hostedAvailable": true,
+      "hardwareRequirements": [
+        "local inference can be slow or memory-heavy without suitable hardware or quantization"
+      ],
+      "volatility": "high",
+      "freshnessPolicy": "verify current Gemma variant and exact model-card terms",
+      "currentVerification": {
+        "status": "snapshot_only",
+        "lastVerifiedAt": null,
+        "currentStatus": null,
+        "deprecatedAliases": [],
+        "currentContextWindow": null,
+        "currentAccess": [],
+        "currentPricingTier": null
+      },
+      "provenance": {
+        "source": "DMS4 Client Solutions — Models tab",
+        "sourceTerm": "2026B",
+        "sourceSnapshot": "DMS4 Client Solutions — Models tab, 2026B screenshots supplied by user",
+        "capturedDateContext": "2026-08-26",
+        "sourceType": "course_resource_screenshot"
+      },
+      "extensions": {}
+    },
+    {
+      "id": "ai-model.zai.glm-5",
+      "label": "GLM / GLM-5",
+      "family": "GLM",
+      "providers": [
+        "Zhipu AI",
+        "Z.ai"
+      ],
+      "providerType": "open_weight_and_hosted",
+      "lifecycleStatus": null,
+      "aliases": [
+        "GLM / GLM-5",
+        "GLM",
+        "Zhipu AI",
+        "Z.ai"
+      ],
+      "accessModes": [
+        "open-weight checkpoints",
+        "Hugging Face",
+        "supported local runtimes",
+        "supported hosted runtimes"
+      ],
+      "licenseType": "source snapshot lists MIT for GLM-5 weights; verify exact newer model-card terms",
+      "licenseNotes": null,
+      "contextWindowSnapshot": [
+        "varies by version; newer GLM-5.x releases advertise long-context support"
+      ],
+      "maxOutputSnapshot": [
+        "depends on runtime and model variant"
+      ],
+      "roles": [
+        "coding model",
+        "repository-understanding model",
+        "terminal-agent model",
+        "open coding-agent reference"
+      ],
+      "strongFor": [
+        "code repair",
+        "repository-level understanding",
+        "terminal-based agent workflows",
+        "comparing open-weight coding models against closed coding agents",
+        "builders using vLLM",
+        "SGLang",
+        "Docker model runners",
+        "Hugging Face",
+        "projects where code reasoning and tool-use reliability matter more than chat personality"
+      ],
+      "executionMethods": [
+        "delegate_to_agent",
+        "code_generation",
+        "code_review",
+        "repository_analysis",
+        "local_model",
+        "hosted_open_weight"
+      ],
+      "typicalUses": [
+        "second coding reviewer after GPT or Claude to expose different failure modes",
+        "small feasibility tests on one bug, one feature, and one deployment task",
+        "compare benchmark claims against project-specific evidence",
+        "document runtime requirements clearly when self-hosting"
+      ],
+      "watchFor": [
+        "family releases quickly",
+        "newer GLM-5.1 / 5.2 variants may become relevant",
+        "check exact Hugging Face model card",
+        "benchmark strength does not guarantee good UI judgement, project management, or client fit"
+      ],
+      "capabilities": [
+        "agentic-coding",
+        "coding-assistance",
+        "cost-sensitive-ai",
+        "local-self-hosted-inference",
+        "long-context-analysis",
+        "privacy-sensitive-local-inference",
+        "repository-scale-coding",
+        "tool-use"
+      ],
+      "localDeployable": true,
+      "hostedAvailable": true,
+      "hardwareRequirements": [],
+      "volatility": "very_high",
+      "freshnessPolicy": "verify current GLM release, license, context, and deployment requirements",
+      "currentVerification": {
+        "status": "snapshot_only",
+        "lastVerifiedAt": null,
+        "currentStatus": null,
+        "deprecatedAliases": [],
+        "currentContextWindow": null,
+        "currentAccess": [],
+        "currentPricingTier": null
+      },
+      "provenance": {
+        "source": "DMS4 Client Solutions — Models tab",
+        "sourceTerm": "2026B",
+        "sourceSnapshot": "DMS4 Client Solutions — Models tab, 2026B screenshots supplied by user",
+        "capturedDateContext": "2026-08-26",
+        "sourceType": "course_resource_screenshot"
+      },
+      "extensions": {}
+    }
+  ],
+  "capabilityIndex": {
+    "agentic-coding": [
+      "ai-model.openai.gpt-5-5",
+      "ai-model.anthropic.claude-opus-4-8",
+      "ai-model.google.gemini-3-1-pro-preview",
+      "ai-model.xai.grok-4-3",
+      "ai-model.deepseek.v4-r1",
+      "ai-model.moonshot.kimi-k2-6",
+      "ai-model.alibaba.qwen3",
+      "ai-model.zai.glm-5"
+    ],
+    "repository-scale-coding": [
+      "ai-model.openai.gpt-5-5",
+      "ai-model.anthropic.claude-opus-4-8",
+      "ai-model.moonshot.kimi-k2-6",
+      "ai-model.zai.glm-5",
+      "ai-model.deepseek.v4-r1"
+    ],
+    "tool-use": [
+      "ai-model.openai.gpt-5-5",
+      "ai-model.anthropic.claude-opus-4-8",
+      "ai-model.google.gemini-3-1-pro-preview",
+      "ai-model.xai.grok-4-3",
+      "ai-model.deepseek.v4-r1",
+      "ai-model.moonshot.kimi-k2-6",
+      "ai-model.alibaba.qwen3",
+      "ai-model.zai.glm-5"
+    ],
+    "long-context-analysis": [
+      "ai-model.openai.gpt-5-5",
+      "ai-model.anthropic.claude-opus-4-8",
+      "ai-model.google.gemini-3-1-pro-preview",
+      "ai-model.xai.grok-4-3",
+      "ai-model.meta.llama-4",
+      "ai-model.deepseek.v4-r1",
+      "ai-model.moonshot.kimi-k2-6",
+      "ai-model.alibaba.qwen3",
+      "ai-model.google.gemma-4",
+      "ai-model.zai.glm-5"
+    ],
+    "multimodal-analysis": [
+      "ai-model.google.gemini-3-1-pro-preview",
+      "ai-model.meta.llama-4",
+      "ai-model.google.gemma-4",
+      "ai-model.moonshot.kimi-k2-6",
+      "ai-model.openai.gpt-5-5",
+      "ai-model.anthropic.claude-opus-4-8"
+    ],
+    "local-self-hosted-inference": [
+      "ai-model.meta.llama-4",
+      "ai-model.deepseek.v4-r1",
+      "ai-model.moonshot.kimi-k2-6",
+      "ai-model.alibaba.qwen3",
+      "ai-model.google.gemma-4",
+      "ai-model.zai.glm-5"
+    ],
+    "multilingual-work": [
+      "ai-model.alibaba.qwen3",
+      "ai-model.google.gemini-3-1-pro-preview",
+      "ai-model.openai.gpt-5-5",
+      "ai-model.anthropic.claude-opus-4-8",
+      "ai-model.google.gemma-4",
+      "ai-model.deepseek.v4-r1"
+    ],
+    "cost-sensitive-ai": [
+      "ai-model.deepseek.v4-r1",
+      "ai-model.alibaba.qwen3",
+      "ai-model.google.gemma-4",
+      "ai-model.zai.glm-5",
+      "ai-model.meta.llama-4",
+      "ai-model.moonshot.kimi-k2-6"
+    ],
+    "google-ecosystem-integration": [
+      "ai-model.google.gemini-3-1-pro-preview",
+      "ai-model.google.gemma-4"
+    ],
+    "privacy-sensitive-local-inference": [
+      "ai-model.alibaba.qwen3",
+      "ai-model.google.gemma-4",
+      "ai-model.meta.llama-4",
+      "ai-model.zai.glm-5",
+      "ai-model.deepseek.v4-r1",
+      "ai-model.moonshot.kimi-k2-6"
+    ],
+    "structured-output": [
+      "ai-model.openai.gpt-5-5",
+      "ai-model.google.gemini-3-1-pro-preview"
+    ],
+    "coding-assistance": [
+      "ai-model.openai.gpt-5-5",
+      "ai-model.anthropic.claude-opus-4-8",
+      "ai-model.deepseek.v4-r1",
+      "ai-model.moonshot.kimi-k2-6",
+      "ai-model.alibaba.qwen3",
+      "ai-model.google.gemma-4",
+      "ai-model.zai.glm-5"
+    ],
+    "document-analysis": [
+      "ai-model.anthropic.claude-opus-4-8",
+      "ai-model.google.gemini-3-1-pro-preview"
+    ],
+    "provider-comparison": [
+      "ai-model.xai.grok-4-3",
+      "ai-model.deepseek.v4-r1"
+    ]
+  },
+  "executionMethodIndex": {
+    "delegate-to-agent": [
+      "ai-model.openai.gpt-5-5",
+      "ai-model.anthropic.claude-opus-4-8",
+      "ai-model.google.gemini-3-1-pro-preview",
+      "ai-model.xai.grok-4-3",
+      "ai-model.deepseek.v4-r1",
+      "ai-model.moonshot.kimi-k2-6",
+      "ai-model.alibaba.qwen3",
+      "ai-model.zai.glm-5"
+    ],
+    "multimodal-analysis": [
+      "ai-model.google.gemini-3-1-pro-preview",
+      "ai-model.meta.llama-4",
+      "ai-model.google.gemma-4",
+      "ai-model.openai.gpt-5-5",
+      "ai-model.anthropic.claude-opus-4-8",
+      "ai-model.moonshot.kimi-k2-6"
+    ],
+    "local-ai": [
+      "ai-model.meta.llama-4",
+      "ai-model.deepseek.v4-r1",
+      "ai-model.moonshot.kimi-k2-6",
+      "ai-model.alibaba.qwen3",
+      "ai-model.google.gemma-4",
+      "ai-model.zai.glm-5"
+    ],
+    "coding-assistance": [
+      "ai-model.openai.gpt-5-5",
+      "ai-model.anthropic.claude-opus-4-8",
+      "ai-model.google.gemini-3-1-pro-preview",
+      "ai-model.deepseek.v4-r1",
+      "ai-model.moonshot.kimi-k2-6",
+      "ai-model.alibaba.qwen3",
+      "ai-model.zai.glm-5",
+      "ai-model.xai.grok-4-3"
+    ],
+    "long-context-review": [
+      "ai-model.openai.gpt-5-5",
+      "ai-model.anthropic.claude-opus-4-8",
+      "ai-model.google.gemini-3-1-pro-preview",
+      "ai-model.xai.grok-4-3",
+      "ai-model.meta.llama-4",
+      "ai-model.deepseek.v4-r1",
+      "ai-model.moonshot.kimi-k2-6",
+      "ai-model.alibaba.qwen3",
+      "ai-model.google.gemma-4",
+      "ai-model.zai.glm-5"
+    ]
+  },
+  "provenance": {
+    "source_type": "course_resource_screenshot",
+    "source_name": "DMS4 Client Solutions — Models tab",
+    "source_term": "2026B",
+    "captured_from_user_screenshots": "true",
+    "captured_date_context": "2026-08-26",
+    "records_extracted": [
+      "OpenAI GPT-5.5",
+      "Claude Opus 4.8",
+      "Gemini 3.1 Pro Preview",
+      "Grok 4.3",
+      "Llama 4",
+      "DeepSeek V4 / R1",
+      "Kimi / Kimi K2.6",
+      "Qwen / Qwen3",
+      "Gemma / Gemma 4",
+      "GLM / GLM-5"
+    ],
+    "extraction_policy": "summarized and normalized for QUANDA ontology use",
+    "current_truth_policy": "verify volatile details against provider documentation before making live recommendations"
+  }
+}

@@ -201,6 +201,20 @@ Hide these behind progressive disclosure or infer them when possible.
 
 Do not require users to manually choose techniques, frameworks, or software that QUANDA is supposed to optimize.
 
+### 6.1 Optional visual-reference analyzer
+
+When reference images or a moodboard are supplied, QUANDA may use a multimodal model to produce a structured visual-style profile covering:
+
+- composition and visual hierarchy
+- spacing, density, and rhythm
+- palette, contrast, and color usage
+- typography characteristics and scale relationships
+- shapes, texture, material, lighting, and depth
+- observed motion cues and reasonable interaction suggestions
+- conflicts, weak evidence, and accessibility cautions
+
+The analysis must distinguish visible evidence from suggested application. It must be editable and must not affect path generation until the user explicitly approves it. References are direction, not permission to copy an artist or work. The text-only flow remains fully functional.
+
 ---
 
 # 7. Central Product Rule
@@ -857,6 +871,7 @@ Good uses:
 - propose candidate execution options
 - summarize evidence
 - parse external resources into structured metadata
+- interpret user-supplied visual references into an editable, evidence-linked style profile
 
 ## Deterministic application responsibilities
 
@@ -874,6 +889,8 @@ Must be code-driven where practical:
 - top-5 ordering
 - evidence assembly
 - duplicate removal
+- apply only user-approved visual-style facts to project resolution and task prompts
+- choose an AI model only inside an execution method that actually needs AI
 
 Do not make the product "Gemini with one giant prompt."
 
@@ -1038,6 +1055,7 @@ Recommended V2 MVP flow:
 LANDING
 ↓
 PROJECT INPUT
+    └── optional visual references → analyze → edit → approve
 ↓
 FIND MY BEST PATH
 ↓
@@ -1572,6 +1590,9 @@ A good MVP should be able to demonstrate:
 18. EN and VI work.
 19. User can reach the recommended path with low cognitive load.
 20. The app deploys cleanly on Vercel.
+21. Optional visual references produce an editable design-principles profile.
+22. Unapproved visual analysis cannot affect deterministic ranking or execution prompts.
+23. The original text-only workflow remains usable when visual analysis is skipped or unavailable.
 
 ---
 

@@ -1,4 +1,5 @@
 import resourcesData from '@/knowledge/resources.json';
+import { selectAIModel } from '@/src/ai-models/select';
 import type { ProjectAnalysisOutcome } from '@/src/project-analysis/schema';
 import { flattenTechniquePlans, resolveTechniquePlans } from './playbooks';
 import type { AgentDelegationGuide, CandidatePath, ExecutionMethod, Language, PipelineTask, ProjectInput, ScoreBreakdown, Solution } from './types';
@@ -104,14 +105,39 @@ function delegationGuide(task:PipelineTask,input:ProjectInput):AgentDelegationGu
  const details=flattenTechniquePlans(techniquePlan);
  const deadline=input.deadline||tr(input.language,'Not specified','Không chỉ định');
  const isChatbotTask=task.techniqueIds.some((id)=>id.includes('language-model')||id.includes('prompting-technique')||id.includes('moderation')||id.endsWith('.chatbot'));
- const contextChecklist=isChatbotTask?(input.language==='vi'?
+ const visualProfile=input.visualStyleProfile;
+ const visualContext=visualProfile?tr(input.language,
+  `User-approved visual profile — ${visualProfile.summary}. Principles: ${visualProfile.designPrinciples.map((item)=>`${item.principle}: ${item.application}`).join('; ')}. Motion cues: ${visualProfile.motion.suggestedBehaviors.join('; ')||'none stated'}. Treat this as direction, not permission to copy a reference.`,
+  `Hồ sơ hình ảnh đã được người dùng duyệt — ${visualProfile.summary}. Nguyên tắc: ${visualProfile.designPrinciples.map((item)=>`${item.principle}: ${item.application}`).join('; ')}. Gợi ý chuyển động: ${visualProfile.motion.suggestedBehaviors.join('; ')||'không nêu'}. Xem đây là định hướng, không phải quyền sao chép hình tham khảo.`):null;
+ const baseContextChecklist=isChatbotTask?(input.language==='vi'?
   ['Output đã duyệt từ các bước phụ thuộc','Repository, file và test hiện có','Ngôn ngữ mục tiêu, kịch bản hội thoại, chính sách độ tuổi và nội dung đã duyệt','Ranh giới client/server, tên biến môi trường như GEMINI_API_KEY khi dùng và giới hạn quota; không cung cấp giá trị secret']:
   ['Approved outputs from prerequisite steps','Existing repository, files, and tests','Target languages, conversation scenarios, and approved age/content policy','Client/server boundary, required environment-variable names such as GEMINI_API_KEY when used, and quota limits; never provide secret values']):(input.language==='vi'?
   ['Output đã duyệt từ các bước phụ thuộc','Repository, file và asset hiện có','Lời bài hát, audio được phép sử dụng và art direction đã duyệt','Runtime mục tiêu, deadline và mọi ràng buộc']:
   ['Approved outputs from prerequisite steps','Existing repository, files, and assets','Licensed lyric/audio content and approved art direction','Target runtime, deadline, and every stated constraint']);
+ const contextChecklist=visualContext?[...baseContextChecklist,visualContext]:baseContextChecklist;
  const expectedOutputs=unique([...details.artifacts,tr(input.language,'A change log naming every file or asset changed','Nhật ký thay đổi nêu rõ file hoặc asset đã sửa'),tr(input.language,'Test, build, and visual-validation evidence','Bằng chứng test, build và kiểm tra trực quan'),tr(input.language,'Remaining assumptions, risks, and human decisions','Giả định, rủi ro và quyết định còn cần con người')]);
  const reviewChecklist=unique([...details.acceptanceChecks,tr(input.language,'The result stays in scope without redesigning unrelated work','Kết quả đúng phạm vi và không redesign phần không liên quan'),tr(input.language,'The user can understand, edit, and continue the work','Người dùng có thể hiểu, chỉnh sửa và tiếp tục công việc')]);
  const dependencyText=task.prerequisiteTaskIds.length?task.prerequisiteTaskIds.join(', '):tr(input.language,'Không có','None');
+ const aiTaskText=`${task.title} ${task.objective} ${task.techniqueIds.join(' ')}`.toLowerCase();
+ const aiCapabilities=unique([
+  'agentic-coding',
+  'coding-assistance',
+  ...(has(aiTaskText,['repository','codebase','full-stack','full stack','project folder'])?['repository-scale-coding']:[]),
+  ...(has(aiTaskText,['multilingual','translation','localization'])?['multilingual-work']:[]),
+  ...(has(aiTaskText,['structured','json','schema'])?['structured-output']:[]),
+  ...(has(aiTaskText,['image analysis','screenshot analysis','pdf analysis','multimodal'])?['multimodal-analysis']:[]),
+ ]);
+ const aiModelDecision=selectAIModel({
+  executionMethod:'delegate_to_agent',
+  requiredCapabilities:aiCapabilities,
+  userAccess:`${input.skills} ${input.constraints}`,
+  userFamiliarity:input.skills,
+  constraints:input.constraints,
+  hardware:has(`${input.skills} ${input.constraints}`.toLowerCase(),['ram','vram','gpu','apple silicon','nvidia'])?`${input.skills} ${input.constraints}`:'',
+  preferredLanguage:input.language,
+  taskDescription:`${task.title}. ${task.objective}`,
+ });
+ const aiRoute=aiModelDecision.recommended;
  const techniqueText=techniquePlan.map((plan,index)=>`${index+1}. ${plan.label}\n   ${plan.method}`).join('\n');
  const summary={
   approach:techniquePlan.map((plan)=>plan.label),
@@ -134,6 +160,9 @@ Tên bước: ${task.title}
 Mục tiêu: ${task.objective}
 Công cụ chính: ${task.softwareLabel}
 Bước phụ thuộc cần hoàn tất trước: ${dependencyText}
+
+TUYẾN AI ĐỀ XUẤT
+${aiRoute?`${aiRoute.label} qua ${aiRoute.accessRoute}. Lý do: ${aiRoute.reasons.slice(0,2).join(' ')} Đây là dữ liệu snapshot; hãy kiểm tra lại tên model và quyền truy cập hiện tại trước khi dùng.`:'Chưa có model nào trong catalog đáp ứng mọi ràng buộc. Không được bỏ qua ràng buộc để ép chọn model.'}
 
 KẾ HOẠCH KỸ THUẬT BẮT BUỘC
 ${techniqueText}
@@ -176,6 +205,9 @@ Objective: ${task.objective}
 Primary tool: ${task.softwareLabel}
 Prerequisite task outputs required first: ${dependencyText}
 
+RECOMMENDED AI ROUTE
+${aiRoute?`${aiRoute.label} via ${aiRoute.accessRoute}. Why: ${aiRoute.reasons.slice(0,2).join(' ')} This is snapshot evidence; verify the current model name and access route before use.`:'No catalog model currently satisfies every constraint. Do not bypass a constraint to force a model choice.'}
+
 REQUIRED TECHNIQUE PLAN
 ${techniqueText}
 
@@ -203,7 +235,7 @@ FAILURE MODES TO PREVENT
 ${details.failureModes.map((item,index)=>`${index+1}. ${item}`).join('\n')}
 
 Start by inspecting the prerequisite outputs, repository, and supplied assets. State a short plan that follows the implementation sequence above and identify only genuine blockers. Then complete the assignment, verify every acceptance criterion, and finish with a change log, validation evidence, assumptions, and remaining risks.`;
- return{compatibleAgents:['Claude','Codex','Kimi'],prompt,summary,prerequisiteTaskIds:task.prerequisiteTaskIds,techniquePlan:techniquePlan.map(({techniqueId,label,method})=>({techniqueId,label,method})),implementationSteps:details.implementationSteps,contextChecklist,expectedOutputs,reviewChecklist,failureModes:details.failureModes};
+ return{compatibleAgents:['Claude','Codex','Kimi'],prompt,summary,prerequisiteTaskIds:task.prerequisiteTaskIds,techniquePlan:techniquePlan.map(({techniqueId,label,method})=>({techniqueId,label,method})),implementationSteps:details.implementationSteps,contextChecklist,expectedOutputs,reviewChecklist,failureModes:details.failureModes,aiModelDecision};
 }
 
 function tasks(kind:string,seed:Seed,lang:Language,known:string[],input:ProjectInput,requestedTechniques:string[]):PipelineTask[]{
