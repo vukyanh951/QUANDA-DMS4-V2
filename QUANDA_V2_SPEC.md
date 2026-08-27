@@ -215,6 +215,8 @@ When reference images or a moodboard are supplied, QUANDA may use a multimodal m
 
 The analysis must distinguish visible evidence from suggested application. It must be editable and must not affect path generation until the user explicitly approves it. References are direction, not permission to copy an artist or work. The text-only flow remains fully functional.
 
+Ground visual interpretation with a focused vocabulary compiled from `knowledge/quanda.skills`; do not send the complete ontology with every request. Gemini may propose only IDs supplied in the compact prompt vocabulary. Repository code must validate every proposed ID against the broader compiled visual vocabulary, discard invented IDs, restore canonical labels locally, and preserve the validated IDs as visible evidence and downstream solver context.
+
 ---
 
 # 7. Central Product Rule

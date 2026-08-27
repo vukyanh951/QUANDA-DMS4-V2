@@ -10,6 +10,12 @@ import {
   visualStyleContext,
   type VisualStyleProfile,
 } from './schema';
+import {
+  groundVisualStyleProfile,
+  isVisualVocabularyConcept,
+  visualDesignVocabulary,
+  visualVocabularyForPrompt,
+} from './vocabulary';
 
 const profile: VisualStyleProfile = {
   summary: 'High-contrast editorial layout with oversized type and asymmetric pacing.',
@@ -81,6 +87,45 @@ test('requires source evidence metadata on an API visual-analysis response', () 
   assert.deepEqual(response.sourceFileNames, ['moodboard.png']);
 });
 
+test('visual vocabulary is a compact, balanced artifact compiled from quanda.skills', () => {
+  assert.equal(visualDesignVocabulary.source, 'knowledge/quanda.skills');
+  assert.equal(visualDesignVocabulary.compiledFrom, 'knowledge/ontology.compiled.json');
+  assert.equal(visualDesignVocabulary.conceptCount, 560);
+  assert.equal(visualDesignVocabulary.promptConceptCount, 196);
+  assert.equal(visualDesignVocabulary.domains.length, 7);
+  assert(visualDesignVocabulary.domains.every((domain) => domain.concepts.length === 80));
+  assert(visualDesignVocabulary.domains.every((domain) => domain.promptConceptIds.length === 28));
+});
+
+test('every concept sent to Gemini is a canonical member of the compiled visual vocabulary', () => {
+  const promptConcepts = visualVocabularyForPrompt().flatMap((domain) => domain.concepts);
+  assert.equal(promptConcepts.length, 196);
+  assert(promptConcepts.every((concept) => isVisualVocabularyConcept(concept.id)));
+});
+
+test('repository grounding drops invented IDs and restores canonical labels', () => {
+  const grounded = groundVisualStyleProfile({
+    ...profile,
+    ontologyMatches: [
+      {
+        conceptId: 'creative-direction.aesthetic.minimalist',
+        label: 'Model-supplied label must not win',
+        evidence: 'Restrained palette and sparse composition.',
+        confidence: 'high',
+      },
+      {
+        conceptId: 'invented.visual.style.fake',
+        label: 'Fake',
+        evidence: 'No canonical evidence.',
+        confidence: 'medium',
+      },
+    ],
+  });
+  assert.equal(grounded.ontologyMatches?.length, 1);
+  assert.equal(grounded.ontologyMatches?.[0].conceptId, 'creative-direction.aesthetic.minimalist');
+  assert.equal(grounded.ontologyMatches?.[0].label, 'minimalist');
+});
+
 test('flattens every approved design layer into repository-owned project context', () => {
   const context = visualStyleContext(profile).join(' ');
   assert.match(context, /Asymmetric hierarchy/);
@@ -97,12 +142,25 @@ test('fallback analysis preserves the approved profile and resolves its known te
 });
 
 test('approved visual direction reaches delegated implementation prompts', async () => {
-  const outcome = await runProjectAnalysis(input, async () => { throw new Error('offline'); });
-  const solution = solveProject(input, outcome);
+  const groundedInput: ProjectInput = {
+    ...input,
+    visualStyleProfile: groundVisualStyleProfile({
+      ...profile,
+      ontologyMatches: [{
+        conceptId: 'creative-direction.aesthetic.minimalist',
+        evidence: 'Restrained palette and sparse composition.',
+        confidence: 'high',
+      }],
+    }),
+  };
+  const outcome = await runProjectAnalysis(groundedInput, async () => { throw new Error('offline'); });
+  const solution = solveProject(groundedInput, outcome);
   const delegated = solution.recommended.tasks.filter((task) => task.agentDelegation);
   assert(delegated.length > 0);
   assert(delegated.every((task) => task.agentDelegation?.prompt.includes('User-approved visual profile')));
   assert(delegated.every((task) => task.agentDelegation?.prompt.includes('Asymmetric hierarchy')));
+  assert(delegated.every((task) => task.agentDelegation?.prompt.includes('creative-direction.aesthetic.minimalist')));
+  assert(outcome.resolution.ontologyConceptIds.includes('creative-direction.aesthetic.minimalist'));
   assert.equal(solution.detectedKind, 'creative-web');
 });
 

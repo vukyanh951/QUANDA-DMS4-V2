@@ -1,5 +1,6 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { compileAIModelsFile } from './compile-ai-models.mjs';
+import { compileVisualVocabularyFile } from './compile-visual-vocabulary.mjs';
 
 const source = await readFile('knowledge/quanda.skills', 'utf8');
 const slug = (value) => value.normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/&/g, ' and ').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -25,3 +26,5 @@ await writeFile('knowledge/ontology.compiled.json', `${JSON.stringify({ ontology
 console.log(`Compiled ${concepts.length} ontology concepts.`);
 const aiModels = await compileAIModelsFile();
 console.log(`Compiled ${aiModels.modelCount} AI model families.`);
+const visualVocabulary = await compileVisualVocabularyFile();
+console.log(`Compiled ${visualVocabulary.conceptCount} visual-design concepts (${visualVocabulary.promptConceptCount} sent to Gemini).`);

@@ -11,6 +11,7 @@ import {
   VisualReferenceAnalysisJsonSchema,
   type VisualStyleProfile,
 } from '@/src/visual-analysis/schema';
+import { groundVisualStyleProfile, visualVocabularyForPrompt } from '@/src/visual-analysis/vocabulary';
 import { getGeminiServerEnvironment } from './env';
 
 const GEMINI_TIMEOUT_MS = 12_000;
@@ -60,7 +61,9 @@ export interface VisualReferenceInput {
 const visualSystemInstruction = `You analyze user-supplied visual references for QUANDA.
 Describe observable design evidence and translate it into an editable visual-style profile. Analyze composition, hierarchy, spacing, rhythm, color, contrast, typography, shapes, texture, material, lighting, depth, and motion or interaction cues that the still references reasonably imply.
 
-Separate observation from application: evidence must say what is visibly present; application must describe how the principle could guide the user's project. Do not identify artists, copyrighted works, brands, or exact typefaces unless unmistakably supplied as text. Do not imitate a living artist. Do not recommend a winning software path, invent project requirements, claim certainty about unseen motion, or use web search. Use cautious language when references conflict or evidence is weak. Return only the requested JSON.`;
+Separate observation from application: evidence must say what is visibly present; application must describe how the principle could guide the user's project. The request includes a compact vocabulary compiled from knowledge/quanda.skills. For ontologyMatches, select only exact concept IDs present in that supplied vocabulary and attach visible evidence; never invent or alter an ID. It is acceptable to return fewer matches when evidence is weak.
+
+Do not identify artists, copyrighted works, brands, or exact typefaces unless unmistakably supplied as text. Do not imitate a living artist. Do not recommend a winning software path, invent project requirements, claim certainty about unseen motion, or use web search. Use cautious language when references conflict or evidence is weak. Return only the requested JSON.`;
 
 export async function analyzeVisualReferencesWithGemini(
   references: VisualReferenceInput[],
@@ -83,6 +86,7 @@ export async function analyzeVisualReferencesWithGemini(
             projectBrief,
             responseLanguage: language,
             sourceFileNames: references.map((reference) => reference.name),
+            quandaVisualVocabulary: visualVocabularyForPrompt(),
           }),
         },
       ],
@@ -98,5 +102,5 @@ export async function analyzeVisualReferencesWithGemini(
   });
 
   if (!response.text) throw new Error('Gemini returned no visual analysis.');
-  return parseVisualReferenceAnalysisJson(response.text);
+  return groundVisualStyleProfile(parseVisualReferenceAnalysisJson(response.text));
 }

@@ -23,6 +23,7 @@ The runtime knowledge layers are:
 - `knowledge/ontology.compiled.json` — canonical concepts compiled from `quanda.skills`
 - `knowledge/quanda-ai-models.skills` — curated, time-scoped AI model-family knowledge kept separate from the creative ontology
 - `knowledge/ai-models.compiled.json` — validated model capabilities, access routes, lifecycle snapshots, and provenance used by the nested model selector
+- `knowledge/visual-design-vocabulary.compiled.json` — a focused design vocabulary compiled from `quanda.skills` for moodboard grounding and deterministic ID validation
 - `knowledge/software-capabilities.json` — technique-to-software support and methods
 - `knowledge/technique-playbooks.json` — curated prerequisites, artifacts, implementation steps, acceptance checks, and failure modes for executable tasks and agent handoffs
 
@@ -32,7 +33,7 @@ When a selected execution step actually benefits from AI, a second deterministic
 
 ## Optional visual-reference analysis
 
-Users may attach one to four JPEG, PNG, or WebP moodboard/reference images. A dedicated server route sends those images to Gemini for structured observation of composition, hierarchy, color, typography, spacing, shapes, texture, lighting/depth, and motion cues. QUANDA then shows an editable visual-style profile. The profile does not affect project analysis, deterministic ranking, or agent prompts until the user explicitly approves it.
+Users may attach one to four JPEG, PNG, or WebP moodboard/reference images. A dedicated server route sends those images to Gemini for structured observation of composition, hierarchy, color, typography, spacing, shapes, texture, lighting/depth, and motion cues. The request includes only a compact 196-concept prompt subset compiled from `quanda.skills`, not the full ontology. Returned concept IDs are deterministically checked against the 560-concept visual-design artifact; invented IDs are discarded and canonical labels come from the repository. QUANDA then shows an editable visual-style profile with its grounded concepts. The profile does not affect project analysis, deterministic ranking, or agent prompts until the user explicitly approves it.
 
 Reference images are held only in the browser and request body for that analysis; QUANDA does not persist them or include them in the saved local draft. The approved structured profile may be saved locally with the rest of the draft. The original text-only workflow still works when no images are provided or visual analysis is unavailable.
 

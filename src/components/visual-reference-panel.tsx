@@ -22,6 +22,8 @@ const text = {
     review: 'Review what QUANDA sees',
     summary: 'Style summary',
     mood: 'Mood keywords (comma-separated)',
+    grounded: 'Matched to quanda.skills',
+    removeMatch: 'Remove ontology match',
     principles: 'Design principles',
     principle: 'Principle',
     evidence: 'Visible evidence',
@@ -58,6 +60,8 @@ const text = {
     review: 'Duyệt cách QUANDA hiểu hình',
     summary: 'Tóm tắt phong cách',
     mood: 'Từ khóa cảm xúc (ngăn cách bằng dấu phẩy)',
+    grounded: 'Khớp với quanda.skills',
+    removeMatch: 'Xóa khái niệm đã khớp',
     principles: 'Nguyên tắc thiết kế',
     principle: 'Nguyên tắc',
     evidence: 'Bằng chứng nhìn thấy',
@@ -171,6 +175,7 @@ export default function VisualReferencePanel({ language, brief, value, onChange 
       <header><div><b>{copy.review}</b>{sourceNames.length > 0 && <small>{sourceNames.join(' · ')}</small>}</div>{value && <span>✓ {copy.approved}</span>}</header>
       <label>{copy.summary}<textarea value={profile.summary} onChange={(event) => setField('summary', event.target.value)}/></label>
       <label>{copy.mood}<input value={join(profile.moodKeywords)} onChange={(event) => setField('moodKeywords', split(event.target.value))}/></label>
+      {(profile.ontologyMatches?.length ?? 0) > 0 && <div className="ontology-matches"><b>{copy.grounded}</b><div>{profile.ontologyMatches?.map((match) => <span key={match.conceptId} title={`${match.evidence} · ${match.confidence}`}><strong>{match.label ?? match.conceptId}</strong><small>{match.conceptId}</small><button type="button" aria-label={`${copy.removeMatch}: ${match.label ?? match.conceptId}`} onClick={() => setField('ontologyMatches', profile.ontologyMatches?.filter((item) => item.conceptId !== match.conceptId))}>×</button></span>)}</div></div>}
       <div className="principles"><b>{copy.principles}</b>{profile.designPrinciples.map((item, index) => <article key={`${item.principle}-${index}`}>
         <label>{copy.principle}<input value={item.principle} onChange={(event) => setField('designPrinciples', profile.designPrinciples.map((current, itemIndex) => itemIndex === index ? { ...current, principle: event.target.value } : current))}/></label>
         <label>{copy.evidence}<textarea value={item.evidence} onChange={(event) => setField('designPrinciples', profile.designPrinciples.map((current, itemIndex) => itemIndex === index ? { ...current, evidence: event.target.value } : current))}/></label>

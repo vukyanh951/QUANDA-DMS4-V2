@@ -1,9 +1,20 @@
 import type { ProjectInput } from '@/src/solver/types';
 import { visualStyleContext } from '@/src/visual-analysis/schema';
+import { isVisualVocabularyConcept } from '@/src/visual-analysis/vocabulary';
 import { ProjectAnalysisSchema, type ProjectAnalysis, type ProjectAnalysisOutcome } from './schema';
 import { findSoftwareLabels, resolveProjectAnalysis } from './resolve';
 
 export type ProjectAnalyzer = (input: ProjectInput) => Promise<ProjectAnalysis>;
+
+function addApprovedVisualConcepts(input: ProjectInput, resolution: ProjectAnalysisOutcome['resolution']) {
+  const approvedIds = (input.visualStyleProfile?.ontologyMatches ?? [])
+    .map((match) => match.conceptId)
+    .filter(isVisualVocabularyConcept);
+  return {
+    ...resolution,
+    ontologyConceptIds: [...new Set([...resolution.ontologyConceptIds, ...approvedIds])],
+  };
+}
 
 const splitFacts = (value: string) => value
   .split(/[;\n]+/)
@@ -79,9 +90,9 @@ export async function runProjectAnalysis(
         ...input.visualStyleProfile.designPrinciples.map((item) => item.application),
       ])].slice(0, 20),
     } : analyzed);
-    return { source: 'gemini', analysis, resolution: resolveProjectAnalysis(analysis) };
+    return { source: 'gemini', analysis, resolution: addApprovedVisualConcepts(input, resolveProjectAnalysis(analysis)) };
   } catch {
     const analysis = createFallbackProjectAnalysis(input);
-    return { source: 'fallback', analysis, resolution: resolveProjectAnalysis(analysis) };
+    return { source: 'fallback', analysis, resolution: addApprovedVisualConcepts(input, resolveProjectAnalysis(analysis)) };
   }
 }

@@ -9,6 +9,13 @@ export const DesignPrincipleSchema = z.object({
   application: shortText,
 }).strict();
 
+export const VisualOntologyMatchSchema = z.object({
+  conceptId: z.string().trim().min(1).max(240),
+  label: shortText.optional(),
+  evidence: shortText,
+  confidence: z.enum(['high', 'medium', 'low']),
+}).strict();
+
 export const VisualStyleProfileSchema = z.object({
   summary: z.string().trim().min(1).max(800),
   moodKeywords: shortList,
@@ -37,6 +44,7 @@ export const VisualStyleProfileSchema = z.object({
     suggestedBehaviors: shortList,
   }).strict(),
   cautions: shortList,
+  ontologyMatches: z.array(VisualOntologyMatchSchema).max(16).optional(),
 }).strict();
 
 export const VisualReferenceAnalysisSchema = VisualStyleProfileSchema.extend({
@@ -120,6 +128,20 @@ export const VisualReferenceAnalysisJsonSchema = {
       required: ['observedCues', 'suggestedBehaviors'],
     },
     cautions: stringArrayJsonSchema,
+    ontologyMatches: {
+      type: 'array',
+      maxItems: 16,
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        properties: {
+          conceptId: { type: 'string', maxLength: 240 },
+          evidence: { type: 'string', maxLength: 320 },
+          confidence: { type: 'string', enum: ['high', 'medium', 'low'] },
+        },
+        required: ['conceptId', 'evidence', 'confidence'],
+      },
+    },
   },
   required: [
     'summary',
@@ -131,6 +153,7 @@ export const VisualReferenceAnalysisJsonSchema = {
     'imagery',
     'motion',
     'cautions',
+    'ontologyMatches',
   ],
 } as const;
 
@@ -159,5 +182,6 @@ export function visualStyleContext(profile: VisualStyleProfile): string[] {
     profile.imagery.lightingAndDepth,
     ...profile.motion.observedCues,
     ...profile.motion.suggestedBehaviors,
+    ...(profile.ontologyMatches ?? []).flatMap((match) => [match.conceptId, match.label ?? '']),
   ];
 }
