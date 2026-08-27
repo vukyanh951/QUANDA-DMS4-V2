@@ -11,8 +11,12 @@
     "start": "next start",
     "lint": "eslint . --ignore-pattern .next",
     "compile:ontology": "node scripts/compile-ontology.mjs",
+    "compile:ai-models": "node scripts/compile-ai-models.mjs",
+    "compile:visual-vocabulary": "node scripts/compile-visual-vocabulary.mjs",
     "migrate:resources": "node scripts/migrate-v1-resources.mjs",
+    "test:ai-models": "node --import tsx --test src/ai-models/ai-models.test.ts",
     "test:analysis": "node --import tsx --test src/project-analysis/project-analysis.test.ts",
+    "test:visual-analysis": "node --import tsx --test src/visual-analysis/visual-analysis.test.ts",
     "test:solver": "node --import tsx --test src/solver/solver.test.ts"
   },
   "dependencies": {

@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import type { Solution } from '@/src/solver/types';
+import { VisualStyleProfileSchema } from '@/src/visual-analysis/schema';
 
 const conciseText = z.string().trim().min(1).max(240);
 const conciseList = z.array(conciseText).max(20);
@@ -11,6 +12,7 @@ export const ProjectInputSchema = z.object({
   skills: z.string().max(2_000),
   constraints: z.string().max(2_000),
   language: z.enum(['en', 'vi']),
+  visualStyleProfile: VisualStyleProfileSchema.optional(),
 }).strict();
 
 export const ProjectAnalysisSchema = z.object({

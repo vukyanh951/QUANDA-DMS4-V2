@@ -1,0 +1,993 @@
+# QUANDA-AI-MODELS.SKILLS — AI Model & Agentic Capability Extension
+Version: 1.0
+Source snapshot: DMS4 Client Solutions — Models tab, 2026B screenshots supplied by user
+Purpose: Extend QUANDA's ontology with contemporary hosted and open/open-weight AI model families so the V2 solver can reason about model choice as one possible execution tool.
+Scope note: AI model names, limits, access routes, licensing, and provider positioning change quickly. Treat the entries below as a dated course snapshot, not timeless truth. Verify current provider documentation before production deployment, purchasing, licensing, or client-facing claims.
+Integration note: This file is designed to sit beside `knowledge/quanda.skills` and be compiled into the same runtime ontology. Do not overwrite the stable base ontology when model metadata changes.
+Selection note: QUANDA should recommend a model only when the project actually benefits from AI assistance. "Use AI" is not a default production step.
+Decision note: Model selection should be based on project fit, access, cost, privacy, deployment constraints, modality, context needs, tool use, user familiarity, and verification requirements — not benchmark rank alone.
+
+## 1. AI Model Provider / Family Index
+
+### Proprietary / Hosted API families
+- OpenAI
+- Claude / Anthropic
+- Gemini / Google
+- Grok / xAI
+
+### Open / Open-weight families
+- Llama / Meta
+- DeepSeek
+- Kimi / Moonshot AI
+- Qwen / Alibaba
+- Gemma / Google DeepMind
+- GLM / Zhipu AI / Z.ai
+
+## 2. Canonical Model Families
+
+### OpenAI GPT-5.5
+- canonical_id: ai-model.openai.gpt-5-5
+- family: GPT
+- provider: OpenAI
+- provider_type: proprietary
+- access:
+  - hosted API
+  - ChatGPT ecosystem
+  - Codex ecosystem
+- license: proprietary API
+- context_window_snapshot: 1,048,576 tokens
+- max_output_snapshot: up to 128,000 tokens
+- model_roles:
+  - frontier hosted reasoning model
+  - senior coding collaborator
+  - agentic coding model
+  - long-context project reviewer
+  - structured-output model
+  - tool-using model
+- strong_for:
+  - complex full-stack builds requiring careful edits across multiple files
+  - repository-scale reasoning
+  - tool-heavy agent workflows
+  - debugging
+  - technical architecture
+  - UI critique
+  - reasoning-heavy product decisions
+  - long-context review of project folders
+  - briefs
+  - user research
+  - assessment evidence
+- useful_execution_methods:
+  - delegate_to_agent
+  - code_generation
+  - code_review
+  - repository_analysis
+  - structured_extraction
+  - planning
+  - debugging
+- typical_uses:
+  - primary implementation partner in Codex or compatible coding agents
+  - turn research or survey findings into prioritized implementation tasks
+  - produce structured JSON, issue lists, test plans, and deployment checklists
+  - use lower reasoning effort for routine edits and higher effort for architecture, difficult bugs, or final verification
+- watch_for:
+  - paid hosted usage
+  - token cost
+  - data handling
+  - quota limits
+  - higher pricing for unusually large prompts
+  - capable output still requires human review and testing
+- best_role_summary: primary senior coding collaborator for complex implementation, review, and tool-heavy project work
+- volatility: high
+- freshness_policy: verify provider docs before production use
+
+### Claude Opus 4.8
+- canonical_id: ai-model.anthropic.claude-opus-4-8
+- family: Claude
+- provider: Anthropic
+- provider_type: proprietary
+- access:
+  - hosted API
+  - Claude app
+  - Claude Code
+  - supported cloud platforms
+- license: proprietary API
+- context_window_snapshot:
+  - up to 1,000,000 tokens on Anthropic API, Amazon Bedrock, and Google Cloud
+  - 200,000 tokens on Microsoft Foundry
+- max_output_snapshot: up to 128,000 tokens
+- model_roles:
+  - high-autonomy reasoning model
+  - coding model
+  - long-horizon coding assistant
+  - technical writing model
+  - design critique partner
+- strong_for:
+  - long coding sessions where project intent must remain stable
+  - large codebase work
+  - design critique
+  - prose refinement
+  - brief rewriting
+  - explaining tradeoffs
+  - long document review
+  - repository review
+  - turning vague requirements into implementation steps
+- useful_execution_methods:
+  - delegate_to_agent
+  - code_generation
+  - code_review
+  - document_analysis
+  - writing_assistance
+  - planning
+- typical_uses:
+  - Claude Code or Anthropic-compatible coding workflows
+  - role-based team task planning from assignment context
+  - README files
+  - project rationale
+  - known-issues documentation
+  - handover notes
+  - higher-effort reasoning for agentic coding, lower effort for routine copy or summarization
+- watch_for:
+  - model naming changes quickly
+  - availability and context vary by provider and plan
+  - hosted frontier model costs and rate limits
+  - exact model name should be checked before deployment
+- best_role_summary: careful implementation and writing partner for long-horizon projects that require sustained context
+- volatility: high
+- freshness_policy: verify Anthropic model documentation at the start of each deployment cycle
+
+### Gemini 3.1 Pro Preview
+- canonical_id: ai-model.google.gemini-3-1-pro-preview
+- family: Gemini
+- provider: Google
+- provider_type: proprietary
+- lifecycle_snapshot: preview
+- access:
+  - Google AI Studio
+  - Gemini API
+  - Google Cloud integrations
+- license: proprietary API
+- context_window_snapshot: 1,048,576 input tokens
+- max_output_snapshot: up to 65,536 output tokens
+- model_roles:
+  - multimodal reasoning model
+  - research model
+  - tool-using model
+  - structured-output model
+  - product intelligence model
+- strong_for:
+  - multimodal analysis of images
+  - documents
+  - screenshots
+  - project evidence
+  - agentic workflows with tool use
+  - Google AI Studio prototyping
+  - teams already using Google Cloud, Firebase, Google Drive, or Google Docs
+- useful_execution_methods:
+  - multimodal_analysis
+  - document_analysis
+  - image_analysis
+  - structured_extraction
+  - agent_tool_use
+  - prototyping
+- typical_uses:
+  - inspect UI screenshots
+  - inspect survey exports
+  - inspect client documents
+  - compare user feedback themes with product goals
+  - prototype prompts in AI Studio before wiring them into an app
+  - multimodal features such as image understanding and content analysis
+- watch_for:
+  - preview-model rate limits
+  - changing behavior
+  - deprecation
+  - recommended model names may change
+  - pin specific model versions for important submissions where possible
+- best_role_summary: multimodal research and product-intelligence model when a workflow spans images, documents, structured project material, and Google ecosystem tools
+- volatility: very_high
+- freshness_policy: verify current Gemini model names and preview status before each production deployment
+
+### Grok 4.3
+- canonical_id: ai-model.xai.grok-4-3
+- family: Grok
+- provider: xAI
+- provider_type: proprietary
+- access:
+  - xAI API
+  - Grok ecosystem
+- license: proprietary API
+- context_window_snapshot: 1,000,000 tokens
+- max_output_snapshot: text output; verify current xAI generation limits
+- model_roles:
+  - hosted reasoning model
+  - tool-calling model
+  - long-context assistant
+  - provider-comparison model
+- strong_for:
+  - agentic tool-calling experiments
+  - large-context assistants
+  - provider-comparison prototypes
+  - testing latency, cost, answer style, and configurable reasoning
+- useful_execution_methods:
+  - agent_tool_use
+  - long_context_analysis
+  - provider_comparison
+  - prototyping
+- typical_uses:
+  - compare against OpenAI, Claude, and Gemini using the same project task
+  - test reasoning-effort tradeoffs
+  - integrate through provider abstractions such as OpenRouter or Vercel AI SDK
+  - use in model-comparison evidence for documentation
+- watch_for:
+  - xAI model list changes quickly
+  - region availability may vary
+  - tooling and rate limits may differ from other providers
+  - Grok-specific capabilities should not be assumed portable
+- best_role_summary: comparison model for hosted-agent experiments where provider differences in speed, reasoning style, tool use, and implementation matter
+- volatility: very_high
+- freshness_policy: check xAI model documentation directly before training demos or deployment
+
+### Llama 4
+- canonical_id: ai-model.meta.llama-4
+- family: Llama
+- provider: Meta
+- provider_type: open_weight
+- architecture_notes:
+  - multimodal Mixture-of-Experts family
+  - Scout and Maverick highlighted in source snapshot
+  - Behemoth described as a larger teacher model
+- access:
+  - open-weight downloads
+  - Hugging Face
+  - llama.com
+  - hosting partners
+- license: Meta Llama license; verify exact terms for the selected variant and use case
+- context_window_snapshot:
+  - up to 10,000,000 tokens on Llama 4 Scout
+  - varies by model and deployment
+- max_output_snapshot: depends on runtime and serving stack
+- model_roles:
+  - open-weight multimodal model
+  - self-hosting candidate
+  - long-context model
+  - model-architecture learning reference
+- strong_for:
+  - open-weight experimentation
+  - projects needing more deployment control than hosted APIs
+  - long-context prototypes
+  - multimodal text-image work
+  - learning MoE architecture
+  - quantization and deployment tradeoffs
+- useful_execution_methods:
+  - local_model
+  - self_hosted_model
+  - hosted_open_weight
+  - multimodal_analysis
+  - long_context_analysis
+- typical_uses:
+  - prototype with hosted Llama first
+  - compare hosted vs local/GPU deployment
+  - use Scout for long-context experiments
+  - use Maverick when stronger quality is desired
+  - evaluate licensing, model card, and deployment requirements as feasibility evidence
+- watch_for:
+  - large variants require significant GPU, memory, and serving infrastructure
+  - open-weight does not mean unrestricted use
+  - benchmark and context claims depend on exact variant and deployment
+- best_role_summary: open-weight baseline for understanding how ownership, hosting, context length, cost, and deployment complexity affect model choice
+- volatility: high
+- freshness_policy: verify exact Llama variant, license, context, and hosting requirements
+
+### DeepSeek V4 / R1
+- canonical_id: ai-model.deepseek.v4-r1
+- family: DeepSeek
+- provider: DeepSeek AI
+- provider_type: mixed_open_and_hosted
+- source_snapshot_variants:
+  - V4-Pro
+  - V4-Flash
+  - R1 lineage
+- access:
+  - DeepSeek API
+  - chat.deepseek.com
+  - open-source checkpoints
+  - compatible coding-agent routes
+- license: model-specific open-source license; verify current checkpoint terms
+- context_window_snapshot: 1,000,000 tokens for DeepSeek V4 Preview family
+- max_output_snapshot: depends on endpoint and model
+- model_roles:
+  - cost-efficient reasoning model
+  - coding model
+  - long-context model
+  - reasoning-first reference family
+- strong_for:
+  - cost-sensitive prototypes needing strong reasoning
+  - coding support
+  - long-context assistants
+  - coding-agent experiments through compatible provider routes
+  - teaching quality / latency / context / price tradeoffs
+- useful_execution_methods:
+  - code_generation
+  - delegate_to_agent
+  - long_context_analysis
+  - cost_optimized_inference
+  - provider_comparison
+- typical_uses:
+  - V4-Flash for cheaper iteration
+  - V4-Pro for harder reasoning passes
+  - compare outputs against GPT, Claude, Gemini, and open-weight models
+  - use context caching and provider-compatible APIs when appropriate
+  - document where cost reduction matters and where quality still needs verification
+- watch_for:
+  - verify endpoint availability
+  - verify data policy
+  - verify current model names
+  - reasoning traces are not a substitute for project evidence
+  - open-source, hosted, preview, and API-compatible variants may differ
+- best_role_summary: cost-efficiency and reasoning case study for teams choosing models pragmatically rather than defaulting to the most expensive frontier option
+- volatility: very_high
+- freshness_policy: verify exact endpoint, model, license, and data-policy details before use
+
+### Kimi / Kimi K2.6
+- canonical_id: ai-model.moonshot.kimi-k2-6
+- family: Kimi
+- provider: Moonshot AI
+- provider_type: open_weight_and_hosted
+- architecture_notes:
+  - large multimodal Mixture-of-Experts family
+  - source snapshot describes K2.6 as a long-horizon coding / agentic reference model
+- access:
+  - open-source / open-weight checkpoints
+  - Hugging Face
+  - Kimi services
+  - compatible runtimes
+- license: model-specific open-source license; verify current model card
+- context_window_snapshot: 256,000 tokens for Kimi K2.6
+- max_output_snapshot: depends on runtime and endpoint
+- model_roles:
+  - advanced coding model
+  - long-horizon implementation model
+  - agentic orchestration model
+  - open-MoE research reference
+- strong_for:
+  - complex code repair
+  - long-horizon implementation
+  - agentic prototypes coordinating tools and subtasks
+  - multi-pass execution
+  - comparing open MoE models with hosted frontier APIs
+- useful_execution_methods:
+  - delegate_to_agent
+  - code_generation
+  - code_repair
+  - multi_agent_orchestration
+  - hosted_open_weight
+  - self_hosted_model
+- typical_uses:
+  - prefer hosted inference unless suitable GPU infrastructure exists
+  - compare K2.6 with newer Kimi coding variants when the project is specifically code-heavy
+  - teach MoE, active parameters, inference cost, and infrastructure tradeoffs
+  - test on one difficult code-repair task before trusting it for a whole project
+- watch_for:
+  - very large family can be impractical for normal local laptops
+  - newer variants may supersede K2.6 for some code-agent tasks
+  - verify exact license, checkpoint, and runtime requirements
+- best_role_summary: advanced open-model reference for agentic coding, MoE architecture, and infrastructure-aware AI production decisions
+- volatility: very_high
+- freshness_policy: verify current Kimi coding variants and exact checkpoint requirements
+
+### Qwen / Qwen3
+- canonical_id: ai-model.alibaba.qwen3
+- family: Qwen
+- provider: Alibaba Qwen Team
+- provider_type: open_weight
+- architecture_notes:
+  - family includes small local models
+  - strong MoE variants
+  - multilingual variants
+  - agentic coding variants
+  - thinking and non-thinking modes
+- access:
+  - open-weight checkpoints
+  - Qwen services
+  - Hugging Face
+  - local runtimes
+- license: mostly Apache 2.0 across Qwen3 family in source snapshot; verify exact checkpoint
+- context_window_snapshot:
+  - 32,000 to 256,000 native tokens on many variants
+  - some variants may extend higher with YaRN
+- max_output_snapshot: depends on runtime and model variant
+- model_roles:
+  - local model
+  - multilingual model
+  - reasoning model
+  - coding model
+  - agentic coding model
+- strong_for:
+  - local deployment with Ollama
+  - LM Studio
+  - llama.cpp
+  - vLLM
+  - Transformers
+  - multilingual tools
+  - translation helpers
+  - culturally broader user-facing prototypes
+  - agentic coding experiments with Qwen Code or compatible IDE / CLI tools
+- useful_execution_methods:
+  - local_model
+  - code_generation
+  - delegate_to_agent
+  - multilingual_assistance
+  - privacy_sensitive_local_inference
+  - hosted_open_weight
+- typical_uses:
+  - start with a small Qwen3 model locally
+  - move to larger or hosted variants when needed
+  - use thinking mode for planning, math, logic, or debugging
+  - use non-thinking mode for UI copy and fast chat
+  - compare local Qwen outputs with hosted frontier APIs
+  - privacy-sensitive demos where local inference is preferred
+- watch_for:
+  - family changes rapidly
+  - model-card details should be checked for current recommended variants
+  - local performance depends on quantization, RAM, VRAM, and runtime
+  - instruction-only and thinking-oriented variants may use different prompt formats
+- best_role_summary: practical local/open-weight option for multilingual support, local deployment, agent modes, and flexible reasoning-cost tradeoffs
+- volatility: very_high
+- freshness_policy: verify exact Qwen variant, context, license, and prompt format
+
+### Gemma / Gemma 4
+- canonical_id: ai-model.google.gemma-4
+- family: Gemma
+- provider: Google DeepMind
+- provider_type: open_model
+- access:
+  - Google AI
+  - Hugging Face
+  - local runtimes
+  - Google Cloud
+- license: source snapshot lists Apache 2.0 for Gemma 4; verify exact model-card terms before deployment
+- context_window_snapshot: 128,000 to 256,000 tokens across Gemma 4 variants
+- max_output_snapshot: depends on runtime and model variant
+- model_roles:
+  - local AI model
+  - multimodal model
+  - teaching model family
+  - privacy-aware prototype model
+- strong_for:
+  - local demos
+  - privacy-aware prototypes
+  - small apps running a model on the builder's own machine
+  - multimodal text-image work
+  - selected audio-capable variants
+  - teaching model sizes and hardware-aware design
+  - local / cloud / browser / mobile / edge deployment comparisons
+- useful_execution_methods:
+  - local_model
+  - multimodal_analysis
+  - privacy_sensitive_local_inference
+  - hosted_open_weight
+  - prototyping
+- typical_uses:
+  - smaller variants for local AI features that do not depend on a hosted API key
+  - larger variants for stronger reasoning, UI critique, coding help, or document assistance
+  - choose variant based on modality and context rather than hype
+  - compare runtime stacks such as Transformers, llama.cpp, Ollama, and LM Studio
+- watch_for:
+  - variants differ in size, modality, and context
+  - local inference can be slow or memory-heavy without suitable hardware or quantization
+  - exact license and model terms should be verified before client-facing use
+- best_role_summary: open local-AI pathway for understanding how model size, modality, context, runtime, and hardware influence deployment choices
+- volatility: high
+- freshness_policy: verify current Gemma variant and exact model-card terms
+
+### GLM / GLM-5
+- canonical_id: ai-model.zai.glm-5
+- family: GLM
+- provider:
+  - Zhipu AI
+  - Z.ai
+- provider_type: open_weight_and_hosted
+- access:
+  - open-weight checkpoints
+  - Hugging Face
+  - supported local runtimes
+  - supported hosted runtimes
+- license: source snapshot lists MIT for GLM-5 weights; verify exact newer model-card terms
+- context_window_snapshot: varies by version; newer GLM-5.x releases advertise long-context support
+- max_output_snapshot: depends on runtime and model variant
+- model_roles:
+  - coding model
+  - repository-understanding model
+  - terminal-agent model
+  - open coding-agent reference
+- strong_for:
+  - code repair
+  - repository-level understanding
+  - terminal-based agent workflows
+  - comparing open-weight coding models against closed coding agents
+  - builders using vLLM
+  - SGLang
+  - Docker model runners
+  - Hugging Face
+  - projects where code reasoning and tool-use reliability matter more than chat personality
+- useful_execution_methods:
+  - delegate_to_agent
+  - code_generation
+  - code_review
+  - repository_analysis
+  - local_model
+  - hosted_open_weight
+- typical_uses:
+  - second coding reviewer after GPT or Claude to expose different failure modes
+  - small feasibility tests on one bug, one feature, and one deployment task
+  - compare benchmark claims against project-specific evidence
+  - document runtime requirements clearly when self-hosting
+- watch_for:
+  - family releases quickly
+  - newer GLM-5.1 / 5.2 variants may become relevant
+  - check exact Hugging Face model card
+  - benchmark strength does not guarantee good UI judgement, project management, or client fit
+- best_role_summary: open coding-agent model family for real repository work, software-engineering evaluation, and open-vs-proprietary deployment comparisons
+- volatility: very_high
+- freshness_policy: verify current GLM release, license, context, and deployment requirements
+
+## 3. Model Capability Tags
+
+### Agentic Coding
+- OpenAI GPT-5.5
+- Claude Opus 4.8
+- Gemini 3.1 Pro Preview
+- Grok 4.3
+- DeepSeek V4 / R1
+- Kimi K2.6
+- Qwen3
+- GLM-5
+
+### Repository-Scale Coding
+- OpenAI GPT-5.5
+- Claude Opus 4.8
+- Kimi K2.6
+- GLM-5
+- DeepSeek V4 / R1
+
+### Tool Use / Agent Tool Calling
+- OpenAI GPT-5.5
+- Claude Opus 4.8
+- Gemini 3.1 Pro Preview
+- Grok 4.3
+- DeepSeek V4 / R1
+- Kimi K2.6
+- Qwen3
+- GLM-5
+
+### Long-Context
+- OpenAI GPT-5.5
+- Claude Opus 4.8
+- Gemini 3.1 Pro Preview
+- Grok 4.3
+- Llama 4
+- DeepSeek V4 / R1
+- Kimi K2.6
+- Qwen3
+- Gemma 4
+- GLM-5
+
+### Multimodal
+- Gemini 3.1 Pro Preview
+- Llama 4
+- Gemma 4
+- Kimi family
+- OpenAI GPT family
+- Claude family
+
+### Local / Self-Hosted Friendly
+- Llama 4
+- DeepSeek open checkpoints
+- Kimi open checkpoints
+- Qwen3
+- Gemma 4
+- GLM-5
+
+### Multilingual / Localization Friendly
+- Qwen3
+- Gemini family
+- OpenAI GPT family
+- Claude family
+- Gemma family
+- DeepSeek family
+
+### Cost-Sensitive / Open-Model Experimentation
+- DeepSeek V4 / R1
+- Qwen3
+- Gemma 4
+- GLM-5
+- Llama 4
+- Kimi K2.6
+
+### Google Ecosystem Integration
+- Gemini 3.1 Pro Preview
+- Gemma 4
+
+### Privacy-Sensitive Local Prototype
+- Qwen3
+- Gemma 4
+- Llama 4
+- GLM-5
+- DeepSeek open checkpoints
+- Kimi open checkpoints
+
+## 4. QUANDA V2 Model-Selection Factors
+
+### Hard Filters
+- project explicitly forbids hosted AI
+- project explicitly requires local inference
+- project explicitly requires a named provider or model
+- user has no API access for a required hosted route
+- model cannot support the required modality
+- model cannot fit required context / file size after realistic chunking strategy
+- required tool-calling or structured-output support is unavailable
+- license terms conflict with intended deployment
+- data-handling constraints conflict with provider route
+- available hardware cannot run the selected local model
+- deployment runtime cannot support the selected model
+- budget constraint makes route infeasible
+
+### Primary Ranking Signals
+- task fit
+- user access
+- user familiarity
+- coding quality fit
+- agentic/tool-use fit
+- multimodal fit
+- context requirement
+- latency requirement
+- cost fit
+- privacy fit
+- local-vs-hosted preference
+- deployment compatibility
+- structured-output reliability
+- language fit
+- resource / documentation quality
+- current model availability
+
+### Secondary Ranking Signals
+- provider ecosystem fit
+- existing project integrations
+- benchmark evidence
+- community adoption
+- local runtime convenience
+- hardware efficiency
+- portability
+- model personality / prose style
+- novelty
+
+### Strong Penalties
+- switching to a new provider with no project-specific benefit
+- requiring a paid API when a known free/local route satisfies the task
+- recommending a huge local model to a laptop-only user
+- recommending a preview alias for an important deployment without version pinning
+- using a reasoning-heavy model for trivial copy edits
+- using a general chat model when deterministic code would solve the task better
+- using any model when no AI assistance is necessary
+
+## 5. Model Selection by Project Need
+
+### Need: Repository-Level Agentic Coding
+- prefer candidates:
+  - OpenAI GPT-5.5
+  - Claude Opus 4.8
+  - GLM-5
+  - Kimi K2.6
+  - DeepSeek coding variants
+  - Qwen coding variants
+- evaluate:
+  - repository access
+  - tool permissions
+  - test execution
+  - code-edit reliability
+  - context size
+  - user review ability
+  - cost
+
+### Need: Multimodal Project Understanding
+- prefer candidates:
+  - Gemini 3.1 Pro Preview
+  - OpenAI GPT multimodal family
+  - Claude multimodal family
+  - Llama 4
+  - Gemma 4
+- evaluate:
+  - screenshot / image support
+  - document support
+  - structured output
+  - privacy
+  - file-size limits
+  - cost
+
+### Need: Local / Offline Prototype
+- prefer candidates:
+  - Qwen3
+  - Gemma 4
+  - Llama 4
+  - GLM-5
+  - DeepSeek open checkpoints
+  - Kimi open checkpoints
+- evaluate:
+  - RAM
+  - VRAM
+  - quantization
+  - model size
+  - inference runtime
+  - latency
+  - license
+  - battery / thermal constraints
+
+### Need: Low-Cost Reasoning
+- prefer candidates:
+  - DeepSeek family
+  - Qwen family
+  - smaller Gemma variants
+  - suitable GLM variants
+- compare against:
+  - paid frontier APIs
+- verify:
+  - current endpoint price
+  - current free tier
+  - context limits
+  - quality on the project's actual task
+
+### Need: Google-Centric Workflow
+- prefer candidates:
+  - Gemini
+  - Gemma where local/open deployment is desired
+- relevant integrations:
+  - Google AI Studio
+  - Gemini API
+  - Google Cloud
+  - Firebase
+  - Google Drive
+  - Google Docs
+
+### Need: Provider Comparison / Research
+- candidate set:
+  - OpenAI
+  - Claude
+  - Gemini
+  - Grok
+  - DeepSeek
+  - Qwen
+  - Llama
+  - Gemma
+  - Kimi
+  - GLM
+- compare with:
+  - same prompt
+  - same task
+  - same rubric
+  - same validation data
+- measure:
+  - task success
+  - latency
+  - cost
+  - tool-use reliability
+  - code quality
+  - structured-output validity
+  - hallucination rate
+  - human correction time
+
+## 6. QUANDA Execution-Method Relationships
+
+### delegate_to_agent IMPLEMENTED_WITH
+- OpenAI GPT-5.5
+- Claude Opus 4.8
+- Gemini 3.1 Pro Preview
+- Grok 4.3
+- DeepSeek V4 / R1
+- Kimi K2.6
+- Qwen3
+- GLM-5
+
+### multimodal_analysis IMPLEMENTED_WITH
+- Gemini 3.1 Pro Preview
+- Llama 4
+- Gemma 4
+- multimodal OpenAI GPT family
+- multimodal Claude family
+- multimodal Kimi variants
+
+### local_ai IMPLEMENTED_WITH
+- Llama 4
+- DeepSeek open checkpoints
+- Kimi open checkpoints
+- Qwen3
+- Gemma 4
+- GLM-5
+
+### coding_assistance IMPLEMENTED_WITH
+- OpenAI GPT-5.5
+- Claude Opus 4.8
+- Gemini 3.1 Pro Preview
+- DeepSeek V4 / R1
+- Kimi K2.6
+- Qwen3
+- GLM-5
+- Grok 4.3
+
+### long_context_review IMPLEMENTED_WITH
+- OpenAI GPT-5.5
+- Claude Opus 4.8
+- Gemini 3.1 Pro Preview
+- Grok 4.3
+- Llama 4 Scout
+- DeepSeek V4 family
+- Kimi K2.6
+- Qwen long-context variants
+- Gemma 4 long-context variants
+- GLM long-context variants
+
+## 7. Suggested Core Entity: ai_model
+
+- id
+- family
+- provider
+- providerType
+- lifecycleStatus
+- aliases[]
+- accessModes[]
+- licenseType
+- licenseNotes
+- modalities[]
+- capabilities[]
+- recommendedTasks[]
+- notRecommendedFor[]
+- contextWindowSnapshot
+- maxOutputSnapshot
+- contextNotes
+- outputNotes
+- localDeployable
+- hostedAvailable
+- toolUseSupport
+- structuredOutputSupport
+- codingStrength
+- multimodalStrength
+- longContextStrength
+- multilingualStrength
+- privacyProfile
+- approximateCostTier
+- hardwareRequirements
+- supportedRuntimes[]
+- ecosystemIntegrations[]
+- watchFor[]
+- sourceSnapshot
+- lastVerifiedAt
+- freshnessPolicy
+- volatility
+- currentStatus
+- deprecatedAliases[]
+- provenance
+
+## 8. Suggested Relationship Types for AI Models
+
+- model_family_of
+- model_variant_of
+- provided_by
+- accessible_via
+- hosted_by
+- locally_runnable_with
+- optimized_for
+- capable_of
+- supports_modality
+- supports_tool_use
+- supports_structured_output
+- useful_for
+- alternative_to
+- cheaper_alternative_to
+- local_alternative_to
+- open_weight_alternative_to
+- hosted_alternative_to
+- commonly_used_with
+- integrates_with
+- requires_hardware
+- requires_api_key
+- governed_by_license
+- version_supersedes
+- preview_of
+- deprecated_by
+- commonly_compared_with
+
+## 9. AI Model Decision Rules for QUANDA
+
+### Do not recommend a model merely because it is powerful
+- Prefer the smallest / cheapest / simplest model or non-AI method that satisfies the task.
+- If deterministic code solves the task reliably, prefer deterministic code.
+- If the user already has access to a suitable model, switching providers should incur friction cost.
+- If a local model satisfies privacy and quality requirements, do not force a hosted route.
+- If a hosted API meaningfully reduces setup compared with self-hosting, include that advantage explicitly.
+- If a project needs image / screenshot understanding, require multimodal support.
+- If a project needs repository edits, require an agent/tool environment capable of actually editing and validating code rather than assuming raw chat access is equivalent.
+- Treat model benchmark claims as evidence inputs, not final project proof.
+- Test candidate models on representative project tasks where model choice materially affects project risk.
+
+### Proof requirements
+For each AI-model recommendation, QUANDA should be able to answer:
+- Why is AI needed for this task?
+- Why this model family?
+- Why this access route?
+- Why hosted or local?
+- Why not the other top candidate?
+- What additional setup does this route introduce?
+- What cost/privacy/license risk exists?
+- How will the user validate the output?
+
+### Alternative-path evidence
+When AI model choice materially changes the pipeline, include alternate paths such as:
+- hosted frontier model
+- lower-cost hosted model
+- open-weight hosted model
+- local model
+- deterministic / no-AI solution
+
+Do not manufacture five variants if fewer are genuinely viable.
+
+## 10. Freshness / Maintenance Rules
+
+### Very-high-volatility records
+- Gemini preview models
+- Grok current model aliases
+- DeepSeek preview / current endpoint names
+- Kimi current coding variants
+- Qwen fast-moving variants
+- GLM current 5.x variants
+- frontier OpenAI / Claude aliases
+
+### Verify before production use
+- exact model name
+- API endpoint
+- lifecycle status
+- context limit
+- output limit
+- modality support
+- tool-use support
+- structured-output support
+- rate limit
+- free tier
+- paid pricing
+- data retention / training policy
+- regional availability
+- license
+- local hardware requirement
+- runtime compatibility
+
+### Historical snapshot rule
+- Preserve the original DMS4 2026B snapshot as provenance.
+- Do not silently overwrite source-snapshot claims with newer provider claims.
+- Add newer metadata as a later verification layer.
+- Keep deprecated model IDs resolvable for older QUANDA projects.
+- User-facing recommendation text should prefer current verified metadata over dated snapshot metadata.
+
+## 11. Provenance
+
+- source_type: course_resource_screenshot
+- source_name: DMS4 Client Solutions — Models tab
+- source_term: 2026B
+- captured_from_user_screenshots: true
+- captured_date_context: 2026-08-26
+- records_extracted:
+  - OpenAI GPT-5.5
+  - Claude Opus 4.8
+  - Gemini 3.1 Pro Preview
+  - Grok 4.3
+  - Llama 4
+  - DeepSeek V4 / R1
+  - Kimi / Kimi K2.6
+  - Qwen / Qwen3
+  - Gemma / Gemma 4
+  - GLM / GLM-5
+- extraction_policy: summarized and normalized for QUANDA ontology use
+- current_truth_policy: verify volatile details against provider documentation before making live recommendations
+
+## 12. Final Principle
+
+- QUANDA should treat AI models as tools inside a project pipeline, not as the project pipeline itself.
+- A coding agent, local model, hosted API, documentation page, tutorial, plugin, template, or manual workflow are competing execution methods.
+- Model choice should reduce total project friction, not add fashionable complexity.
+- The recommended AI path must be explainable against alternatives and grounded in the user's actual constraints, access, skill, hardware, budget, privacy needs, and deadline.

@@ -21,10 +21,21 @@ Treat `quanda.skills` as the human-maintained creative and technical knowledge s
 The runtime knowledge layers are:
 
 - `knowledge/ontology.compiled.json` — canonical concepts compiled from `quanda.skills`
+- `knowledge/quanda-ai-models.skills` — curated, time-scoped AI model-family knowledge kept separate from the creative ontology
+- `knowledge/ai-models.compiled.json` — validated model capabilities, access routes, lifecycle snapshots, and provenance used by the nested model selector
+- `knowledge/visual-design-vocabulary.compiled.json` — a focused design vocabulary compiled from `quanda.skills` for moodboard grounding and deterministic ID validation
 - `knowledge/software-capabilities.json` — technique-to-software support and methods
 - `knowledge/technique-playbooks.json` — curated prerequisites, artifacts, implementation steps, acceptance checks, and failure modes for executable tasks and agent handoffs
 
 Gemini identifies plain-language project intent. Repository-owned resolution validates it against these canonical layers, and the deterministic solver selects paths, task dependencies, and delegation playbooks. Agent prompts are generated from the selected playbooks; they are not generic Gemini-authored instructions.
+
+When a selected execution step actually benefits from AI, a second deterministic selector compares the curated model families by hard capability fit, user access, familiarity, modality, privacy, cost, setup burden, switching friction, lifecycle stability, and snapshot freshness. This nested choice is separate from the server-side Gemini call used internally for project understanding. Non-AI execution remains a first-class option.
+
+## Optional visual-reference analysis
+
+Users may attach one to four JPEG, PNG, or WebP moodboard/reference images. A dedicated server route sends those images to Gemini for structured observation of composition, hierarchy, color, typography, spacing, shapes, texture, lighting/depth, and motion cues. The request includes only a compact 196-concept prompt subset compiled from `quanda.skills`, not the full ontology. Returned concept IDs are deterministically checked against the 560-concept visual-design artifact; invented IDs are discarded and canonical labels come from the repository. QUANDA then shows an editable visual-style profile with its grounded concepts. The profile does not affect project analysis, deterministic ranking, or agent prompts until the user explicitly approves it.
+
+Reference images are held only in the browser and request body for that analysis; QUANDA does not persist them or include them in the saved local draft. The approved structured profile may be saved locally with the rest of the draft. The original text-only workflow still works when no images are provided or visual analysis is unavailable.
 
 ## V2 product direction
 
@@ -123,6 +134,8 @@ Run the validation gate with:
 ```bash
 pnpm test:solver
 pnpm test:analysis
+pnpm test:visual-analysis
+pnpm test:ai-models
 pnpm lint
 pnpm build
 ```
@@ -133,4 +146,4 @@ Import this repository into Vercel as a Next.js project. No custom build or outp
 
 Copy `.env.example` to `.env.local` for local server-side integrations. Configure the same variable names in Vercel for Preview and Production. `GEMINI_API_KEY` is server-only and must never use a `NEXT_PUBLIC_` prefix.
 
-Each uncached project submission makes one server-side Gemini structured-analysis request. The validated analysis enriches repository-owned ontology and capability resolution, then the deterministic QUANDA solver ranks the paths. If Gemini configuration, quota, output validation, or the request itself fails, the API automatically uses local deterministic analysis instead.
+Each uncached project submission makes one server-side Gemini structured-analysis request. Visual-reference analysis is a separate optional request made only when the user clicks the analysis control. The validated and user-approved result enriches repository-owned ontology and capability resolution, then the deterministic QUANDA solver ranks the paths. If project-understanding Gemini configuration, quota, output validation, or the request itself fails, the API automatically uses local deterministic analysis instead. If optional visual analysis fails, QUANDA reports the issue and leaves the text-only workflow available.

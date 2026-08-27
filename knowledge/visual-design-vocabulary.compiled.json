@@ -1,0 +1,3621 @@
+{
+  "visualVocabularySchemaVersion": "1.0.0",
+  "source": "knowledge/quanda.skills",
+  "compiledFrom": "knowledge/ontology.compiled.json",
+  "conceptCount": 560,
+  "promptConceptCount": 196,
+  "domains": [
+    {
+      "id": "aesthetic-direction",
+      "label": "Aesthetic, mood, and visual identity",
+      "concepts": [
+        {
+          "id": "creative-direction.aesthetic.minimalist",
+          "label": "minimalist",
+          "section": "Creative Direction",
+          "category": "Aesthetic"
+        },
+        {
+          "id": "creative-direction.design-movement.arts-and-crafts",
+          "label": "Arts and Crafts",
+          "section": "Creative Direction",
+          "category": "Design Movement"
+        },
+        {
+          "id": "creative-direction.mood.joyful",
+          "label": "joyful",
+          "section": "Creative Direction",
+          "category": "Mood"
+        },
+        {
+          "id": "creative-direction.atmosphere.sunlit",
+          "label": "sunlit",
+          "section": "Creative Direction",
+          "category": "Atmosphere"
+        },
+        {
+          "id": "creative-direction.visual-identity.wordmark-led",
+          "label": "wordmark-led",
+          "section": "Creative Direction",
+          "category": "Visual Identity"
+        },
+        {
+          "id": "creative-direction.aesthetic.maximalist",
+          "label": "maximalist",
+          "section": "Creative Direction",
+          "category": "Aesthetic"
+        },
+        {
+          "id": "creative-direction.design-movement.art-nouveau",
+          "label": "Art Nouveau",
+          "section": "Creative Direction",
+          "category": "Design Movement"
+        },
+        {
+          "id": "creative-direction.mood.cheerful",
+          "label": "cheerful",
+          "section": "Creative Direction",
+          "category": "Mood"
+        },
+        {
+          "id": "creative-direction.atmosphere.golden-hour",
+          "label": "golden-hour",
+          "section": "Creative Direction",
+          "category": "Atmosphere"
+        },
+        {
+          "id": "creative-direction.visual-identity.monogram-led",
+          "label": "monogram-led",
+          "section": "Creative Direction",
+          "category": "Visual Identity"
+        },
+        {
+          "id": "creative-direction.aesthetic.brutalist",
+          "label": "brutalist",
+          "section": "Creative Direction",
+          "category": "Aesthetic"
+        },
+        {
+          "id": "creative-direction.design-movement.vienna-secession",
+          "label": "Vienna Secession",
+          "section": "Creative Direction",
+          "category": "Design Movement"
+        },
+        {
+          "id": "creative-direction.mood.playful",
+          "label": "playful",
+          "section": "Creative Direction",
+          "category": "Mood"
+        },
+        {
+          "id": "creative-direction.atmosphere.blue-hour",
+          "label": "blue-hour",
+          "section": "Creative Direction",
+          "category": "Atmosphere"
+        },
+        {
+          "id": "creative-direction.visual-identity.symbol-led",
+          "label": "symbol-led",
+          "section": "Creative Direction",
+          "category": "Visual Identity"
+        },
+        {
+          "id": "creative-direction.aesthetic.neo-brutalist",
+          "label": "neo-brutalist",
+          "section": "Creative Direction",
+          "category": "Aesthetic"
+        },
+        {
+          "id": "creative-direction.design-movement.deutscher-werkbund",
+          "label": "Deutscher Werkbund",
+          "section": "Creative Direction",
+          "category": "Design Movement"
+        },
+        {
+          "id": "creative-direction.mood.energetic",
+          "label": "energetic",
+          "section": "Creative Direction",
+          "category": "Mood"
+        },
+        {
+          "id": "creative-direction.atmosphere.moonlit",
+          "label": "moonlit",
+          "section": "Creative Direction",
+          "category": "Atmosphere"
+        },
+        {
+          "id": "creative-direction.visual-identity.mascot-led",
+          "label": "mascot-led",
+          "section": "Creative Direction",
+          "category": "Visual Identity"
+        },
+        {
+          "id": "creative-direction.aesthetic.swiss-international-typographic",
+          "label": "Swiss / International Typographic",
+          "section": "Creative Direction",
+          "category": "Aesthetic"
+        },
+        {
+          "id": "creative-direction.design-movement.bauhaus",
+          "label": "Bauhaus",
+          "section": "Creative Direction",
+          "category": "Design Movement"
+        },
+        {
+          "id": "creative-direction.mood.exuberant",
+          "label": "exuberant",
+          "section": "Creative Direction",
+          "category": "Mood"
+        },
+        {
+          "id": "creative-direction.atmosphere.nocturnal",
+          "label": "nocturnal",
+          "section": "Creative Direction",
+          "category": "Atmosphere"
+        },
+        {
+          "id": "creative-direction.visual-identity.typographic-system",
+          "label": "typographic system",
+          "section": "Creative Direction",
+          "category": "Visual Identity"
+        },
+        {
+          "id": "creative-direction.aesthetic.bauhaus",
+          "label": "Bauhaus",
+          "section": "Creative Direction",
+          "category": "Aesthetic"
+        },
+        {
+          "id": "creative-direction.design-movement.de-stijl",
+          "label": "De Stijl",
+          "section": "Creative Direction",
+          "category": "Design Movement"
+        },
+        {
+          "id": "creative-direction.mood.celebratory",
+          "label": "celebratory",
+          "section": "Creative Direction",
+          "category": "Mood"
+        },
+        {
+          "id": "creative-direction.atmosphere.foggy",
+          "label": "foggy",
+          "section": "Creative Direction",
+          "category": "Atmosphere"
+        },
+        {
+          "id": "creative-direction.visual-identity.editorial-system",
+          "label": "editorial system",
+          "section": "Creative Direction",
+          "category": "Visual Identity"
+        },
+        {
+          "id": "creative-direction.aesthetic.art-deco",
+          "label": "Art Deco",
+          "section": "Creative Direction",
+          "category": "Aesthetic"
+        },
+        {
+          "id": "creative-direction.design-movement.constructivist-design",
+          "label": "Constructivist design",
+          "section": "Creative Direction",
+          "category": "Design Movement"
+        },
+        {
+          "id": "creative-direction.mood.hopeful",
+          "label": "hopeful",
+          "section": "Creative Direction",
+          "category": "Mood"
+        },
+        {
+          "id": "creative-direction.atmosphere.misty",
+          "label": "misty",
+          "section": "Creative Direction",
+          "category": "Atmosphere"
+        },
+        {
+          "id": "creative-direction.visual-identity.modular-identity",
+          "label": "modular identity",
+          "section": "Creative Direction",
+          "category": "Visual Identity"
+        },
+        {
+          "id": "creative-direction.aesthetic.art-nouveau",
+          "label": "Art Nouveau",
+          "section": "Creative Direction",
+          "category": "Aesthetic"
+        },
+        {
+          "id": "creative-direction.design-movement.international-typographic-style",
+          "label": "International Typographic Style",
+          "section": "Creative Direction",
+          "category": "Design Movement"
+        },
+        {
+          "id": "creative-direction.mood.optimistic",
+          "label": "optimistic",
+          "section": "Creative Direction",
+          "category": "Mood"
+        },
+        {
+          "id": "creative-direction.atmosphere.rainy",
+          "label": "rainy",
+          "section": "Creative Direction",
+          "category": "Atmosphere"
+        },
+        {
+          "id": "creative-direction.visual-identity.responsive-identity",
+          "label": "responsive identity",
+          "section": "Creative Direction",
+          "category": "Visual Identity"
+        },
+        {
+          "id": "creative-direction.aesthetic.memphis",
+          "label": "Memphis",
+          "section": "Creative Direction",
+          "category": "Aesthetic"
+        },
+        {
+          "id": "creative-direction.design-movement.swiss-style",
+          "label": "Swiss Style",
+          "section": "Creative Direction",
+          "category": "Design Movement"
+        },
+        {
+          "id": "creative-direction.mood.uplifting",
+          "label": "uplifting",
+          "section": "Creative Direction",
+          "category": "Mood"
+        },
+        {
+          "id": "creative-direction.atmosphere.stormy",
+          "label": "stormy",
+          "section": "Creative Direction",
+          "category": "Atmosphere"
+        },
+        {
+          "id": "creative-direction.visual-identity.generative-identity",
+          "label": "generative identity",
+          "section": "Creative Direction",
+          "category": "Visual Identity"
+        },
+        {
+          "id": "creative-direction.aesthetic.de-stijl",
+          "label": "De Stijl",
+          "section": "Creative Direction",
+          "category": "Aesthetic"
+        },
+        {
+          "id": "creative-direction.design-movement.new-typography",
+          "label": "New Typography",
+          "section": "Creative Direction",
+          "category": "Design Movement"
+        },
+        {
+          "id": "creative-direction.mood.warm",
+          "label": "warm",
+          "section": "Creative Direction",
+          "category": "Mood"
+        },
+        {
+          "id": "creative-direction.atmosphere.snowy",
+          "label": "snowy",
+          "section": "Creative Direction",
+          "category": "Atmosphere"
+        },
+        {
+          "id": "creative-direction.visual-identity.dynamic-identity",
+          "label": "dynamic identity",
+          "section": "Creative Direction",
+          "category": "Visual Identity"
+        },
+        {
+          "id": "creative-direction.aesthetic.constructivist",
+          "label": "Constructivist",
+          "section": "Creative Direction",
+          "category": "Aesthetic"
+        },
+        {
+          "id": "creative-direction.design-movement.streamline-moderne",
+          "label": "Streamline Moderne",
+          "section": "Creative Direction",
+          "category": "Design Movement"
+        },
+        {
+          "id": "creative-direction.mood.cozy",
+          "label": "cozy",
+          "section": "Creative Direction",
+          "category": "Mood"
+        },
+        {
+          "id": "creative-direction.atmosphere.humid",
+          "label": "humid",
+          "section": "Creative Direction",
+          "category": "Atmosphere"
+        },
+        {
+          "id": "creative-direction.visual-identity.motion-first-identity",
+          "label": "motion-first identity",
+          "section": "Creative Direction",
+          "category": "Visual Identity"
+        },
+        {
+          "id": "creative-direction.aesthetic.suprematist",
+          "label": "Suprematist",
+          "section": "Creative Direction",
+          "category": "Aesthetic"
+        },
+        {
+          "id": "creative-direction.design-movement.art-deco",
+          "label": "Art Deco",
+          "section": "Creative Direction",
+          "category": "Design Movement"
+        },
+        {
+          "id": "creative-direction.mood.comforting",
+          "label": "comforting",
+          "section": "Creative Direction",
+          "category": "Mood"
+        },
+        {
+          "id": "creative-direction.atmosphere.hazy",
+          "label": "hazy",
+          "section": "Creative Direction",
+          "category": "Atmosphere"
+        },
+        {
+          "id": "creative-direction.visual-identity.illustration-led-identity",
+          "label": "illustration-led identity",
+          "section": "Creative Direction",
+          "category": "Visual Identity"
+        },
+        {
+          "id": "creative-direction.aesthetic.futurist",
+          "label": "Futurist",
+          "section": "Creative Direction",
+          "category": "Aesthetic"
+        },
+        {
+          "id": "creative-direction.design-movement.mid-century-modern",
+          "label": "Mid-century modern",
+          "section": "Creative Direction",
+          "category": "Design Movement"
+        },
+        {
+          "id": "creative-direction.mood.serene",
+          "label": "serene",
+          "section": "Creative Direction",
+          "category": "Mood"
+        },
+        {
+          "id": "creative-direction.atmosphere.dusty",
+          "label": "dusty",
+          "section": "Creative Direction",
+          "category": "Atmosphere"
+        },
+        {
+          "id": "creative-direction.visual-identity.photography-led-identity",
+          "label": "photography-led identity",
+          "section": "Creative Direction",
+          "category": "Visual Identity"
+        },
+        {
+          "id": "creative-direction.aesthetic.retrofuturist",
+          "label": "retrofuturist",
+          "section": "Creative Direction",
+          "category": "Aesthetic"
+        },
+        {
+          "id": "creative-direction.design-movement.scandinavian-modern",
+          "label": "Scandinavian modern",
+          "section": "Creative Direction",
+          "category": "Design Movement"
+        },
+        {
+          "id": "creative-direction.mood.peaceful",
+          "label": "peaceful",
+          "section": "Creative Direction",
+          "category": "Mood"
+        },
+        {
+          "id": "creative-direction.atmosphere.smoky",
+          "label": "smoky",
+          "section": "Creative Direction",
+          "category": "Atmosphere"
+        },
+        {
+          "id": "creative-direction.visual-identity.pattern-led-identity",
+          "label": "pattern-led identity",
+          "section": "Creative Direction",
+          "category": "Visual Identity"
+        },
+        {
+          "id": "creative-direction.aesthetic.mid-century-modern",
+          "label": "mid-century modern",
+          "section": "Creative Direction",
+          "category": "Aesthetic"
+        },
+        {
+          "id": "creative-direction.design-movement.ulm-school-functionalism",
+          "label": "Ulm School functionalism",
+          "section": "Creative Direction",
+          "category": "Design Movement"
+        },
+        {
+          "id": "creative-direction.mood.tranquil",
+          "label": "tranquil",
+          "section": "Creative Direction",
+          "category": "Mood"
+        },
+        {
+          "id": "creative-direction.atmosphere.neon-lit",
+          "label": "neon-lit",
+          "section": "Creative Direction",
+          "category": "Atmosphere"
+        },
+        {
+          "id": "creative-direction.visual-identity.color-led-identity",
+          "label": "color-led identity",
+          "section": "Creative Direction",
+          "category": "Visual Identity"
+        },
+        {
+          "id": "creative-direction.aesthetic.postmodern",
+          "label": "postmodern",
+          "section": "Creative Direction",
+          "category": "Aesthetic"
+        },
+        {
+          "id": "creative-direction.design-movement.corporate-modernism",
+          "label": "Corporate modernism",
+          "section": "Creative Direction",
+          "category": "Design Movement"
+        },
+        {
+          "id": "creative-direction.mood.meditative",
+          "label": "meditative",
+          "section": "Creative Direction",
+          "category": "Mood"
+        },
+        {
+          "id": "creative-direction.atmosphere.candlelit",
+          "label": "candlelit",
+          "section": "Creative Direction",
+          "category": "Atmosphere"
+        },
+        {
+          "id": "creative-direction.visual-identity.material-led-identity",
+          "label": "material-led identity",
+          "section": "Creative Direction",
+          "category": "Visual Identity"
+        }
+      ],
+      "promptConceptIds": [
+        "creative-direction.aesthetic.minimalist",
+        "creative-direction.design-movement.arts-and-crafts",
+        "creative-direction.mood.joyful",
+        "creative-direction.atmosphere.sunlit",
+        "creative-direction.visual-identity.wordmark-led",
+        "creative-direction.aesthetic.maximalist",
+        "creative-direction.design-movement.art-nouveau",
+        "creative-direction.mood.cheerful",
+        "creative-direction.atmosphere.golden-hour",
+        "creative-direction.visual-identity.monogram-led",
+        "creative-direction.aesthetic.brutalist",
+        "creative-direction.design-movement.vienna-secession",
+        "creative-direction.mood.playful",
+        "creative-direction.atmosphere.blue-hour",
+        "creative-direction.visual-identity.symbol-led",
+        "creative-direction.aesthetic.neo-brutalist",
+        "creative-direction.design-movement.deutscher-werkbund",
+        "creative-direction.mood.energetic",
+        "creative-direction.atmosphere.moonlit",
+        "creative-direction.visual-identity.mascot-led",
+        "creative-direction.aesthetic.swiss-international-typographic",
+        "creative-direction.design-movement.bauhaus",
+        "creative-direction.mood.exuberant",
+        "creative-direction.atmosphere.nocturnal",
+        "creative-direction.visual-identity.typographic-system",
+        "creative-direction.aesthetic.bauhaus",
+        "creative-direction.design-movement.de-stijl",
+        "creative-direction.mood.celebratory"
+      ]
+    },
+    {
+      "id": "composition-layout",
+      "label": "Composition, hierarchy, spacing, and rhythm",
+      "concepts": [
+        {
+          "id": "visual-characteristics.composition.rule-of-thirds",
+          "label": "rule of thirds",
+          "section": "Visual Characteristics",
+          "category": "Composition"
+        },
+        {
+          "id": "visual-characteristics.layout.single-column",
+          "label": "single column",
+          "section": "Visual Characteristics",
+          "category": "Layout"
+        },
+        {
+          "id": "visual-characteristics.visual-hierarchy.single-focal-point",
+          "label": "single focal point",
+          "section": "Visual Characteristics",
+          "category": "Visual Hierarchy"
+        },
+        {
+          "id": "visual-characteristics.negative-space.none",
+          "label": "none",
+          "section": "Visual Characteristics",
+          "category": "Negative Space"
+        },
+        {
+          "id": "visual-characteristics.balance.symmetrical",
+          "label": "symmetrical",
+          "section": "Visual Characteristics",
+          "category": "Balance"
+        },
+        {
+          "id": "visual-characteristics.proportion.naturalistic",
+          "label": "naturalistic",
+          "section": "Visual Characteristics",
+          "category": "Proportion"
+        },
+        {
+          "id": "visual-characteristics.scale.microscopic",
+          "label": "microscopic",
+          "section": "Visual Characteristics",
+          "category": "Scale"
+        },
+        {
+          "id": "visual-characteristics.rhythm.regular",
+          "label": "regular",
+          "section": "Visual Characteristics",
+          "category": "Rhythm"
+        },
+        {
+          "id": "visual-characteristics.repetition.none",
+          "label": "none",
+          "section": "Visual Characteristics",
+          "category": "Repetition"
+        },
+        {
+          "id": "visual-characteristics.symmetry.bilateral",
+          "label": "bilateral",
+          "section": "Visual Characteristics",
+          "category": "Symmetry"
+        },
+        {
+          "id": "visual-characteristics.asymmetry.balanced-asymmetry",
+          "label": "balanced asymmetry",
+          "section": "Visual Characteristics",
+          "category": "Asymmetry"
+        },
+        {
+          "id": "graphic-design.graphic-composition.centered",
+          "label": "centered",
+          "section": "Graphic Design",
+          "category": "Graphic Composition"
+        },
+        {
+          "id": "visual-characteristics.composition.centered",
+          "label": "centered",
+          "section": "Visual Characteristics",
+          "category": "Composition"
+        },
+        {
+          "id": "visual-characteristics.layout.two-column",
+          "label": "two column",
+          "section": "Visual Characteristics",
+          "category": "Layout"
+        },
+        {
+          "id": "visual-characteristics.visual-hierarchy.primary-secondary-tertiary",
+          "label": "primary-secondary-tertiary",
+          "section": "Visual Characteristics",
+          "category": "Visual Hierarchy"
+        },
+        {
+          "id": "visual-characteristics.negative-space.minimal",
+          "label": "minimal",
+          "section": "Visual Characteristics",
+          "category": "Negative Space"
+        },
+        {
+          "id": "visual-characteristics.balance.asymmetrical",
+          "label": "asymmetrical",
+          "section": "Visual Characteristics",
+          "category": "Balance"
+        },
+        {
+          "id": "visual-characteristics.proportion.idealized",
+          "label": "idealized",
+          "section": "Visual Characteristics",
+          "category": "Proportion"
+        },
+        {
+          "id": "visual-characteristics.scale.miniature",
+          "label": "miniature",
+          "section": "Visual Characteristics",
+          "category": "Scale"
+        },
+        {
+          "id": "visual-characteristics.rhythm.alternating",
+          "label": "alternating",
+          "section": "Visual Characteristics",
+          "category": "Rhythm"
+        },
+        {
+          "id": "visual-characteristics.repetition.regular",
+          "label": "regular",
+          "section": "Visual Characteristics",
+          "category": "Repetition"
+        },
+        {
+          "id": "visual-characteristics.symmetry.radial",
+          "label": "radial",
+          "section": "Visual Characteristics",
+          "category": "Symmetry"
+        },
+        {
+          "id": "visual-characteristics.asymmetry.dynamic-asymmetry",
+          "label": "dynamic asymmetry",
+          "section": "Visual Characteristics",
+          "category": "Asymmetry"
+        },
+        {
+          "id": "graphic-design.graphic-composition.axial",
+          "label": "axial",
+          "section": "Graphic Design",
+          "category": "Graphic Composition"
+        },
+        {
+          "id": "visual-characteristics.composition.symmetrical",
+          "label": "symmetrical",
+          "section": "Visual Characteristics",
+          "category": "Composition"
+        },
+        {
+          "id": "visual-characteristics.layout.multi-column",
+          "label": "multi-column",
+          "section": "Visual Characteristics",
+          "category": "Layout"
+        },
+        {
+          "id": "visual-characteristics.visual-hierarchy.typographic-hierarchy",
+          "label": "typographic hierarchy",
+          "section": "Visual Characteristics",
+          "category": "Visual Hierarchy"
+        },
+        {
+          "id": "visual-characteristics.negative-space.moderate",
+          "label": "moderate",
+          "section": "Visual Characteristics",
+          "category": "Negative Space"
+        },
+        {
+          "id": "visual-characteristics.balance.radial",
+          "label": "radial",
+          "section": "Visual Characteristics",
+          "category": "Balance"
+        },
+        {
+          "id": "visual-characteristics.proportion.heroic",
+          "label": "heroic",
+          "section": "Visual Characteristics",
+          "category": "Proportion"
+        },
+        {
+          "id": "visual-characteristics.scale.toy-scale",
+          "label": "toy-scale",
+          "section": "Visual Characteristics",
+          "category": "Scale"
+        },
+        {
+          "id": "visual-characteristics.rhythm.progressive",
+          "label": "progressive",
+          "section": "Visual Characteristics",
+          "category": "Rhythm"
+        },
+        {
+          "id": "visual-characteristics.repetition.irregular",
+          "label": "irregular",
+          "section": "Visual Characteristics",
+          "category": "Repetition"
+        },
+        {
+          "id": "visual-characteristics.symmetry.rotational",
+          "label": "rotational",
+          "section": "Visual Characteristics",
+          "category": "Symmetry"
+        },
+        {
+          "id": "visual-characteristics.asymmetry.visual-weight-offset",
+          "label": "visual-weight offset",
+          "section": "Visual Characteristics",
+          "category": "Asymmetry"
+        },
+        {
+          "id": "graphic-design.graphic-composition.symmetrical",
+          "label": "symmetrical",
+          "section": "Graphic Design",
+          "category": "Graphic Composition"
+        },
+        {
+          "id": "visual-characteristics.composition.asymmetrical",
+          "label": "asymmetrical",
+          "section": "Visual Characteristics",
+          "category": "Composition"
+        },
+        {
+          "id": "visual-characteristics.layout.manuscript-grid",
+          "label": "manuscript grid",
+          "section": "Visual Characteristics",
+          "category": "Layout"
+        },
+        {
+          "id": "visual-characteristics.visual-hierarchy.size-hierarchy",
+          "label": "size hierarchy",
+          "section": "Visual Characteristics",
+          "category": "Visual Hierarchy"
+        },
+        {
+          "id": "visual-characteristics.negative-space.generous",
+          "label": "generous",
+          "section": "Visual Characteristics",
+          "category": "Negative Space"
+        },
+        {
+          "id": "visual-characteristics.balance.crystallographic-all-over",
+          "label": "crystallographic / all-over",
+          "section": "Visual Characteristics",
+          "category": "Balance"
+        },
+        {
+          "id": "visual-characteristics.proportion.fashion-elongated",
+          "label": "fashion-elongated",
+          "section": "Visual Characteristics",
+          "category": "Proportion"
+        },
+        {
+          "id": "visual-characteristics.scale.intimate",
+          "label": "intimate",
+          "section": "Visual Characteristics",
+          "category": "Scale"
+        },
+        {
+          "id": "visual-characteristics.rhythm.flowing",
+          "label": "flowing",
+          "section": "Visual Characteristics",
+          "category": "Rhythm"
+        },
+        {
+          "id": "visual-characteristics.repetition.alternating",
+          "label": "alternating",
+          "section": "Visual Characteristics",
+          "category": "Repetition"
+        },
+        {
+          "id": "visual-characteristics.symmetry.translational",
+          "label": "translational",
+          "section": "Visual Characteristics",
+          "category": "Symmetry"
+        },
+        {
+          "id": "visual-characteristics.asymmetry.off-center-focal-point",
+          "label": "off-center focal point",
+          "section": "Visual Characteristics",
+          "category": "Asymmetry"
+        },
+        {
+          "id": "graphic-design.graphic-composition.asymmetrical",
+          "label": "asymmetrical",
+          "section": "Graphic Design",
+          "category": "Graphic Composition"
+        },
+        {
+          "id": "visual-characteristics.composition.golden-ratio",
+          "label": "golden ratio",
+          "section": "Visual Characteristics",
+          "category": "Composition"
+        },
+        {
+          "id": "visual-characteristics.layout.modular-grid",
+          "label": "modular grid",
+          "section": "Visual Characteristics",
+          "category": "Layout"
+        },
+        {
+          "id": "visual-characteristics.visual-hierarchy.color-hierarchy",
+          "label": "color hierarchy",
+          "section": "Visual Characteristics",
+          "category": "Visual Hierarchy"
+        },
+        {
+          "id": "visual-characteristics.negative-space.dominant",
+          "label": "dominant",
+          "section": "Visual Characteristics",
+          "category": "Negative Space"
+        },
+        {
+          "id": "visual-characteristics.balance.static",
+          "label": "static",
+          "section": "Visual Characteristics",
+          "category": "Balance"
+        },
+        {
+          "id": "visual-characteristics.proportion.chibi-super-deformed",
+          "label": "chibi / super-deformed",
+          "section": "Visual Characteristics",
+          "category": "Proportion"
+        },
+        {
+          "id": "visual-characteristics.scale.human-scale",
+          "label": "human-scale",
+          "section": "Visual Characteristics",
+          "category": "Scale"
+        },
+        {
+          "id": "visual-characteristics.rhythm.syncopated-visual-rhythm",
+          "label": "syncopated visual rhythm",
+          "section": "Visual Characteristics",
+          "category": "Rhythm"
+        },
+        {
+          "id": "visual-characteristics.repetition.progressive",
+          "label": "progressive",
+          "section": "Visual Characteristics",
+          "category": "Repetition"
+        },
+        {
+          "id": "visual-characteristics.symmetry.reflection",
+          "label": "reflection",
+          "section": "Visual Characteristics",
+          "category": "Symmetry"
+        },
+        {
+          "id": "visual-characteristics.asymmetry.unequal-margins",
+          "label": "unequal margins",
+          "section": "Visual Characteristics",
+          "category": "Asymmetry"
+        },
+        {
+          "id": "graphic-design.graphic-composition.diagonal",
+          "label": "diagonal",
+          "section": "Graphic Design",
+          "category": "Graphic Composition"
+        },
+        {
+          "id": "visual-characteristics.composition.golden-spiral",
+          "label": "golden spiral",
+          "section": "Visual Characteristics",
+          "category": "Composition"
+        },
+        {
+          "id": "visual-characteristics.layout.baseline-grid",
+          "label": "baseline grid",
+          "section": "Visual Characteristics",
+          "category": "Layout"
+        },
+        {
+          "id": "visual-characteristics.visual-hierarchy.value-hierarchy",
+          "label": "value hierarchy",
+          "section": "Visual Characteristics",
+          "category": "Visual Hierarchy"
+        },
+        {
+          "id": "visual-characteristics.negative-space.asymmetrical",
+          "label": "asymmetrical",
+          "section": "Visual Characteristics",
+          "category": "Negative Space"
+        },
+        {
+          "id": "visual-characteristics.balance.dynamic",
+          "label": "dynamic",
+          "section": "Visual Characteristics",
+          "category": "Balance"
+        },
+        {
+          "id": "visual-characteristics.proportion.caricatured",
+          "label": "caricatured",
+          "section": "Visual Characteristics",
+          "category": "Proportion"
+        },
+        {
+          "id": "visual-characteristics.scale.room-scale",
+          "label": "room-scale",
+          "section": "Visual Characteristics",
+          "category": "Scale"
+        },
+        {
+          "id": "visual-characteristics.rhythm.staccato",
+          "label": "staccato",
+          "section": "Visual Characteristics",
+          "category": "Rhythm"
+        },
+        {
+          "id": "visual-characteristics.repetition.radial",
+          "label": "radial",
+          "section": "Visual Characteristics",
+          "category": "Repetition"
+        },
+        {
+          "id": "visual-characteristics.symmetry.approximate",
+          "label": "approximate",
+          "section": "Visual Characteristics",
+          "category": "Symmetry"
+        },
+        {
+          "id": "visual-characteristics.asymmetry.irregular-grid",
+          "label": "irregular grid",
+          "section": "Visual Characteristics",
+          "category": "Asymmetry"
+        },
+        {
+          "id": "graphic-design.graphic-composition.triangular",
+          "label": "triangular",
+          "section": "Graphic Design",
+          "category": "Graphic Composition"
+        },
+        {
+          "id": "visual-characteristics.composition.diagonal",
+          "label": "diagonal",
+          "section": "Visual Characteristics",
+          "category": "Composition"
+        },
+        {
+          "id": "visual-characteristics.layout.hierarchical-grid",
+          "label": "hierarchical grid",
+          "section": "Visual Characteristics",
+          "category": "Layout"
+        },
+        {
+          "id": "visual-characteristics.visual-hierarchy.contrast-hierarchy",
+          "label": "contrast hierarchy",
+          "section": "Visual Characteristics",
+          "category": "Visual Hierarchy"
+        },
+        {
+          "id": "visual-characteristics.negative-space.symmetrical",
+          "label": "symmetrical",
+          "section": "Visual Characteristics",
+          "category": "Negative Space"
+        },
+        {
+          "id": "visual-characteristics.balance.top-heavy",
+          "label": "top-heavy",
+          "section": "Visual Characteristics",
+          "category": "Balance"
+        },
+        {
+          "id": "visual-characteristics.proportion.exaggerated-head",
+          "label": "exaggerated head",
+          "section": "Visual Characteristics",
+          "category": "Proportion"
+        },
+        {
+          "id": "visual-characteristics.scale.architectural",
+          "label": "architectural",
+          "section": "Visual Characteristics",
+          "category": "Scale"
+        },
+        {
+          "id": "visual-characteristics.rhythm.legato",
+          "label": "legato",
+          "section": "Visual Characteristics",
+          "category": "Rhythm"
+        }
+      ],
+      "promptConceptIds": [
+        "visual-characteristics.composition.rule-of-thirds",
+        "visual-characteristics.layout.single-column",
+        "visual-characteristics.visual-hierarchy.single-focal-point",
+        "visual-characteristics.negative-space.none",
+        "visual-characteristics.balance.symmetrical",
+        "visual-characteristics.proportion.naturalistic",
+        "visual-characteristics.scale.microscopic",
+        "visual-characteristics.rhythm.regular",
+        "visual-characteristics.repetition.none",
+        "visual-characteristics.symmetry.bilateral",
+        "visual-characteristics.asymmetry.balanced-asymmetry",
+        "graphic-design.graphic-composition.centered",
+        "visual-characteristics.composition.centered",
+        "visual-characteristics.layout.two-column",
+        "visual-characteristics.visual-hierarchy.primary-secondary-tertiary",
+        "visual-characteristics.negative-space.minimal",
+        "visual-characteristics.balance.asymmetrical",
+        "visual-characteristics.proportion.idealized",
+        "visual-characteristics.scale.miniature",
+        "visual-characteristics.rhythm.alternating",
+        "visual-characteristics.repetition.regular",
+        "visual-characteristics.symmetry.radial",
+        "visual-characteristics.asymmetry.dynamic-asymmetry",
+        "graphic-design.graphic-composition.axial",
+        "visual-characteristics.composition.symmetrical",
+        "visual-characteristics.layout.multi-column",
+        "visual-characteristics.visual-hierarchy.typographic-hierarchy",
+        "visual-characteristics.negative-space.moderate"
+      ]
+    },
+    {
+      "id": "color-light",
+      "label": "Color, contrast, value, and lighting",
+      "concepts": [
+        {
+          "id": "visual-characteristics.color-palette.monochrome",
+          "label": "monochrome",
+          "section": "Visual Characteristics",
+          "category": "Color Palette"
+        },
+        {
+          "id": "visual-characteristics.color-relationship.monochromatic",
+          "label": "monochromatic",
+          "section": "Visual Characteristics",
+          "category": "Color Relationship"
+        },
+        {
+          "id": "visual-characteristics.color-temperature.very-warm",
+          "label": "very warm",
+          "section": "Visual Characteristics",
+          "category": "Color Temperature"
+        },
+        {
+          "id": "visual-characteristics.contrast.low-contrast",
+          "label": "low contrast",
+          "section": "Visual Characteristics",
+          "category": "Contrast"
+        },
+        {
+          "id": "visual-characteristics.brightness.very-dark",
+          "label": "very dark",
+          "section": "Visual Characteristics",
+          "category": "Brightness"
+        },
+        {
+          "id": "visual-characteristics.saturation.zero-saturation",
+          "label": "zero saturation",
+          "section": "Visual Characteristics",
+          "category": "Saturation"
+        },
+        {
+          "id": "visual-characteristics.value-range.compressed-dark",
+          "label": "compressed dark",
+          "section": "Visual Characteristics",
+          "category": "Value Range"
+        },
+        {
+          "id": "visual-characteristics.lighting-mood.soft",
+          "label": "soft",
+          "section": "Visual Characteristics",
+          "category": "Lighting Mood"
+        },
+        {
+          "id": "visual-characteristics.color-palette.grayscale",
+          "label": "grayscale",
+          "section": "Visual Characteristics",
+          "category": "Color Palette"
+        },
+        {
+          "id": "visual-characteristics.color-relationship.analogous",
+          "label": "analogous",
+          "section": "Visual Characteristics",
+          "category": "Color Relationship"
+        },
+        {
+          "id": "visual-characteristics.color-temperature.warm",
+          "label": "warm",
+          "section": "Visual Characteristics",
+          "category": "Color Temperature"
+        },
+        {
+          "id": "visual-characteristics.contrast.medium-contrast",
+          "label": "medium contrast",
+          "section": "Visual Characteristics",
+          "category": "Contrast"
+        },
+        {
+          "id": "visual-characteristics.brightness.dark",
+          "label": "dark",
+          "section": "Visual Characteristics",
+          "category": "Brightness"
+        },
+        {
+          "id": "visual-characteristics.saturation.near-monochrome",
+          "label": "near-monochrome",
+          "section": "Visual Characteristics",
+          "category": "Saturation"
+        },
+        {
+          "id": "visual-characteristics.value-range.compressed-midtone",
+          "label": "compressed midtone",
+          "section": "Visual Characteristics",
+          "category": "Value Range"
+        },
+        {
+          "id": "visual-characteristics.lighting-mood.flattering",
+          "label": "flattering",
+          "section": "Visual Characteristics",
+          "category": "Lighting Mood"
+        },
+        {
+          "id": "visual-characteristics.color-palette.achromatic",
+          "label": "achromatic",
+          "section": "Visual Characteristics",
+          "category": "Color Palette"
+        },
+        {
+          "id": "visual-characteristics.color-relationship.complementary",
+          "label": "complementary",
+          "section": "Visual Characteristics",
+          "category": "Color Relationship"
+        },
+        {
+          "id": "visual-characteristics.color-temperature.slightly-warm",
+          "label": "slightly warm",
+          "section": "Visual Characteristics",
+          "category": "Color Temperature"
+        },
+        {
+          "id": "visual-characteristics.contrast.high-contrast",
+          "label": "high contrast",
+          "section": "Visual Characteristics",
+          "category": "Contrast"
+        },
+        {
+          "id": "visual-characteristics.brightness.dim",
+          "label": "dim",
+          "section": "Visual Characteristics",
+          "category": "Brightness"
+        },
+        {
+          "id": "visual-characteristics.saturation.strongly-desaturated",
+          "label": "strongly desaturated",
+          "section": "Visual Characteristics",
+          "category": "Saturation"
+        },
+        {
+          "id": "visual-characteristics.value-range.compressed-light",
+          "label": "compressed light",
+          "section": "Visual Characteristics",
+          "category": "Value Range"
+        },
+        {
+          "id": "visual-characteristics.lighting-mood.romantic",
+          "label": "romantic",
+          "section": "Visual Characteristics",
+          "category": "Lighting Mood"
+        },
+        {
+          "id": "visual-characteristics.color-palette.black-and-white",
+          "label": "black-and-white",
+          "section": "Visual Characteristics",
+          "category": "Color Palette"
+        },
+        {
+          "id": "visual-characteristics.color-relationship.split-complementary",
+          "label": "split complementary",
+          "section": "Visual Characteristics",
+          "category": "Color Relationship"
+        },
+        {
+          "id": "visual-characteristics.color-temperature.neutral",
+          "label": "neutral",
+          "section": "Visual Characteristics",
+          "category": "Color Temperature"
+        },
+        {
+          "id": "visual-characteristics.contrast.extreme-contrast",
+          "label": "extreme contrast",
+          "section": "Visual Characteristics",
+          "category": "Contrast"
+        },
+        {
+          "id": "visual-characteristics.brightness.medium-dark",
+          "label": "medium-dark",
+          "section": "Visual Characteristics",
+          "category": "Brightness"
+        },
+        {
+          "id": "visual-characteristics.saturation.muted",
+          "label": "muted",
+          "section": "Visual Characteristics",
+          "category": "Saturation"
+        },
+        {
+          "id": "visual-characteristics.value-range.low-dynamic-range",
+          "label": "low dynamic range",
+          "section": "Visual Characteristics",
+          "category": "Value Range"
+        },
+        {
+          "id": "visual-characteristics.lighting-mood.dreamy",
+          "label": "dreamy",
+          "section": "Visual Characteristics",
+          "category": "Lighting Mood"
+        },
+        {
+          "id": "visual-characteristics.color-palette.duotone",
+          "label": "duotone",
+          "section": "Visual Characteristics",
+          "category": "Color Palette"
+        },
+        {
+          "id": "visual-characteristics.color-relationship.triadic",
+          "label": "triadic",
+          "section": "Visual Characteristics",
+          "category": "Color Relationship"
+        },
+        {
+          "id": "visual-characteristics.color-temperature.slightly-cool",
+          "label": "slightly cool",
+          "section": "Visual Characteristics",
+          "category": "Color Temperature"
+        },
+        {
+          "id": "visual-characteristics.contrast.tonal-contrast",
+          "label": "tonal contrast",
+          "section": "Visual Characteristics",
+          "category": "Contrast"
+        },
+        {
+          "id": "visual-characteristics.brightness.balanced",
+          "label": "balanced",
+          "section": "Visual Characteristics",
+          "category": "Brightness"
+        },
+        {
+          "id": "visual-characteristics.saturation.low-saturation",
+          "label": "low saturation",
+          "section": "Visual Characteristics",
+          "category": "Saturation"
+        },
+        {
+          "id": "visual-characteristics.value-range.medium-dynamic-range",
+          "label": "medium dynamic range",
+          "section": "Visual Characteristics",
+          "category": "Value Range"
+        },
+        {
+          "id": "visual-characteristics.lighting-mood.dramatic",
+          "label": "dramatic",
+          "section": "Visual Characteristics",
+          "category": "Lighting Mood"
+        },
+        {
+          "id": "visual-characteristics.color-palette.tritone",
+          "label": "tritone",
+          "section": "Visual Characteristics",
+          "category": "Color Palette"
+        },
+        {
+          "id": "visual-characteristics.color-relationship.tetradic",
+          "label": "tetradic",
+          "section": "Visual Characteristics",
+          "category": "Color Relationship"
+        },
+        {
+          "id": "visual-characteristics.color-temperature.cool",
+          "label": "cool",
+          "section": "Visual Characteristics",
+          "category": "Color Temperature"
+        },
+        {
+          "id": "visual-characteristics.contrast.color-contrast",
+          "label": "color contrast",
+          "section": "Visual Characteristics",
+          "category": "Contrast"
+        },
+        {
+          "id": "visual-characteristics.brightness.medium-bright",
+          "label": "medium-bright",
+          "section": "Visual Characteristics",
+          "category": "Brightness"
+        },
+        {
+          "id": "visual-characteristics.saturation.moderate-saturation",
+          "label": "moderate saturation",
+          "section": "Visual Characteristics",
+          "category": "Saturation"
+        },
+        {
+          "id": "visual-characteristics.value-range.wide-dynamic-range",
+          "label": "wide dynamic range",
+          "section": "Visual Characteristics",
+          "category": "Value Range"
+        },
+        {
+          "id": "visual-characteristics.lighting-mood.ominous",
+          "label": "ominous",
+          "section": "Visual Characteristics",
+          "category": "Lighting Mood"
+        },
+        {
+          "id": "visual-characteristics.color-palette.analogous",
+          "label": "analogous",
+          "section": "Visual Characteristics",
+          "category": "Color Palette"
+        },
+        {
+          "id": "visual-characteristics.color-relationship.square",
+          "label": "square",
+          "section": "Visual Characteristics",
+          "category": "Color Relationship"
+        },
+        {
+          "id": "visual-characteristics.color-temperature.very-cool",
+          "label": "very cool",
+          "section": "Visual Characteristics",
+          "category": "Color Temperature"
+        },
+        {
+          "id": "visual-characteristics.contrast.hue-contrast",
+          "label": "hue contrast",
+          "section": "Visual Characteristics",
+          "category": "Contrast"
+        },
+        {
+          "id": "visual-characteristics.brightness.bright",
+          "label": "bright",
+          "section": "Visual Characteristics",
+          "category": "Brightness"
+        },
+        {
+          "id": "visual-characteristics.saturation.naturalistic-saturation",
+          "label": "naturalistic saturation",
+          "section": "Visual Characteristics",
+          "category": "Saturation"
+        },
+        {
+          "id": "visual-characteristics.value-range.full-black-to-white",
+          "label": "full black-to-white",
+          "section": "Visual Characteristics",
+          "category": "Value Range"
+        },
+        {
+          "id": "visual-characteristics.lighting-mood.mysterious",
+          "label": "mysterious",
+          "section": "Visual Characteristics",
+          "category": "Lighting Mood"
+        },
+        {
+          "id": "visual-characteristics.color-palette.complementary",
+          "label": "complementary",
+          "section": "Visual Characteristics",
+          "category": "Color Palette"
+        },
+        {
+          "id": "visual-characteristics.color-relationship.double-complementary",
+          "label": "double complementary",
+          "section": "Visual Characteristics",
+          "category": "Color Relationship"
+        },
+        {
+          "id": "visual-characteristics.color-temperature.mixed-temperature",
+          "label": "mixed temperature",
+          "section": "Visual Characteristics",
+          "category": "Color Temperature"
+        },
+        {
+          "id": "visual-characteristics.contrast.saturation-contrast",
+          "label": "saturation contrast",
+          "section": "Visual Characteristics",
+          "category": "Contrast"
+        },
+        {
+          "id": "visual-characteristics.brightness.very-bright",
+          "label": "very bright",
+          "section": "Visual Characteristics",
+          "category": "Brightness"
+        },
+        {
+          "id": "visual-characteristics.saturation.high-saturation",
+          "label": "high saturation",
+          "section": "Visual Characteristics",
+          "category": "Saturation"
+        },
+        {
+          "id": "visual-characteristics.value-range.high-key",
+          "label": "high-key",
+          "section": "Visual Characteristics",
+          "category": "Value Range"
+        },
+        {
+          "id": "visual-characteristics.lighting-mood.cheerful",
+          "label": "cheerful",
+          "section": "Visual Characteristics",
+          "category": "Lighting Mood"
+        },
+        {
+          "id": "visual-characteristics.color-palette.split-complementary",
+          "label": "split-complementary",
+          "section": "Visual Characteristics",
+          "category": "Color Palette"
+        },
+        {
+          "id": "visual-characteristics.color-relationship.near-complementary",
+          "label": "near-complementary",
+          "section": "Visual Characteristics",
+          "category": "Color Relationship"
+        },
+        {
+          "id": "visual-characteristics.color-temperature.warm-subject-cool-background",
+          "label": "warm subject / cool background",
+          "section": "Visual Characteristics",
+          "category": "Color Temperature"
+        },
+        {
+          "id": "visual-characteristics.contrast.temperature-contrast",
+          "label": "temperature contrast",
+          "section": "Visual Characteristics",
+          "category": "Contrast"
+        },
+        {
+          "id": "visual-characteristics.brightness.luminous",
+          "label": "luminous",
+          "section": "Visual Characteristics",
+          "category": "Brightness"
+        },
+        {
+          "id": "visual-characteristics.saturation.hyper-saturated",
+          "label": "hyper-saturated",
+          "section": "Visual Characteristics",
+          "category": "Saturation"
+        },
+        {
+          "id": "visual-characteristics.value-range.low-key",
+          "label": "low-key",
+          "section": "Visual Characteristics",
+          "category": "Value Range"
+        },
+        {
+          "id": "visual-characteristics.lighting-mood.sunny",
+          "label": "sunny",
+          "section": "Visual Characteristics",
+          "category": "Lighting Mood"
+        },
+        {
+          "id": "visual-characteristics.color-palette.triadic",
+          "label": "triadic",
+          "section": "Visual Characteristics",
+          "category": "Color Palette"
+        },
+        {
+          "id": "visual-characteristics.color-relationship.warm-versus-cool",
+          "label": "warm versus cool",
+          "section": "Visual Characteristics",
+          "category": "Color Relationship"
+        },
+        {
+          "id": "visual-characteristics.color-temperature.cool-subject-warm-background",
+          "label": "cool subject / warm background",
+          "section": "Visual Characteristics",
+          "category": "Color Temperature"
+        },
+        {
+          "id": "visual-characteristics.contrast.size-contrast",
+          "label": "size contrast",
+          "section": "Visual Characteristics",
+          "category": "Contrast"
+        },
+        {
+          "id": "visual-characteristics.brightness.glowing",
+          "label": "glowing",
+          "section": "Visual Characteristics",
+          "category": "Brightness"
+        },
+        {
+          "id": "visual-characteristics.saturation.selective-saturation",
+          "label": "selective saturation",
+          "section": "Visual Characteristics",
+          "category": "Saturation"
+        },
+        {
+          "id": "visual-characteristics.value-range.mid-key",
+          "label": "mid-key",
+          "section": "Visual Characteristics",
+          "category": "Value Range"
+        },
+        {
+          "id": "visual-characteristics.lighting-mood.natural",
+          "label": "natural",
+          "section": "Visual Characteristics",
+          "category": "Lighting Mood"
+        }
+      ],
+      "promptConceptIds": [
+        "visual-characteristics.color-palette.monochrome",
+        "visual-characteristics.color-relationship.monochromatic",
+        "visual-characteristics.color-temperature.very-warm",
+        "visual-characteristics.contrast.low-contrast",
+        "visual-characteristics.brightness.very-dark",
+        "visual-characteristics.saturation.zero-saturation",
+        "visual-characteristics.value-range.compressed-dark",
+        "visual-characteristics.lighting-mood.soft",
+        "visual-characteristics.color-palette.grayscale",
+        "visual-characteristics.color-relationship.analogous",
+        "visual-characteristics.color-temperature.warm",
+        "visual-characteristics.contrast.medium-contrast",
+        "visual-characteristics.brightness.dark",
+        "visual-characteristics.saturation.near-monochrome",
+        "visual-characteristics.value-range.compressed-midtone",
+        "visual-characteristics.lighting-mood.flattering",
+        "visual-characteristics.color-palette.achromatic",
+        "visual-characteristics.color-relationship.complementary",
+        "visual-characteristics.color-temperature.slightly-warm",
+        "visual-characteristics.contrast.high-contrast",
+        "visual-characteristics.brightness.dim",
+        "visual-characteristics.saturation.strongly-desaturated",
+        "visual-characteristics.value-range.compressed-light",
+        "visual-characteristics.lighting-mood.romantic",
+        "visual-characteristics.color-palette.black-and-white",
+        "visual-characteristics.color-relationship.split-complementary",
+        "visual-characteristics.color-temperature.neutral",
+        "visual-characteristics.contrast.extreme-contrast"
+      ]
+    },
+    {
+      "id": "typography",
+      "label": "Typography and typographic motion",
+      "concepts": [
+        {
+          "id": "graphic-design.typography-style.serif",
+          "label": "serif",
+          "section": "Graphic Design",
+          "category": "Typography Style"
+        },
+        {
+          "id": "conceptual-theoretical-metadata.typography-principle.legibility",
+          "label": "legibility",
+          "section": "Conceptual / Theoretical Metadata",
+          "category": "Typography Principle"
+        },
+        {
+          "id": "motion-and-animation.typography-animation.fade",
+          "label": "fade",
+          "section": "Motion and Animation",
+          "category": "Typography Animation"
+        },
+        {
+          "id": "graphic-design.typography-style.sans-serif",
+          "label": "sans serif",
+          "section": "Graphic Design",
+          "category": "Typography Style"
+        },
+        {
+          "id": "conceptual-theoretical-metadata.typography-principle.readability",
+          "label": "readability",
+          "section": "Conceptual / Theoretical Metadata",
+          "category": "Typography Principle"
+        },
+        {
+          "id": "motion-and-animation.typography-animation.reveal",
+          "label": "reveal",
+          "section": "Motion and Animation",
+          "category": "Typography Animation"
+        },
+        {
+          "id": "graphic-design.typography-style.slab-serif",
+          "label": "slab serif",
+          "section": "Graphic Design",
+          "category": "Typography Style"
+        },
+        {
+          "id": "conceptual-theoretical-metadata.typography-principle.hierarchy",
+          "label": "hierarchy",
+          "section": "Conceptual / Theoretical Metadata",
+          "category": "Typography Principle"
+        },
+        {
+          "id": "motion-and-animation.typography-animation.wipe",
+          "label": "wipe",
+          "section": "Motion and Animation",
+          "category": "Typography Animation"
+        },
+        {
+          "id": "graphic-design.typography-style.display",
+          "label": "display",
+          "section": "Graphic Design",
+          "category": "Typography Style"
+        },
+        {
+          "id": "conceptual-theoretical-metadata.typography-principle.type-classification",
+          "label": "type classification",
+          "section": "Conceptual / Theoretical Metadata",
+          "category": "Typography Principle"
+        },
+        {
+          "id": "motion-and-animation.typography-animation.mask",
+          "label": "mask",
+          "section": "Motion and Animation",
+          "category": "Typography Animation"
+        },
+        {
+          "id": "graphic-design.typography-style.script",
+          "label": "script",
+          "section": "Graphic Design",
+          "category": "Typography Style"
+        },
+        {
+          "id": "conceptual-theoretical-metadata.typography-principle.x-height",
+          "label": "x-height",
+          "section": "Conceptual / Theoretical Metadata",
+          "category": "Typography Principle"
+        },
+        {
+          "id": "motion-and-animation.typography-animation.type-on",
+          "label": "type-on",
+          "section": "Motion and Animation",
+          "category": "Typography Animation"
+        },
+        {
+          "id": "graphic-design.typography-style.handwriting",
+          "label": "handwriting",
+          "section": "Graphic Design",
+          "category": "Typography Style"
+        },
+        {
+          "id": "conceptual-theoretical-metadata.typography-principle.cap-height",
+          "label": "cap height",
+          "section": "Conceptual / Theoretical Metadata",
+          "category": "Typography Principle"
+        },
+        {
+          "id": "motion-and-animation.typography-animation.typewriter",
+          "label": "typewriter",
+          "section": "Motion and Animation",
+          "category": "Typography Animation"
+        },
+        {
+          "id": "graphic-design.typography-style.blackletter",
+          "label": "blackletter",
+          "section": "Graphic Design",
+          "category": "Typography Style"
+        },
+        {
+          "id": "conceptual-theoretical-metadata.typography-principle.baseline",
+          "label": "baseline",
+          "section": "Conceptual / Theoretical Metadata",
+          "category": "Typography Principle"
+        },
+        {
+          "id": "motion-and-animation.typography-animation.character-stagger",
+          "label": "character stagger",
+          "section": "Motion and Animation",
+          "category": "Typography Animation"
+        },
+        {
+          "id": "graphic-design.typography-style.monospace",
+          "label": "monospace",
+          "section": "Graphic Design",
+          "category": "Typography Style"
+        },
+        {
+          "id": "conceptual-theoretical-metadata.typography-principle.ascender",
+          "label": "ascender",
+          "section": "Conceptual / Theoretical Metadata",
+          "category": "Typography Principle"
+        },
+        {
+          "id": "motion-and-animation.typography-animation.word-stagger",
+          "label": "word stagger",
+          "section": "Motion and Animation",
+          "category": "Typography Animation"
+        },
+        {
+          "id": "graphic-design.typography-style.geometric-sans",
+          "label": "geometric sans",
+          "section": "Graphic Design",
+          "category": "Typography Style"
+        },
+        {
+          "id": "conceptual-theoretical-metadata.typography-principle.descender",
+          "label": "descender",
+          "section": "Conceptual / Theoretical Metadata",
+          "category": "Typography Principle"
+        },
+        {
+          "id": "motion-and-animation.typography-animation.line-stagger",
+          "label": "line stagger",
+          "section": "Motion and Animation",
+          "category": "Typography Animation"
+        },
+        {
+          "id": "graphic-design.typography-style.grotesque",
+          "label": "grotesque",
+          "section": "Graphic Design",
+          "category": "Typography Style"
+        },
+        {
+          "id": "conceptual-theoretical-metadata.typography-principle.counter",
+          "label": "counter",
+          "section": "Conceptual / Theoretical Metadata",
+          "category": "Typography Principle"
+        },
+        {
+          "id": "motion-and-animation.typography-animation.tracking-animation",
+          "label": "tracking animation",
+          "section": "Motion and Animation",
+          "category": "Typography Animation"
+        },
+        {
+          "id": "graphic-design.typography-style.neo-grotesque",
+          "label": "neo-grotesque",
+          "section": "Graphic Design",
+          "category": "Typography Style"
+        },
+        {
+          "id": "conceptual-theoretical-metadata.typography-principle.kerning",
+          "label": "kerning",
+          "section": "Conceptual / Theoretical Metadata",
+          "category": "Typography Principle"
+        },
+        {
+          "id": "motion-and-animation.typography-animation.kerning-animation",
+          "label": "kerning animation",
+          "section": "Motion and Animation",
+          "category": "Typography Animation"
+        },
+        {
+          "id": "graphic-design.typography-style.humanist-sans",
+          "label": "humanist sans",
+          "section": "Graphic Design",
+          "category": "Typography Style"
+        },
+        {
+          "id": "conceptual-theoretical-metadata.typography-principle.tracking",
+          "label": "tracking",
+          "section": "Conceptual / Theoretical Metadata",
+          "category": "Typography Principle"
+        },
+        {
+          "id": "motion-and-animation.typography-animation.scale",
+          "label": "scale",
+          "section": "Motion and Animation",
+          "category": "Typography Animation"
+        },
+        {
+          "id": "graphic-design.typography-style.transitional-serif",
+          "label": "transitional serif",
+          "section": "Graphic Design",
+          "category": "Typography Style"
+        },
+        {
+          "id": "conceptual-theoretical-metadata.typography-principle.leading",
+          "label": "leading",
+          "section": "Conceptual / Theoretical Metadata",
+          "category": "Typography Principle"
+        },
+        {
+          "id": "motion-and-animation.typography-animation.rotation",
+          "label": "rotation",
+          "section": "Motion and Animation",
+          "category": "Typography Animation"
+        },
+        {
+          "id": "graphic-design.typography-style.old-style-serif",
+          "label": "old-style serif",
+          "section": "Graphic Design",
+          "category": "Typography Style"
+        },
+        {
+          "id": "conceptual-theoretical-metadata.typography-principle.measure",
+          "label": "measure",
+          "section": "Conceptual / Theoretical Metadata",
+          "category": "Typography Principle"
+        },
+        {
+          "id": "motion-and-animation.typography-animation.position",
+          "label": "position",
+          "section": "Motion and Animation",
+          "category": "Typography Animation"
+        },
+        {
+          "id": "graphic-design.typography-style.didone",
+          "label": "Didone",
+          "section": "Graphic Design",
+          "category": "Typography Style"
+        },
+        {
+          "id": "conceptual-theoretical-metadata.typography-principle.alignment",
+          "label": "alignment",
+          "section": "Conceptual / Theoretical Metadata",
+          "category": "Typography Principle"
+        },
+        {
+          "id": "motion-and-animation.typography-animation.bounce",
+          "label": "bounce",
+          "section": "Motion and Animation",
+          "category": "Typography Animation"
+        },
+        {
+          "id": "graphic-design.typography-style.scotch-roman",
+          "label": "Scotch Roman",
+          "section": "Graphic Design",
+          "category": "Typography Style"
+        },
+        {
+          "id": "conceptual-theoretical-metadata.typography-principle.rag",
+          "label": "rag",
+          "section": "Conceptual / Theoretical Metadata",
+          "category": "Typography Principle"
+        },
+        {
+          "id": "motion-and-animation.typography-animation.spring",
+          "label": "spring",
+          "section": "Motion and Animation",
+          "category": "Typography Animation"
+        },
+        {
+          "id": "graphic-design.typography-style.rounded-sans",
+          "label": "rounded sans",
+          "section": "Graphic Design",
+          "category": "Typography Style"
+        },
+        {
+          "id": "conceptual-theoretical-metadata.typography-principle.justification",
+          "label": "justification",
+          "section": "Conceptual / Theoretical Metadata",
+          "category": "Typography Principle"
+        },
+        {
+          "id": "motion-and-animation.typography-animation.elastic",
+          "label": "elastic",
+          "section": "Motion and Animation",
+          "category": "Typography Animation"
+        },
+        {
+          "id": "graphic-design.typography-style.condensed",
+          "label": "condensed",
+          "section": "Graphic Design",
+          "category": "Typography Style"
+        },
+        {
+          "id": "conceptual-theoretical-metadata.typography-principle.widows-orphans",
+          "label": "widows/orphans",
+          "section": "Conceptual / Theoretical Metadata",
+          "category": "Typography Principle"
+        },
+        {
+          "id": "motion-and-animation.typography-animation.squash-stretch",
+          "label": "squash/stretch",
+          "section": "Motion and Animation",
+          "category": "Typography Animation"
+        },
+        {
+          "id": "graphic-design.typography-style.expanded",
+          "label": "expanded",
+          "section": "Graphic Design",
+          "category": "Typography Style"
+        },
+        {
+          "id": "conceptual-theoretical-metadata.typography-principle.optical-size",
+          "label": "optical size",
+          "section": "Conceptual / Theoretical Metadata",
+          "category": "Typography Principle"
+        },
+        {
+          "id": "motion-and-animation.typography-animation.morph",
+          "label": "morph",
+          "section": "Motion and Animation",
+          "category": "Typography Animation"
+        },
+        {
+          "id": "graphic-design.typography-style.stencil",
+          "label": "stencil",
+          "section": "Graphic Design",
+          "category": "Typography Style"
+        },
+        {
+          "id": "conceptual-theoretical-metadata.typography-principle.weight",
+          "label": "weight",
+          "section": "Conceptual / Theoretical Metadata",
+          "category": "Typography Principle"
+        },
+        {
+          "id": "motion-and-animation.typography-animation.variable-font-axis",
+          "label": "variable-font axis",
+          "section": "Motion and Animation",
+          "category": "Typography Animation"
+        },
+        {
+          "id": "graphic-design.typography-style.inline",
+          "label": "inline",
+          "section": "Graphic Design",
+          "category": "Typography Style"
+        },
+        {
+          "id": "conceptual-theoretical-metadata.typography-principle.contrast",
+          "label": "contrast",
+          "section": "Conceptual / Theoretical Metadata",
+          "category": "Typography Principle"
+        },
+        {
+          "id": "motion-and-animation.typography-animation.weight-shift",
+          "label": "weight shift",
+          "section": "Motion and Animation",
+          "category": "Typography Animation"
+        },
+        {
+          "id": "graphic-design.typography-style.outline",
+          "label": "outline",
+          "section": "Graphic Design",
+          "category": "Typography Style"
+        },
+        {
+          "id": "conceptual-theoretical-metadata.typography-principle.width",
+          "label": "width",
+          "section": "Conceptual / Theoretical Metadata",
+          "category": "Typography Principle"
+        },
+        {
+          "id": "motion-and-animation.typography-animation.width-shift",
+          "label": "width shift",
+          "section": "Motion and Animation",
+          "category": "Typography Animation"
+        },
+        {
+          "id": "graphic-design.typography-style.shadow",
+          "label": "shadow",
+          "section": "Graphic Design",
+          "category": "Typography Style"
+        },
+        {
+          "id": "conceptual-theoretical-metadata.typography-principle.variable-axes",
+          "label": "variable axes",
+          "section": "Conceptual / Theoretical Metadata",
+          "category": "Typography Principle"
+        },
+        {
+          "id": "motion-and-animation.typography-animation.outline-to-fill",
+          "label": "outline-to-fill",
+          "section": "Motion and Animation",
+          "category": "Typography Animation"
+        },
+        {
+          "id": "graphic-design.typography-style.3d-extruded",
+          "label": "3D extruded",
+          "section": "Graphic Design",
+          "category": "Typography Style"
+        },
+        {
+          "id": "conceptual-theoretical-metadata.typography-principle.pairing",
+          "label": "pairing",
+          "section": "Conceptual / Theoretical Metadata",
+          "category": "Typography Principle"
+        },
+        {
+          "id": "motion-and-animation.typography-animation.blur-to-sharp",
+          "label": "blur-to-sharp",
+          "section": "Motion and Animation",
+          "category": "Typography Animation"
+        },
+        {
+          "id": "graphic-design.typography-style.variable-type",
+          "label": "variable type",
+          "section": "Graphic Design",
+          "category": "Typography Style"
+        },
+        {
+          "id": "conceptual-theoretical-metadata.typography-principle.scale",
+          "label": "scale",
+          "section": "Conceptual / Theoretical Metadata",
+          "category": "Typography Principle"
+        },
+        {
+          "id": "motion-and-animation.typography-animation.kinetic-typography",
+          "label": "kinetic typography",
+          "section": "Motion and Animation",
+          "category": "Typography Animation"
+        },
+        {
+          "id": "graphic-design.typography-style.kinetic-type",
+          "label": "kinetic type",
+          "section": "Graphic Design",
+          "category": "Typography Style"
+        },
+        {
+          "id": "conceptual-theoretical-metadata.typography-principle.rhythm",
+          "label": "rhythm",
+          "section": "Conceptual / Theoretical Metadata",
+          "category": "Typography Principle"
+        },
+        {
+          "id": "motion-and-animation.typography-animation.path-following-type",
+          "label": "path-following type",
+          "section": "Motion and Animation",
+          "category": "Typography Animation"
+        },
+        {
+          "id": "graphic-design.typography-style.experimental",
+          "label": "experimental",
+          "section": "Graphic Design",
+          "category": "Typography Style"
+        },
+        {
+          "id": "conceptual-theoretical-metadata.typography-principle.grid",
+          "label": "grid",
+          "section": "Conceptual / Theoretical Metadata",
+          "category": "Typography Principle"
+        }
+      ],
+      "promptConceptIds": [
+        "graphic-design.typography-style.serif",
+        "conceptual-theoretical-metadata.typography-principle.legibility",
+        "motion-and-animation.typography-animation.fade",
+        "graphic-design.typography-style.sans-serif",
+        "conceptual-theoretical-metadata.typography-principle.readability",
+        "motion-and-animation.typography-animation.reveal",
+        "graphic-design.typography-style.slab-serif",
+        "conceptual-theoretical-metadata.typography-principle.hierarchy",
+        "motion-and-animation.typography-animation.wipe",
+        "graphic-design.typography-style.display",
+        "conceptual-theoretical-metadata.typography-principle.type-classification",
+        "motion-and-animation.typography-animation.mask",
+        "graphic-design.typography-style.script",
+        "conceptual-theoretical-metadata.typography-principle.x-height",
+        "motion-and-animation.typography-animation.type-on",
+        "graphic-design.typography-style.handwriting",
+        "conceptual-theoretical-metadata.typography-principle.cap-height",
+        "motion-and-animation.typography-animation.typewriter",
+        "graphic-design.typography-style.blackletter",
+        "conceptual-theoretical-metadata.typography-principle.baseline",
+        "motion-and-animation.typography-animation.character-stagger",
+        "graphic-design.typography-style.monospace",
+        "conceptual-theoretical-metadata.typography-principle.ascender",
+        "motion-and-animation.typography-animation.word-stagger",
+        "graphic-design.typography-style.geometric-sans",
+        "conceptual-theoretical-metadata.typography-principle.descender",
+        "motion-and-animation.typography-animation.line-stagger",
+        "graphic-design.typography-style.grotesque"
+      ]
+    },
+    {
+      "id": "form-material-depth",
+      "label": "Form, shape, texture, material, and depth",
+      "concepts": [
+        {
+          "id": "visual-characteristics.form-language.soft-rounded-volumes",
+          "label": "soft rounded volumes",
+          "section": "Visual Characteristics",
+          "category": "Form Language"
+        },
+        {
+          "id": "visual-characteristics.shape-language.circular",
+          "label": "circular",
+          "section": "Visual Characteristics",
+          "category": "Shape Language"
+        },
+        {
+          "id": "visual-characteristics.geometry.euclidean",
+          "label": "Euclidean",
+          "section": "Visual Characteristics",
+          "category": "Geometry"
+        },
+        {
+          "id": "visual-characteristics.texture.smooth",
+          "label": "smooth",
+          "section": "Visual Characteristics",
+          "category": "Texture"
+        },
+        {
+          "id": "visual-characteristics.surface-quality.matte",
+          "label": "matte",
+          "section": "Visual Characteristics",
+          "category": "Surface Quality"
+        },
+        {
+          "id": "visual-characteristics.material-appearance.wood",
+          "label": "wood",
+          "section": "Visual Characteristics",
+          "category": "Material Appearance"
+        },
+        {
+          "id": "visual-characteristics.depth.flat",
+          "label": "flat",
+          "section": "Visual Characteristics",
+          "category": "Depth"
+        },
+        {
+          "id": "visual-characteristics.perspective.orthographic",
+          "label": "orthographic",
+          "section": "Visual Characteristics",
+          "category": "Perspective"
+        },
+        {
+          "id": "visual-characteristics.pattern.solid",
+          "label": "solid",
+          "section": "Visual Characteristics",
+          "category": "Pattern"
+        },
+        {
+          "id": "visual-characteristics.ornamentation.none",
+          "label": "none",
+          "section": "Visual Characteristics",
+          "category": "Ornamentation"
+        },
+        {
+          "id": "visual-characteristics.form-language.hard-planar-volumes",
+          "label": "hard planar volumes",
+          "section": "Visual Characteristics",
+          "category": "Form Language"
+        },
+        {
+          "id": "visual-characteristics.shape-language.rounded",
+          "label": "rounded",
+          "section": "Visual Characteristics",
+          "category": "Shape Language"
+        },
+        {
+          "id": "visual-characteristics.geometry.geometric-primitive-based",
+          "label": "geometric primitive-based",
+          "section": "Visual Characteristics",
+          "category": "Geometry"
+        },
+        {
+          "id": "visual-characteristics.texture.rough",
+          "label": "rough",
+          "section": "Visual Characteristics",
+          "category": "Texture"
+        },
+        {
+          "id": "visual-characteristics.surface-quality.eggshell",
+          "label": "eggshell",
+          "section": "Visual Characteristics",
+          "category": "Surface Quality"
+        },
+        {
+          "id": "visual-characteristics.material-appearance.plywood",
+          "label": "plywood",
+          "section": "Visual Characteristics",
+          "category": "Material Appearance"
+        },
+        {
+          "id": "visual-characteristics.depth.intentionally-2d",
+          "label": "intentionally 2D",
+          "section": "Visual Characteristics",
+          "category": "Depth"
+        },
+        {
+          "id": "visual-characteristics.perspective.isometric",
+          "label": "isometric",
+          "section": "Visual Characteristics",
+          "category": "Perspective"
+        },
+        {
+          "id": "visual-characteristics.pattern.stripe",
+          "label": "stripe",
+          "section": "Visual Characteristics",
+          "category": "Pattern"
+        },
+        {
+          "id": "visual-characteristics.ornamentation.restrained",
+          "label": "restrained",
+          "section": "Visual Characteristics",
+          "category": "Ornamentation"
+        },
+        {
+          "id": "visual-characteristics.form-language.faceted-forms",
+          "label": "faceted forms",
+          "section": "Visual Characteristics",
+          "category": "Form Language"
+        },
+        {
+          "id": "visual-characteristics.shape-language.oval",
+          "label": "oval",
+          "section": "Visual Characteristics",
+          "category": "Shape Language"
+        },
+        {
+          "id": "visual-characteristics.geometry.rectilinear",
+          "label": "rectilinear",
+          "section": "Visual Characteristics",
+          "category": "Geometry"
+        },
+        {
+          "id": "visual-characteristics.texture.grainy",
+          "label": "grainy",
+          "section": "Visual Characteristics",
+          "category": "Texture"
+        },
+        {
+          "id": "visual-characteristics.surface-quality.satin",
+          "label": "satin",
+          "section": "Visual Characteristics",
+          "category": "Surface Quality"
+        },
+        {
+          "id": "visual-characteristics.material-appearance.mdf",
+          "label": "MDF",
+          "section": "Visual Characteristics",
+          "category": "Material Appearance"
+        },
+        {
+          "id": "visual-characteristics.depth.shallow",
+          "label": "shallow",
+          "section": "Visual Characteristics",
+          "category": "Depth"
+        },
+        {
+          "id": "visual-characteristics.perspective.dimetric",
+          "label": "dimetric",
+          "section": "Visual Characteristics",
+          "category": "Perspective"
+        },
+        {
+          "id": "visual-characteristics.pattern.pinstripe",
+          "label": "pinstripe",
+          "section": "Visual Characteristics",
+          "category": "Pattern"
+        },
+        {
+          "id": "visual-characteristics.ornamentation.minimal",
+          "label": "minimal",
+          "section": "Visual Characteristics",
+          "category": "Ornamentation"
+        },
+        {
+          "id": "visual-characteristics.form-language.smooth-continuous-surfaces",
+          "label": "smooth continuous surfaces",
+          "section": "Visual Characteristics",
+          "category": "Form Language"
+        },
+        {
+          "id": "visual-characteristics.shape-language.spherical",
+          "label": "spherical",
+          "section": "Visual Characteristics",
+          "category": "Shape Language"
+        },
+        {
+          "id": "visual-characteristics.geometry.curvilinear",
+          "label": "curvilinear",
+          "section": "Visual Characteristics",
+          "category": "Geometry"
+        },
+        {
+          "id": "visual-characteristics.texture.noisy",
+          "label": "noisy",
+          "section": "Visual Characteristics",
+          "category": "Texture"
+        },
+        {
+          "id": "visual-characteristics.surface-quality.semi-gloss",
+          "label": "semi-gloss",
+          "section": "Visual Characteristics",
+          "category": "Surface Quality"
+        },
+        {
+          "id": "visual-characteristics.material-appearance.bamboo",
+          "label": "bamboo",
+          "section": "Visual Characteristics",
+          "category": "Material Appearance"
+        },
+        {
+          "id": "visual-characteristics.depth.layered-2-5d",
+          "label": "layered 2.5D",
+          "section": "Visual Characteristics",
+          "category": "Depth"
+        },
+        {
+          "id": "visual-characteristics.perspective.trimetric",
+          "label": "trimetric",
+          "section": "Visual Characteristics",
+          "category": "Perspective"
+        },
+        {
+          "id": "visual-characteristics.pattern.diagonal-stripe",
+          "label": "diagonal stripe",
+          "section": "Visual Characteristics",
+          "category": "Pattern"
+        },
+        {
+          "id": "visual-characteristics.ornamentation.border-ornament",
+          "label": "border ornament",
+          "section": "Visual Characteristics",
+          "category": "Ornamentation"
+        },
+        {
+          "id": "visual-characteristics.form-language.inflated-forms",
+          "label": "inflated forms",
+          "section": "Visual Characteristics",
+          "category": "Form Language"
+        },
+        {
+          "id": "visual-characteristics.shape-language.square",
+          "label": "square",
+          "section": "Visual Characteristics",
+          "category": "Shape Language"
+        },
+        {
+          "id": "visual-characteristics.geometry.polygonal",
+          "label": "polygonal",
+          "section": "Visual Characteristics",
+          "category": "Geometry"
+        },
+        {
+          "id": "visual-characteristics.texture.sandy",
+          "label": "sandy",
+          "section": "Visual Characteristics",
+          "category": "Texture"
+        },
+        {
+          "id": "visual-characteristics.surface-quality.glossy",
+          "label": "glossy",
+          "section": "Visual Characteristics",
+          "category": "Surface Quality"
+        },
+        {
+          "id": "visual-characteristics.material-appearance.paper",
+          "label": "paper",
+          "section": "Visual Characteristics",
+          "category": "Material Appearance"
+        },
+        {
+          "id": "visual-characteristics.depth.medium-depth",
+          "label": "medium depth",
+          "section": "Visual Characteristics",
+          "category": "Depth"
+        },
+        {
+          "id": "visual-characteristics.perspective.axonometric",
+          "label": "axonometric",
+          "section": "Visual Characteristics",
+          "category": "Perspective"
+        },
+        {
+          "id": "visual-characteristics.pattern.chevron",
+          "label": "chevron",
+          "section": "Visual Characteristics",
+          "category": "Pattern"
+        },
+        {
+          "id": "visual-characteristics.ornamentation.corner-ornament",
+          "label": "corner ornament",
+          "section": "Visual Characteristics",
+          "category": "Ornamentation"
+        },
+        {
+          "id": "visual-characteristics.form-language.compressed-forms",
+          "label": "compressed forms",
+          "section": "Visual Characteristics",
+          "category": "Form Language"
+        },
+        {
+          "id": "visual-characteristics.shape-language.rectangular",
+          "label": "rectangular",
+          "section": "Visual Characteristics",
+          "category": "Shape Language"
+        },
+        {
+          "id": "visual-characteristics.geometry.low-poly",
+          "label": "low-poly",
+          "section": "Visual Characteristics",
+          "category": "Geometry"
+        },
+        {
+          "id": "visual-characteristics.texture.gritty",
+          "label": "gritty",
+          "section": "Visual Characteristics",
+          "category": "Texture"
+        },
+        {
+          "id": "visual-characteristics.surface-quality.mirror",
+          "label": "mirror",
+          "section": "Visual Characteristics",
+          "category": "Surface Quality"
+        },
+        {
+          "id": "visual-characteristics.material-appearance.cardboard",
+          "label": "cardboard",
+          "section": "Visual Characteristics",
+          "category": "Material Appearance"
+        },
+        {
+          "id": "visual-characteristics.depth.deep",
+          "label": "deep",
+          "section": "Visual Characteristics",
+          "category": "Depth"
+        },
+        {
+          "id": "visual-characteristics.perspective.one-point",
+          "label": "one-point",
+          "section": "Visual Characteristics",
+          "category": "Perspective"
+        },
+        {
+          "id": "visual-characteristics.pattern.herringbone",
+          "label": "herringbone",
+          "section": "Visual Characteristics",
+          "category": "Pattern"
+        },
+        {
+          "id": "visual-characteristics.ornamentation.frame-ornament",
+          "label": "frame ornament",
+          "section": "Visual Characteristics",
+          "category": "Ornamentation"
+        },
+        {
+          "id": "visual-characteristics.form-language.stretched-forms",
+          "label": "stretched forms",
+          "section": "Visual Characteristics",
+          "category": "Form Language"
+        },
+        {
+          "id": "visual-characteristics.shape-language.boxy",
+          "label": "boxy",
+          "section": "Visual Characteristics",
+          "category": "Shape Language"
+        },
+        {
+          "id": "visual-characteristics.geometry.high-poly",
+          "label": "high-poly",
+          "section": "Visual Characteristics",
+          "category": "Geometry"
+        },
+        {
+          "id": "visual-characteristics.texture.dusty",
+          "label": "dusty",
+          "section": "Visual Characteristics",
+          "category": "Texture"
+        },
+        {
+          "id": "visual-characteristics.surface-quality.polished",
+          "label": "polished",
+          "section": "Visual Characteristics",
+          "category": "Surface Quality"
+        },
+        {
+          "id": "visual-characteristics.material-appearance.vellum",
+          "label": "vellum",
+          "section": "Visual Characteristics",
+          "category": "Material Appearance"
+        },
+        {
+          "id": "visual-characteristics.depth.infinite",
+          "label": "infinite",
+          "section": "Visual Characteristics",
+          "category": "Depth"
+        },
+        {
+          "id": "visual-characteristics.perspective.two-point",
+          "label": "two-point",
+          "section": "Visual Characteristics",
+          "category": "Perspective"
+        },
+        {
+          "id": "visual-characteristics.pattern.zigzag",
+          "label": "zigzag",
+          "section": "Visual Characteristics",
+          "category": "Pattern"
+        },
+        {
+          "id": "visual-characteristics.ornamentation.filigree",
+          "label": "filigree",
+          "section": "Visual Characteristics",
+          "category": "Ornamentation"
+        },
+        {
+          "id": "visual-characteristics.form-language.twisted-forms",
+          "label": "twisted forms",
+          "section": "Visual Characteristics",
+          "category": "Form Language"
+        },
+        {
+          "id": "visual-characteristics.shape-language.triangular",
+          "label": "triangular",
+          "section": "Visual Characteristics",
+          "category": "Shape Language"
+        },
+        {
+          "id": "visual-characteristics.geometry.faceted",
+          "label": "faceted",
+          "section": "Visual Characteristics",
+          "category": "Geometry"
+        },
+        {
+          "id": "visual-characteristics.texture.chalky",
+          "label": "chalky",
+          "section": "Visual Characteristics",
+          "category": "Texture"
+        },
+        {
+          "id": "visual-characteristics.surface-quality.brushed",
+          "label": "brushed",
+          "section": "Visual Characteristics",
+          "category": "Surface Quality"
+        },
+        {
+          "id": "visual-characteristics.material-appearance.parchment",
+          "label": "parchment",
+          "section": "Visual Characteristics",
+          "category": "Material Appearance"
+        },
+        {
+          "id": "visual-characteristics.depth.atmospheric-depth",
+          "label": "atmospheric depth",
+          "section": "Visual Characteristics",
+          "category": "Depth"
+        },
+        {
+          "id": "visual-characteristics.perspective.three-point",
+          "label": "three-point",
+          "section": "Visual Characteristics",
+          "category": "Perspective"
+        },
+        {
+          "id": "visual-characteristics.pattern.checkerboard",
+          "label": "checkerboard",
+          "section": "Visual Characteristics",
+          "category": "Pattern"
+        },
+        {
+          "id": "visual-characteristics.ornamentation.scrollwork",
+          "label": "scrollwork",
+          "section": "Visual Characteristics",
+          "category": "Ornamentation"
+        }
+      ],
+      "promptConceptIds": [
+        "visual-characteristics.form-language.soft-rounded-volumes",
+        "visual-characteristics.shape-language.circular",
+        "visual-characteristics.geometry.euclidean",
+        "visual-characteristics.texture.smooth",
+        "visual-characteristics.surface-quality.matte",
+        "visual-characteristics.material-appearance.wood",
+        "visual-characteristics.depth.flat",
+        "visual-characteristics.perspective.orthographic",
+        "visual-characteristics.pattern.solid",
+        "visual-characteristics.ornamentation.none",
+        "visual-characteristics.form-language.hard-planar-volumes",
+        "visual-characteristics.shape-language.rounded",
+        "visual-characteristics.geometry.geometric-primitive-based",
+        "visual-characteristics.texture.rough",
+        "visual-characteristics.surface-quality.eggshell",
+        "visual-characteristics.material-appearance.plywood",
+        "visual-characteristics.depth.intentionally-2d",
+        "visual-characteristics.perspective.isometric",
+        "visual-characteristics.pattern.stripe",
+        "visual-characteristics.ornamentation.restrained",
+        "visual-characteristics.form-language.faceted-forms",
+        "visual-characteristics.shape-language.oval",
+        "visual-characteristics.geometry.rectilinear",
+        "visual-characteristics.texture.grainy",
+        "visual-characteristics.surface-quality.satin",
+        "visual-characteristics.material-appearance.mdf",
+        "visual-characteristics.depth.shallow",
+        "visual-characteristics.perspective.dimetric"
+      ]
+    },
+    {
+      "id": "motion-interaction",
+      "label": "Motion, transitions, scroll, and interaction",
+      "concepts": [
+        {
+          "id": "motion-and-animation.motion-style.snappy",
+          "label": "snappy",
+          "section": "Motion and Animation",
+          "category": "Motion Style"
+        },
+        {
+          "id": "motion-and-animation.motion-quality.weight",
+          "label": "weight",
+          "section": "Motion and Animation",
+          "category": "Motion Quality"
+        },
+        {
+          "id": "motion-and-animation.motion-rhythm.steady",
+          "label": "steady",
+          "section": "Motion and Animation",
+          "category": "Motion Rhythm"
+        },
+        {
+          "id": "motion-and-animation.motion-speed.static",
+          "label": "static",
+          "section": "Motion and Animation",
+          "category": "Motion Speed"
+        },
+        {
+          "id": "motion-and-animation.transition-style.cut",
+          "label": "cut",
+          "section": "Motion and Animation",
+          "category": "Transition Style"
+        },
+        {
+          "id": "motion-and-animation.ui-animation.hover",
+          "label": "hover",
+          "section": "Motion and Animation",
+          "category": "UI Animation"
+        },
+        {
+          "id": "motion-and-animation.interaction-reactive-motion.mouse-position",
+          "label": "mouse position",
+          "section": "Motion and Animation",
+          "category": "Interaction-Reactive Motion"
+        },
+        {
+          "id": "ui-ux-interaction.scroll-behavior.normal-vertical",
+          "label": "normal vertical",
+          "section": "UI / UX / Interaction",
+          "category": "Scroll Behavior"
+        },
+        {
+          "id": "ui-ux-interaction.hover-behavior.none",
+          "label": "none",
+          "section": "UI / UX / Interaction",
+          "category": "Hover Behavior"
+        },
+        {
+          "id": "ui-ux-interaction.microinteraction.button-press",
+          "label": "button press",
+          "section": "UI / UX / Interaction",
+          "category": "Microinteraction"
+        },
+        {
+          "id": "ui-ux-interaction.motion-design-pattern.microinteraction",
+          "label": "microinteraction",
+          "section": "UI / UX / Interaction",
+          "category": "Motion Design Pattern"
+        },
+        {
+          "id": "motion-and-animation.motion-style.smooth",
+          "label": "smooth",
+          "section": "Motion and Animation",
+          "category": "Motion Style"
+        },
+        {
+          "id": "motion-and-animation.motion-quality.momentum",
+          "label": "momentum",
+          "section": "Motion and Animation",
+          "category": "Motion Quality"
+        },
+        {
+          "id": "motion-and-animation.motion-rhythm.even",
+          "label": "even",
+          "section": "Motion and Animation",
+          "category": "Motion Rhythm"
+        },
+        {
+          "id": "motion-and-animation.motion-speed.near-static",
+          "label": "near-static",
+          "section": "Motion and Animation",
+          "category": "Motion Speed"
+        },
+        {
+          "id": "motion-and-animation.transition-style.hard-cut",
+          "label": "hard cut",
+          "section": "Motion and Animation",
+          "category": "Transition Style"
+        },
+        {
+          "id": "motion-and-animation.ui-animation.pressed",
+          "label": "pressed",
+          "section": "Motion and Animation",
+          "category": "UI Animation"
+        },
+        {
+          "id": "motion-and-animation.interaction-reactive-motion.mouse-velocity",
+          "label": "mouse velocity",
+          "section": "Motion and Animation",
+          "category": "Interaction-Reactive Motion"
+        },
+        {
+          "id": "ui-ux-interaction.scroll-behavior.horizontal",
+          "label": "horizontal",
+          "section": "UI / UX / Interaction",
+          "category": "Scroll Behavior"
+        },
+        {
+          "id": "ui-ux-interaction.hover-behavior.color-change",
+          "label": "color change",
+          "section": "UI / UX / Interaction",
+          "category": "Hover Behavior"
+        },
+        {
+          "id": "ui-ux-interaction.microinteraction.hover",
+          "label": "hover",
+          "section": "UI / UX / Interaction",
+          "category": "Microinteraction"
+        },
+        {
+          "id": "ui-ux-interaction.motion-design-pattern.page-transition",
+          "label": "page transition",
+          "section": "UI / UX / Interaction",
+          "category": "Motion Design Pattern"
+        },
+        {
+          "id": "motion-and-animation.motion-style.fluid",
+          "label": "fluid",
+          "section": "Motion and Animation",
+          "category": "Motion Style"
+        },
+        {
+          "id": "motion-and-animation.motion-quality.inertia",
+          "label": "inertia",
+          "section": "Motion and Animation",
+          "category": "Motion Quality"
+        },
+        {
+          "id": "motion-and-animation.motion-rhythm.pulsed",
+          "label": "pulsed",
+          "section": "Motion and Animation",
+          "category": "Motion Rhythm"
+        },
+        {
+          "id": "motion-and-animation.motion-speed.very-slow",
+          "label": "very slow",
+          "section": "Motion and Animation",
+          "category": "Motion Speed"
+        },
+        {
+          "id": "motion-and-animation.transition-style.match-cut",
+          "label": "match cut",
+          "section": "Motion and Animation",
+          "category": "Transition Style"
+        },
+        {
+          "id": "motion-and-animation.ui-animation.focus",
+          "label": "focus",
+          "section": "Motion and Animation",
+          "category": "UI Animation"
+        },
+        {
+          "id": "motion-and-animation.interaction-reactive-motion.click",
+          "label": "click",
+          "section": "Motion and Animation",
+          "category": "Interaction-Reactive Motion"
+        },
+        {
+          "id": "ui-ux-interaction.scroll-behavior.nested-scroll",
+          "label": "nested scroll",
+          "section": "UI / UX / Interaction",
+          "category": "Scroll Behavior"
+        },
+        {
+          "id": "ui-ux-interaction.hover-behavior.underline",
+          "label": "underline",
+          "section": "UI / UX / Interaction",
+          "category": "Hover Behavior"
+        },
+        {
+          "id": "ui-ux-interaction.microinteraction.focus-ring",
+          "label": "focus ring",
+          "section": "UI / UX / Interaction",
+          "category": "Microinteraction"
+        },
+        {
+          "id": "ui-ux-interaction.motion-design-pattern.shared-element",
+          "label": "shared element",
+          "section": "UI / UX / Interaction",
+          "category": "Motion Design Pattern"
+        },
+        {
+          "id": "motion-and-animation.motion-style.elastic",
+          "label": "elastic",
+          "section": "Motion and Animation",
+          "category": "Motion Style"
+        },
+        {
+          "id": "motion-and-animation.motion-quality.drag",
+          "label": "drag",
+          "section": "Motion and Animation",
+          "category": "Motion Quality"
+        },
+        {
+          "id": "motion-and-animation.motion-rhythm.syncopated",
+          "label": "syncopated",
+          "section": "Motion and Animation",
+          "category": "Motion Rhythm"
+        },
+        {
+          "id": "motion-and-animation.motion-speed.slow",
+          "label": "slow",
+          "section": "Motion and Animation",
+          "category": "Motion Speed"
+        },
+        {
+          "id": "motion-and-animation.transition-style.jump-cut",
+          "label": "jump cut",
+          "section": "Motion and Animation",
+          "category": "Transition Style"
+        },
+        {
+          "id": "motion-and-animation.ui-animation.loading",
+          "label": "loading",
+          "section": "Motion and Animation",
+          "category": "UI Animation"
+        },
+        {
+          "id": "motion-and-animation.interaction-reactive-motion.hover",
+          "label": "hover",
+          "section": "Motion and Animation",
+          "category": "Interaction-Reactive Motion"
+        },
+        {
+          "id": "ui-ux-interaction.scroll-behavior.snap",
+          "label": "snap",
+          "section": "UI / UX / Interaction",
+          "category": "Scroll Behavior"
+        },
+        {
+          "id": "ui-ux-interaction.hover-behavior.background-change",
+          "label": "background change",
+          "section": "UI / UX / Interaction",
+          "category": "Hover Behavior"
+        },
+        {
+          "id": "ui-ux-interaction.microinteraction.toggle-switch",
+          "label": "toggle switch",
+          "section": "UI / UX / Interaction",
+          "category": "Microinteraction"
+        },
+        {
+          "id": "ui-ux-interaction.motion-design-pattern.stagger",
+          "label": "stagger",
+          "section": "UI / UX / Interaction",
+          "category": "Motion Design Pattern"
+        },
+        {
+          "id": "motion-and-animation.motion-style.bouncy",
+          "label": "bouncy",
+          "section": "Motion and Animation",
+          "category": "Motion Style"
+        },
+        {
+          "id": "motion-and-animation.motion-quality.friction",
+          "label": "friction",
+          "section": "Motion and Animation",
+          "category": "Motion Quality"
+        },
+        {
+          "id": "motion-and-animation.motion-rhythm.alternating",
+          "label": "alternating",
+          "section": "Motion and Animation",
+          "category": "Motion Rhythm"
+        },
+        {
+          "id": "motion-and-animation.motion-speed.moderate",
+          "label": "moderate",
+          "section": "Motion and Animation",
+          "category": "Motion Speed"
+        },
+        {
+          "id": "motion-and-animation.transition-style.dissolve",
+          "label": "dissolve",
+          "section": "Motion and Animation",
+          "category": "Transition Style"
+        },
+        {
+          "id": "motion-and-animation.ui-animation.skeleton",
+          "label": "skeleton",
+          "section": "Motion and Animation",
+          "category": "UI Animation"
+        },
+        {
+          "id": "motion-and-animation.interaction-reactive-motion.drag",
+          "label": "drag",
+          "section": "Motion and Animation",
+          "category": "Interaction-Reactive Motion"
+        },
+        {
+          "id": "ui-ux-interaction.scroll-behavior.paging",
+          "label": "paging",
+          "section": "UI / UX / Interaction",
+          "category": "Scroll Behavior"
+        },
+        {
+          "id": "ui-ux-interaction.hover-behavior.border-change",
+          "label": "border change",
+          "section": "UI / UX / Interaction",
+          "category": "Hover Behavior"
+        },
+        {
+          "id": "ui-ux-interaction.microinteraction.checkbox-tick",
+          "label": "checkbox tick",
+          "section": "UI / UX / Interaction",
+          "category": "Microinteraction"
+        },
+        {
+          "id": "ui-ux-interaction.motion-design-pattern.reveal",
+          "label": "reveal",
+          "section": "UI / UX / Interaction",
+          "category": "Motion Design Pattern"
+        },
+        {
+          "id": "motion-and-animation.motion-style.springy",
+          "label": "springy",
+          "section": "Motion and Animation",
+          "category": "Motion Style"
+        },
+        {
+          "id": "motion-and-animation.motion-quality.elasticity",
+          "label": "elasticity",
+          "section": "Motion and Animation",
+          "category": "Motion Quality"
+        },
+        {
+          "id": "motion-and-animation.motion-rhythm.accelerating",
+          "label": "accelerating",
+          "section": "Motion and Animation",
+          "category": "Motion Rhythm"
+        },
+        {
+          "id": "motion-and-animation.motion-speed.fast",
+          "label": "fast",
+          "section": "Motion and Animation",
+          "category": "Motion Speed"
+        },
+        {
+          "id": "motion-and-animation.transition-style.crossfade",
+          "label": "crossfade",
+          "section": "Motion and Animation",
+          "category": "Transition Style"
+        },
+        {
+          "id": "motion-and-animation.ui-animation.spinner",
+          "label": "spinner",
+          "section": "Motion and Animation",
+          "category": "UI Animation"
+        },
+        {
+          "id": "motion-and-animation.interaction-reactive-motion.scroll",
+          "label": "scroll",
+          "section": "Motion and Animation",
+          "category": "Interaction-Reactive Motion"
+        },
+        {
+          "id": "ui-ux-interaction.scroll-behavior.smooth",
+          "label": "smooth",
+          "section": "UI / UX / Interaction",
+          "category": "Scroll Behavior"
+        },
+        {
+          "id": "ui-ux-interaction.hover-behavior.elevation",
+          "label": "elevation",
+          "section": "UI / UX / Interaction",
+          "category": "Hover Behavior"
+        },
+        {
+          "id": "ui-ux-interaction.microinteraction.radio-select",
+          "label": "radio select",
+          "section": "UI / UX / Interaction",
+          "category": "Microinteraction"
+        },
+        {
+          "id": "ui-ux-interaction.motion-design-pattern.enter-exit",
+          "label": "enter/exit",
+          "section": "UI / UX / Interaction",
+          "category": "Motion Design Pattern"
+        },
+        {
+          "id": "motion-and-animation.motion-style.floaty",
+          "label": "floaty",
+          "section": "Motion and Animation",
+          "category": "Motion Style"
+        },
+        {
+          "id": "motion-and-animation.motion-quality.overshoot",
+          "label": "overshoot",
+          "section": "Motion and Animation",
+          "category": "Motion Quality"
+        },
+        {
+          "id": "motion-and-animation.motion-rhythm.decelerating",
+          "label": "decelerating",
+          "section": "Motion and Animation",
+          "category": "Motion Rhythm"
+        },
+        {
+          "id": "motion-and-animation.motion-speed.very-fast",
+          "label": "very fast",
+          "section": "Motion and Animation",
+          "category": "Motion Speed"
+        },
+        {
+          "id": "motion-and-animation.transition-style.dip-to-black",
+          "label": "dip to black",
+          "section": "Motion and Animation",
+          "category": "Transition Style"
+        },
+        {
+          "id": "motion-and-animation.ui-animation.progress",
+          "label": "progress",
+          "section": "Motion and Animation",
+          "category": "UI Animation"
+        },
+        {
+          "id": "motion-and-animation.interaction-reactive-motion.wheel",
+          "label": "wheel",
+          "section": "Motion and Animation",
+          "category": "Interaction-Reactive Motion"
+        },
+        {
+          "id": "ui-ux-interaction.scroll-behavior.inertial",
+          "label": "inertial",
+          "section": "UI / UX / Interaction",
+          "category": "Scroll Behavior"
+        },
+        {
+          "id": "ui-ux-interaction.hover-behavior.scale",
+          "label": "scale",
+          "section": "UI / UX / Interaction",
+          "category": "Hover Behavior"
+        },
+        {
+          "id": "ui-ux-interaction.microinteraction.favorite-save",
+          "label": "favorite / save",
+          "section": "UI / UX / Interaction",
+          "category": "Microinteraction"
+        },
+        {
+          "id": "ui-ux-interaction.motion-design-pattern.loading",
+          "label": "loading",
+          "section": "UI / UX / Interaction",
+          "category": "Motion Design Pattern"
+        },
+        {
+          "id": "motion-and-animation.motion-style.weightless",
+          "label": "weightless",
+          "section": "Motion and Animation",
+          "category": "Motion Style"
+        },
+        {
+          "id": "motion-and-animation.motion-quality.anticipation",
+          "label": "anticipation",
+          "section": "Motion and Animation",
+          "category": "Motion Quality"
+        },
+        {
+          "id": "motion-and-animation.motion-rhythm.crescendo-like",
+          "label": "crescendo-like",
+          "section": "Motion and Animation",
+          "category": "Motion Rhythm"
+        }
+      ],
+      "promptConceptIds": [
+        "motion-and-animation.motion-style.snappy",
+        "motion-and-animation.motion-quality.weight",
+        "motion-and-animation.motion-rhythm.steady",
+        "motion-and-animation.motion-speed.static",
+        "motion-and-animation.transition-style.cut",
+        "motion-and-animation.ui-animation.hover",
+        "motion-and-animation.interaction-reactive-motion.mouse-position",
+        "ui-ux-interaction.scroll-behavior.normal-vertical",
+        "ui-ux-interaction.hover-behavior.none",
+        "ui-ux-interaction.microinteraction.button-press",
+        "ui-ux-interaction.motion-design-pattern.microinteraction",
+        "motion-and-animation.motion-style.smooth",
+        "motion-and-animation.motion-quality.momentum",
+        "motion-and-animation.motion-rhythm.even",
+        "motion-and-animation.motion-speed.near-static",
+        "motion-and-animation.transition-style.hard-cut",
+        "motion-and-animation.ui-animation.pressed",
+        "motion-and-animation.interaction-reactive-motion.mouse-velocity",
+        "ui-ux-interaction.scroll-behavior.horizontal",
+        "ui-ux-interaction.hover-behavior.color-change",
+        "ui-ux-interaction.microinteraction.hover",
+        "ui-ux-interaction.motion-design-pattern.page-transition",
+        "motion-and-animation.motion-style.fluid",
+        "motion-and-animation.motion-quality.inertia",
+        "motion-and-animation.motion-rhythm.pulsed",
+        "motion-and-animation.motion-speed.very-slow",
+        "motion-and-animation.transition-style.match-cut",
+        "motion-and-animation.ui-animation.focus"
+      ]
+    },
+    {
+      "id": "accessibility-usability",
+      "label": "Accessibility, readability, and responsive behavior",
+      "concepts": [
+        {
+          "id": "ui-ux-interaction.accessibility-pattern.semantic-html",
+          "label": "semantic HTML",
+          "section": "UI / UX / Interaction",
+          "category": "Accessibility Pattern"
+        },
+        {
+          "id": "ui-ux-interaction.responsive-behavior.fluid-type",
+          "label": "fluid type",
+          "section": "UI / UX / Interaction",
+          "category": "Responsive Behavior"
+        },
+        {
+          "id": "constraints.accessibility-constraint.contrast",
+          "label": "contrast",
+          "section": "Constraints",
+          "category": "Accessibility Constraint"
+        },
+        {
+          "id": "audience.accessibility-needs.captions",
+          "label": "captions",
+          "section": "Audience",
+          "category": "Accessibility Needs"
+        },
+        {
+          "id": "web-and-creative-coding.web-standard.html-living-standard",
+          "label": "HTML Living Standard",
+          "section": "Web and Creative Coding",
+          "category": "Web Standard"
+        },
+        {
+          "id": "ui-ux-interaction.accessibility-pattern.keyboard-navigation",
+          "label": "keyboard navigation",
+          "section": "UI / UX / Interaction",
+          "category": "Accessibility Pattern"
+        },
+        {
+          "id": "ui-ux-interaction.responsive-behavior.fluid-spacing",
+          "label": "fluid spacing",
+          "section": "UI / UX / Interaction",
+          "category": "Responsive Behavior"
+        },
+        {
+          "id": "constraints.accessibility-constraint.font-size",
+          "label": "font size",
+          "section": "Constraints",
+          "category": "Accessibility Constraint"
+        },
+        {
+          "id": "audience.accessibility-needs.subtitles",
+          "label": "subtitles",
+          "section": "Audience",
+          "category": "Accessibility Needs"
+        },
+        {
+          "id": "web-and-creative-coding.web-standard.css",
+          "label": "CSS",
+          "section": "Web and Creative Coding",
+          "category": "Web Standard"
+        },
+        {
+          "id": "ui-ux-interaction.accessibility-pattern.visible-focus",
+          "label": "visible focus",
+          "section": "UI / UX / Interaction",
+          "category": "Accessibility Pattern"
+        },
+        {
+          "id": "ui-ux-interaction.responsive-behavior.breakpoint-layout",
+          "label": "breakpoint layout",
+          "section": "UI / UX / Interaction",
+          "category": "Responsive Behavior"
+        },
+        {
+          "id": "constraints.accessibility-constraint.captions",
+          "label": "captions",
+          "section": "Constraints",
+          "category": "Accessibility Constraint"
+        },
+        {
+          "id": "audience.accessibility-needs.transcript",
+          "label": "transcript",
+          "section": "Audience",
+          "category": "Accessibility Needs"
+        },
+        {
+          "id": "web-and-creative-coding.web-standard.ecmascript",
+          "label": "ECMAScript",
+          "section": "Web and Creative Coding",
+          "category": "Web Standard"
+        },
+        {
+          "id": "ui-ux-interaction.accessibility-pattern.skip-link",
+          "label": "skip link",
+          "section": "UI / UX / Interaction",
+          "category": "Accessibility Pattern"
+        },
+        {
+          "id": "ui-ux-interaction.responsive-behavior.component-reflow",
+          "label": "component reflow",
+          "section": "UI / UX / Interaction",
+          "category": "Responsive Behavior"
+        },
+        {
+          "id": "constraints.accessibility-constraint.transcript",
+          "label": "transcript",
+          "section": "Constraints",
+          "category": "Accessibility Constraint"
+        },
+        {
+          "id": "audience.accessibility-needs.audio-description",
+          "label": "audio description",
+          "section": "Audience",
+          "category": "Accessibility Needs"
+        },
+        {
+          "id": "web-and-creative-coding.web-standard.dom",
+          "label": "DOM",
+          "section": "Web and Creative Coding",
+          "category": "Web Standard"
+        },
+        {
+          "id": "ui-ux-interaction.accessibility-pattern.screen-reader-labels",
+          "label": "screen-reader labels",
+          "section": "UI / UX / Interaction",
+          "category": "Accessibility Pattern"
+        },
+        {
+          "id": "ui-ux-interaction.responsive-behavior.column-collapse",
+          "label": "column collapse",
+          "section": "UI / UX / Interaction",
+          "category": "Responsive Behavior"
+        },
+        {
+          "id": "constraints.accessibility-constraint.keyboard-access",
+          "label": "keyboard access",
+          "section": "Constraints",
+          "category": "Accessibility Constraint"
+        },
+        {
+          "id": "audience.accessibility-needs.screen-reader",
+          "label": "screen reader",
+          "section": "Audience",
+          "category": "Accessibility Needs"
+        },
+        {
+          "id": "web-and-creative-coding.web-standard.fetch",
+          "label": "Fetch",
+          "section": "Web and Creative Coding",
+          "category": "Web Standard"
+        },
+        {
+          "id": "ui-ux-interaction.accessibility-pattern.live-regions",
+          "label": "live regions",
+          "section": "UI / UX / Interaction",
+          "category": "Accessibility Pattern"
+        },
+        {
+          "id": "ui-ux-interaction.responsive-behavior.navigation-collapse",
+          "label": "navigation collapse",
+          "section": "UI / UX / Interaction",
+          "category": "Responsive Behavior"
+        },
+        {
+          "id": "constraints.accessibility-constraint.screen-reader",
+          "label": "screen reader",
+          "section": "Constraints",
+          "category": "Accessibility Constraint"
+        },
+        {
+          "id": "audience.accessibility-needs.keyboard-navigation",
+          "label": "keyboard navigation",
+          "section": "Audience",
+          "category": "Accessibility Needs"
+        },
+        {
+          "id": "web-and-creative-coding.web-standard.url",
+          "label": "URL",
+          "section": "Web and Creative Coding",
+          "category": "Web Standard"
+        },
+        {
+          "id": "ui-ux-interaction.accessibility-pattern.alt-text",
+          "label": "alt text",
+          "section": "UI / UX / Interaction",
+          "category": "Accessibility Pattern"
+        },
+        {
+          "id": "ui-ux-interaction.responsive-behavior.card-stacking",
+          "label": "card stacking",
+          "section": "UI / UX / Interaction",
+          "category": "Responsive Behavior"
+        },
+        {
+          "id": "constraints.accessibility-constraint.focus-visibility",
+          "label": "focus visibility",
+          "section": "Constraints",
+          "category": "Accessibility Constraint"
+        },
+        {
+          "id": "audience.accessibility-needs.switch-access",
+          "label": "switch access",
+          "section": "Audience",
+          "category": "Accessibility Needs"
+        },
+        {
+          "id": "web-and-creative-coding.web-standard.web-storage",
+          "label": "Web Storage",
+          "section": "Web and Creative Coding",
+          "category": "Web Standard"
+        },
+        {
+          "id": "ui-ux-interaction.accessibility-pattern.captions",
+          "label": "captions",
+          "section": "UI / UX / Interaction",
+          "category": "Accessibility Pattern"
+        },
+        {
+          "id": "ui-ux-interaction.responsive-behavior.image-art-direction",
+          "label": "image art direction",
+          "section": "UI / UX / Interaction",
+          "category": "Responsive Behavior"
+        },
+        {
+          "id": "constraints.accessibility-constraint.reduced-motion",
+          "label": "reduced motion",
+          "section": "Constraints",
+          "category": "Accessibility Constraint"
+        },
+        {
+          "id": "audience.accessibility-needs.voice-control",
+          "label": "voice control",
+          "section": "Audience",
+          "category": "Accessibility Needs"
+        },
+        {
+          "id": "web-and-creative-coding.web-standard.indexeddb",
+          "label": "IndexedDB",
+          "section": "Web and Creative Coding",
+          "category": "Web Standard"
+        },
+        {
+          "id": "ui-ux-interaction.accessibility-pattern.transcripts",
+          "label": "transcripts",
+          "section": "UI / UX / Interaction",
+          "category": "Accessibility Pattern"
+        },
+        {
+          "id": "ui-ux-interaction.responsive-behavior.responsive-image",
+          "label": "responsive image",
+          "section": "UI / UX / Interaction",
+          "category": "Responsive Behavior"
+        },
+        {
+          "id": "constraints.accessibility-constraint.flashing-restrictions",
+          "label": "flashing restrictions",
+          "section": "Constraints",
+          "category": "Accessibility Constraint"
+        },
+        {
+          "id": "audience.accessibility-needs.high-contrast",
+          "label": "high contrast",
+          "section": "Audience",
+          "category": "Accessibility Needs"
+        },
+        {
+          "id": "web-and-creative-coding.web-standard.web-workers",
+          "label": "Web Workers",
+          "section": "Web and Creative Coding",
+          "category": "Web Standard"
+        },
+        {
+          "id": "ui-ux-interaction.accessibility-pattern.audio-description",
+          "label": "audio description",
+          "section": "UI / UX / Interaction",
+          "category": "Accessibility Pattern"
+        },
+        {
+          "id": "ui-ux-interaction.responsive-behavior.responsive-video",
+          "label": "responsive video",
+          "section": "UI / UX / Interaction",
+          "category": "Responsive Behavior"
+        },
+        {
+          "id": "constraints.accessibility-constraint.color-independent-cues",
+          "label": "color-independent cues",
+          "section": "Constraints",
+          "category": "Accessibility Constraint"
+        },
+        {
+          "id": "audience.accessibility-needs.text-scaling",
+          "label": "text scaling",
+          "section": "Audience",
+          "category": "Accessibility Needs"
+        },
+        {
+          "id": "web-and-creative-coding.web-standard.service-workers",
+          "label": "Service Workers",
+          "section": "Web and Creative Coding",
+          "category": "Web Standard"
+        },
+        {
+          "id": "ui-ux-interaction.accessibility-pattern.sufficient-contrast",
+          "label": "sufficient contrast",
+          "section": "UI / UX / Interaction",
+          "category": "Accessibility Pattern"
+        },
+        {
+          "id": "ui-ux-interaction.responsive-behavior.container-query",
+          "label": "container query",
+          "section": "UI / UX / Interaction",
+          "category": "Responsive Behavior"
+        },
+        {
+          "id": "constraints.accessibility-constraint.touch-target-size",
+          "label": "touch target size",
+          "section": "Constraints",
+          "category": "Accessibility Constraint"
+        },
+        {
+          "id": "audience.accessibility-needs.large-targets",
+          "label": "large targets",
+          "section": "Audience",
+          "category": "Accessibility Needs"
+        },
+        {
+          "id": "web-and-creative-coding.web-standard.web-components",
+          "label": "Web Components",
+          "section": "Web and Creative Coding",
+          "category": "Web Standard"
+        },
+        {
+          "id": "ui-ux-interaction.accessibility-pattern.non-color-cues",
+          "label": "non-color cues",
+          "section": "UI / UX / Interaction",
+          "category": "Accessibility Pattern"
+        },
+        {
+          "id": "ui-ux-interaction.responsive-behavior.orientation-change",
+          "label": "orientation change",
+          "section": "UI / UX / Interaction",
+          "category": "Responsive Behavior"
+        },
+        {
+          "id": "constraints.accessibility-constraint.motor-accessibility",
+          "label": "motor accessibility",
+          "section": "Constraints",
+          "category": "Accessibility Constraint"
+        },
+        {
+          "id": "audience.accessibility-needs.reduced-motion",
+          "label": "reduced motion",
+          "section": "Audience",
+          "category": "Accessibility Needs"
+        },
+        {
+          "id": "web-and-creative-coding.web-standard.custom-elements",
+          "label": "Custom Elements",
+          "section": "Web and Creative Coding",
+          "category": "Web Standard"
+        },
+        {
+          "id": "ui-ux-interaction.accessibility-pattern.scalable-text",
+          "label": "scalable text",
+          "section": "UI / UX / Interaction",
+          "category": "Accessibility Pattern"
+        },
+        {
+          "id": "ui-ux-interaction.responsive-behavior.safe-area-adaptation",
+          "label": "safe-area adaptation",
+          "section": "UI / UX / Interaction",
+          "category": "Responsive Behavior"
+        },
+        {
+          "id": "constraints.accessibility-constraint.hearing-accessibility",
+          "label": "hearing accessibility",
+          "section": "Constraints",
+          "category": "Accessibility Constraint"
+        },
+        {
+          "id": "audience.accessibility-needs.reduced-flashing",
+          "label": "reduced flashing",
+          "section": "Audience",
+          "category": "Accessibility Needs"
+        },
+        {
+          "id": "web-and-creative-coding.web-standard.shadow-dom",
+          "label": "Shadow DOM",
+          "section": "Web and Creative Coding",
+          "category": "Web Standard"
+        },
+        {
+          "id": "ui-ux-interaction.accessibility-pattern.reduced-motion",
+          "label": "reduced motion",
+          "section": "UI / UX / Interaction",
+          "category": "Accessibility Pattern"
+        },
+        {
+          "id": "ui-ux-interaction.responsive-behavior.touch-target-expansion",
+          "label": "touch target expansion",
+          "section": "UI / UX / Interaction",
+          "category": "Responsive Behavior"
+        },
+        {
+          "id": "constraints.accessibility-constraint.visual-accessibility",
+          "label": "visual accessibility",
+          "section": "Constraints",
+          "category": "Accessibility Constraint"
+        },
+        {
+          "id": "audience.accessibility-needs.color-vision-support",
+          "label": "color vision support",
+          "section": "Audience",
+          "category": "Accessibility Needs"
+        },
+        {
+          "id": "web-and-creative-coding.web-standard.web-animations",
+          "label": "Web Animations",
+          "section": "Web and Creative Coding",
+          "category": "Web Standard"
+        },
+        {
+          "id": "ui-ux-interaction.accessibility-pattern.touch-target-sizing",
+          "label": "touch target sizing",
+          "section": "UI / UX / Interaction",
+          "category": "Accessibility Pattern"
+        },
+        {
+          "id": "ui-ux-interaction.responsive-behavior.hover-removal-on-touch",
+          "label": "hover removal on touch",
+          "section": "UI / UX / Interaction",
+          "category": "Responsive Behavior"
+        },
+        {
+          "id": "constraints.accessibility-constraint.cognitive-load",
+          "label": "cognitive load",
+          "section": "Constraints",
+          "category": "Accessibility Constraint"
+        },
+        {
+          "id": "audience.accessibility-needs.simplified-language",
+          "label": "simplified language",
+          "section": "Audience",
+          "category": "Accessibility Needs"
+        },
+        {
+          "id": "web-and-creative-coding.web-standard.web-audio",
+          "label": "Web Audio",
+          "section": "Web and Creative Coding",
+          "category": "Web Standard"
+        },
+        {
+          "id": "ui-ux-interaction.accessibility-pattern.logical-heading-order",
+          "label": "logical heading order",
+          "section": "UI / UX / Interaction",
+          "category": "Accessibility Pattern"
+        },
+        {
+          "id": "ui-ux-interaction.responsive-behavior.desktop-sidebar-to-mobile-drawer",
+          "label": "desktop sidebar to mobile drawer",
+          "section": "UI / UX / Interaction",
+          "category": "Responsive Behavior"
+        },
+        {
+          "id": "constraints.accessibility-constraint.plain-language",
+          "label": "plain language",
+          "section": "Constraints",
+          "category": "Accessibility Constraint"
+        },
+        {
+          "id": "audience.accessibility-needs.cognitive-load-reduction",
+          "label": "cognitive load reduction",
+          "section": "Audience",
+          "category": "Accessibility Needs"
+        },
+        {
+          "id": "web-and-creative-coding.web-standard.web-midi",
+          "label": "Web MIDI",
+          "section": "Web and Creative Coding",
+          "category": "Web Standard"
+        }
+      ],
+      "promptConceptIds": [
+        "ui-ux-interaction.accessibility-pattern.semantic-html",
+        "ui-ux-interaction.responsive-behavior.fluid-type",
+        "constraints.accessibility-constraint.contrast",
+        "audience.accessibility-needs.captions",
+        "web-and-creative-coding.web-standard.html-living-standard",
+        "ui-ux-interaction.accessibility-pattern.keyboard-navigation",
+        "ui-ux-interaction.responsive-behavior.fluid-spacing",
+        "constraints.accessibility-constraint.font-size",
+        "audience.accessibility-needs.subtitles",
+        "web-and-creative-coding.web-standard.css",
+        "ui-ux-interaction.accessibility-pattern.visible-focus",
+        "ui-ux-interaction.responsive-behavior.breakpoint-layout",
+        "constraints.accessibility-constraint.captions",
+        "audience.accessibility-needs.transcript",
+        "web-and-creative-coding.web-standard.ecmascript",
+        "ui-ux-interaction.accessibility-pattern.skip-link",
+        "ui-ux-interaction.responsive-behavior.component-reflow",
+        "constraints.accessibility-constraint.transcript",
+        "audience.accessibility-needs.audio-description",
+        "web-and-creative-coding.web-standard.dom",
+        "ui-ux-interaction.accessibility-pattern.screen-reader-labels",
+        "ui-ux-interaction.responsive-behavior.column-collapse",
+        "constraints.accessibility-constraint.keyboard-access",
+        "audience.accessibility-needs.screen-reader",
+        "web-and-creative-coding.web-standard.fetch",
+        "ui-ux-interaction.accessibility-pattern.live-regions",
+        "ui-ux-interaction.responsive-behavior.navigation-collapse",
+        "constraints.accessibility-constraint.screen-reader"
+      ]
+    }
+  ]
+}
