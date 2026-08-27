@@ -2,7 +2,7 @@ import resourcesData from '@/knowledge/resources.json';
 import { selectAIModel } from '@/src/ai-models/select';
 import type { ProjectAnalysisOutcome } from '@/src/project-analysis/schema';
 import { flattenTechniquePlans, resolveTechniquePlans } from './playbooks';
-import type { AgentDelegationGuide, CandidatePath, ExecutionMethod, Language, PipelineTask, ProjectInput, ScoreBreakdown, Solution } from './types';
+import type { AgentDelegationGuide, CandidatePath, DetourDecision, ExecutionMethod, Language, PipelineTask, ProjectInput, ScoreBreakdown, Solution } from './types';
 
 const APPS:Record<string,string>={blender:'Blender',touchdesigner:'TouchDesigner','davinci-resolve':'DaVinci Resolve','python-opencv':'Python + OpenCV',p5js:'p5.js',threejs:'Three.js','after-effects':'After Effects',houdini:'Houdini',maya:'Maya',illustrator:'Illustrator',nextjs:'Next.js','gemini-api':'Gemini API','browser-llm':'Browser-local LLM',vercel:'Vercel'};
 const STRATEGIES:Record<string,[string,string]>={
@@ -256,6 +256,27 @@ function score(seed:Seed,input:ProjectInput,known:string[],required:string[],cap
  const weaknesses=[...(newApps?[tr(input.language,`Introduces ${newApps} new tool${newApps>1?'s':''}`,`Giới thiệu ${newApps} công cụ mới`)]:[]),...(kind==='ai-chatbot'&&seed.apps.includes('gemini-api')?[tr(input.language,'Free-tier availability and quota must be verified before launch','Cần kiểm tra free tier và quota trước khi ra mắt')]:[]),...(kind==='ai-chatbot'&&seed.apps.includes('browser-llm')?[tr(input.language,'Requires a model download and a capable user device','Cần tải model và thiết bị người dùng đủ mạnh')]:[]),...(b.deadlineFit<100?[tr(input.language,'Exceeds the current time capacity','Vượt quỹ thời gian')]:[]),...(resourceMatches===0?[tr(input.language,'No matching verified local resource','Chưa có tài nguyên local phù hợp')]:[])];
  return{id:seed.id,title:seed.apps.length?seed.apps.map((id)=>APPS[id]).join(' → '):tr(input.language,'Clarify project requirements','Làm rõ yêu cầu dự án'),strategyLabel:tr(input.language,...(STRATEGIES[seed.id]??['Standard execution','Triển khai tiêu chuẩn'])),softwareIds:seed.apps,softwareLabels:seed.apps.map((id)=>APPS[id]),tasks:pathTasks,estimatedHumanMinutes:pathTasks.reduce((s,t)=>s+t.estimatedHumanMinutes,0),estimatedLearningMinutes:pathTasks.reduce((s,t)=>s+t.estimatedLearningMinutes,0),estimatedAgentMinutes:pathTasks.reduce((s,t)=>s+t.estimatedAgentMinutes,0),score:pathScore,scoreBreakdown:b,strengths,weaknesses,viable,rejectionReasons:missing.map((id)=>tr(input.language,`Missing required ${APPS[id]}`,`Thiếu ${APPS[id]} bắt buộc`))};
 }
+function detourDecisions(rejected:CandidatePath[],recommended:CandidatePath,lang:Language):DetourDecision[]{
+ return rejected.slice(0,3).map((path)=>{
+  const extraLearning=Math.max(0,path.estimatedLearningMinutes-recommended.estimatedLearningMinutes);
+  const extraHuman=Math.max(0,path.estimatedHumanMinutes-recommended.estimatedHumanMinutes);
+  const unfamiliarity=path.weaknesses.find((reason)=>reason.includes('new tool')||reason.includes('công cụ mới'));
+  const timeRisk=path.weaknesses.find((reason)=>reason.includes('time capacity')||reason.includes('quỹ thời gian'));
+  const costAvoided=extraLearning>0
+   ?tr(lang,`Avoids ${extraLearning} additional minutes of learning for a route that still fails a hard requirement.`,`Tránh thêm ${extraLearning} phút học cho một lộ trình vẫn không đạt yêu cầu bắt buộc.`)
+   :extraHuman>0
+    ?tr(lang,`Avoids ${extraHuman} additional minutes of human work before the blocking requirement is resolved.`,`Tránh thêm ${extraHuman} phút làm việc trước khi yêu cầu đang chặn được giải quyết.`)
+    :tr(lang,'Avoids investing in a route that cannot deliver the brief under its current constraints.','Tránh đầu tư vào lộ trình không thể đáp ứng brief với các ràng buộc hiện tại.');
+  return{
+   id:path.id,
+   title:path.title,
+   summary:tr(lang,`Rejected because ${path.rejectionReasons.join('; ').replace(/^./,(letter)=>letter.toLowerCase())}.`,`Bị loại vì ${path.rejectionReasons.join('; ').replace(/^./,(letter)=>letter.toLowerCase())}.`),
+   costAvoided,
+   reconsiderWhen:tr(lang,'Reconsider this route only if the blocking requirement becomes optional or the brief changes.','Chỉ xem xét lại lộ trình này nếu yêu cầu đang chặn trở thành tùy chọn hoặc brief thay đổi.'),
+   evidence:unique([...path.rejectionReasons,...(timeRisk?[timeRisk]:[]),...(unfamiliarity?[unfamiliarity]:[])]),
+  };
+ });
+}
 export function solveProject(input:ProjectInput,understanding?:ProjectAnalysisOutcome):Solution{
  const explicitText=`${input.brief} ${input.skills} ${input.constraints}`.toLowerCase();
  const enrichment=understanding?Object.values(understanding.analysis).flat().join(' ').toLowerCase():'';
@@ -263,6 +284,6 @@ export function solveProject(input:ProjectInput,understanding?:ProjectAnalysisOu
  const kind=kindOf(text),explicitRequired=mandatory(`${input.brief}. ${input.constraints}`.toLowerCase()),constraintSoftware=appMentions(input.constraints.toLowerCase()),analyzedRequired=(understanding?.resolution.mandatorySoftwareIds??[]).filter((id)=>constraintSoftware.includes(id)),required=[...new Set([...explicitRequired,...analyzedRequired])],known=[...new Set([...appMentions(input.skills.toLowerCase()),...(understanding?.resolution.softwareIds??[])])];
  const deadline=input.deadline?new Date(`${input.deadline}T23:59:59`):new Date(Date.now()+7*86400000),days=Math.max(1,Math.ceil((deadline.getTime()-Date.now())/86400000)),capacity=Math.round(days*Math.max(.5,input.hoursPerDay)*60);
  const requestedTechniques=understanding?.resolution.techniqueIds??[];
- const all=seeds(kind).map((seed)=>score(seed,input,known,required,capacity,kind,requestedTechniques)),viable=all.filter((p)=>p.viable).sort((a,b)=>b.score-a.score),recommended=viable[0]??all.sort((a,b)=>b.score-a.score)[0];
- return{destination:understanding?.analysis.destination??input.brief.trim(),detectedKind:kind,capacityMinutes:capacity,daysAvailable:days,requirements:required.map((id)=>APPS[id]),knownSoftware:known.map((id)=>APPS[id]),recommended,alternatives:viable.slice(1),rejected:all.filter((p)=>!p.viable),skipped:['Maya','Houdini','Generic beginner courses'].filter((label)=>!recommended.softwareLabels.includes(label)).map((label)=>tr(input.language,`${label} — no required advantage for this route`,`${label} — không có lợi thế bắt buộc cho lộ trình này`)),solverVersion:'mvp-rules-1.5.0',scoringVersion:'deterministic-1.0.0'};
+ const all=seeds(kind).map((seed)=>score(seed,input,known,required,capacity,kind,requestedTechniques)),viable=all.filter((p)=>p.viable).sort((a,b)=>b.score-a.score),recommended=viable[0]??all.sort((a,b)=>b.score-a.score)[0],rejected=all.filter((p)=>!p.viable);
+ return{destination:understanding?.analysis.destination??input.brief.trim(),detectedKind:kind,capacityMinutes:capacity,daysAvailable:days,requirements:required.map((id)=>APPS[id]),knownSoftware:known.map((id)=>APPS[id]),recommended,alternatives:viable.slice(1),rejected,detours:detourDecisions(rejected,recommended,input.language),solverVersion:'mvp-rules-1.6.0',scoringVersion:'deterministic-1.0.0'};
 }
