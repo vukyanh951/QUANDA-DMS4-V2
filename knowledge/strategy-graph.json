@@ -1,0 +1,39 @@
+{
+  "strategyGraphVersion": "1.0.0",
+  "source": "QUANDA V2 curated strategy graph",
+  "strategies": [
+    {"id":"td-native","projectKind":"installation","softwareIds":["blender","touchdesigner","davinci-resolve"],"humanMinutes":315,"learningMinutes":45,"agentMinutes":0,"risk":16},
+    {"id":"td-python","projectKind":"installation","softwareIds":["blender","python-opencv","touchdesigner","davinci-resolve"],"humanMinutes":275,"learningMinutes":105,"agentMinutes":50,"risk":26},
+    {"id":"td-lean","projectKind":"installation","softwareIds":["touchdesigner","davinci-resolve"],"humanMinutes":350,"learningMinutes":70,"agentMinutes":0,"risk":19},
+    {"id":"unity-route","projectKind":"installation","softwareIds":["blender","davinci-resolve"],"humanMinutes":390,"learningMinutes":150,"agentMinutes":25,"risk":34},
+
+    {"id":"p5-illustrator-site","projectKind":"creative-web","softwareIds":["illustrator","p5js","vercel"],"humanMinutes":260,"learningMinutes":70,"agentMinutes":60,"risk":16},
+    {"id":"p5-site","projectKind":"creative-web","softwareIds":["p5js","vercel"],"humanMinutes":300,"learningMinutes":90,"agentMinutes":75,"risk":20},
+    {"id":"three-creative-site","projectKind":"creative-web","softwareIds":["threejs","vercel"],"humanMinutes":285,"learningMinutes":85,"agentMinutes":95,"risk":25},
+    {"id":"three-illustrator-site","projectKind":"creative-web","softwareIds":["illustrator","threejs","vercel"],"humanMinutes":295,"learningMinutes":95,"agentMinutes":100,"risk":24},
+
+    {"id":"three-agent","projectKind":"threejs","softwareIds":["threejs","vercel"],"humanMinutes":260,"learningMinutes":40,"agentMinutes":95,"risk":18},
+    {"id":"three-learn","projectKind":"threejs","softwareIds":["threejs","vercel"],"humanMinutes":380,"learningMinutes":150,"agentMinutes":0,"risk":22},
+    {"id":"p5-site","projectKind":"threejs","softwareIds":["p5js","vercel"],"humanMinutes":300,"learningMinutes":75,"agentMinutes":45,"risk":28},
+    {"id":"three-illustrator-site","projectKind":"threejs","softwareIds":["illustrator","threejs","vercel"],"humanMinutes":300,"learningMinutes":55,"agentMinutes":90,"risk":20},
+
+    {"id":"next-gemini-agent","projectKind":"ai-chatbot","softwareIds":["nextjs","gemini-api","vercel"],"humanMinutes":375,"learningMinutes":60,"agentMinutes":150,"risk":22},
+    {"id":"next-gemini-learn","projectKind":"ai-chatbot","softwareIds":["nextjs","gemini-api","vercel"],"humanMinutes":475,"learningMinutes":210,"agentMinutes":0,"risk":28},
+    {"id":"next-browser-model","projectKind":"ai-chatbot","softwareIds":["nextjs","browser-llm","vercel"],"humanMinutes":440,"learningMinutes":120,"agentMinutes":150,"risk":34},
+    {"id":"next-browser-learn","projectKind":"ai-chatbot","softwareIds":["nextjs","browser-llm","vercel"],"humanMinutes":520,"learningMinutes":230,"agentMinutes":0,"risk":38},
+
+    {"id":"p5-poster","projectKind":"poster","softwareIds":["illustrator","p5js"],"humanMinutes":205,"learningMinutes":55,"agentMinutes":40,"risk":16},
+    {"id":"td-poster","projectKind":"poster","softwareIds":["illustrator","touchdesigner"],"humanMinutes":250,"learningMinutes":100,"agentMinutes":0,"risk":20},
+    {"id":"ae-poster","projectKind":"poster","softwareIds":["illustrator","after-effects"],"humanMinutes":235,"learningMinutes":115,"agentMinutes":0,"risk":18},
+
+    {"id":"blender-geo","projectKind":"geometry","softwareIds":["blender"],"humanMinutes":290,"learningMinutes":70,"agentMinutes":0,"risk":14},
+    {"id":"blender-manual","projectKind":"geometry","softwareIds":["blender"],"humanMinutes":390,"learningMinutes":15,"agentMinutes":0,"risk":19},
+    {"id":"houdini-geo","projectKind":"geometry","softwareIds":["houdini"],"humanMinutes":285,"learningMinutes":210,"agentMinutes":0,"risk":30},
+
+    {"id":"blender-only","projectKind":"animation","softwareIds":["blender"],"humanMinutes":330,"learningMinutes":35,"agentMinutes":0,"risk":13},
+    {"id":"blender-resolve","projectKind":"animation","softwareIds":["blender","davinci-resolve"],"humanMinutes":310,"learningMinutes":55,"agentMinutes":0,"risk":15},
+    {"id":"maya-ae","projectKind":"animation","softwareIds":["maya","after-effects"],"humanMinutes":345,"learningMinutes":190,"agentMinutes":0,"risk":29},
+
+    {"id":"clarify-project","projectKind":"unresolved","softwareIds":[],"humanMinutes":25,"learningMinutes":0,"agentMinutes":0,"risk":45}
+  ]
+}

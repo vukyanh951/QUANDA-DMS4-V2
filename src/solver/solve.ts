@@ -2,13 +2,15 @@ import resourcesData from '@/knowledge/resources.json';
 import { selectAIModel } from '@/src/ai-models/select';
 import type { ProjectAnalysisOutcome } from '@/src/project-analysis/schema';
 import { flattenTechniquePlans, resolveTechniquePlans } from './playbooks';
+import { reasoningChainForStrategy } from './knowledge-graph';
+import { deriveCandidateStrategies } from './strategy-graph';
 import type { AgentDelegationGuide, CandidatePath, DetourDecision, ExecutionMethod, Language, PipelineTask, ProjectInput, ScoreBreakdown, Solution } from './types';
 
 const APPS:Record<string,string>={blender:'Blender',touchdesigner:'TouchDesigner','davinci-resolve':'DaVinci Resolve','python-opencv':'Python + OpenCV',p5js:'p5.js',threejs:'Three.js','after-effects':'After Effects',houdini:'Houdini',maya:'Maya',illustrator:'Illustrator',nextjs:'Next.js','gemini-api':'Gemini API','browser-llm':'Browser-local LLM',vercel:'Vercel'};
 const STRATEGIES:Record<string,[string,string]>={
  'td-native':['Integrated visual-tool workflow','Quy trình tích hợp bằng công cụ hình ảnh'],'td-python':['Python-assisted tracking workflow','Quy trình tracking hỗ trợ bằng Python'],'td-lean':['Lean TouchDesigner workflow','Quy trình TouchDesigner tinh gọn'],'unity-route':['High-learning alternative','Phương án cần học nhiều'],
- 'p5-illustrator-site':['Design-led, agent-assisted build','Bản dựng ưu tiên thiết kế, có agent hỗ trợ'],'p5-site':['Lean p5.js build','Bản dựng p5.js tinh gọn'],'three-creative-site':['3D web alternative','Phương án web 3D'],'three-agent':['Agent-assisted implementation','Triển khai có agent hỗ trợ'],'three-learn':['Learn-first implementation','Triển khai ưu tiên tự học'],
- 'next-gemini-agent':['Agent-assisted server-model MVP','MVP dùng model phía server, có agent hỗ trợ'],'next-gemini-learn':['Learn-first server-model MVP','MVP dùng model phía server, ưu tiên tự học'],'next-browser-model':['Browser-local model alternative','Phương án model chạy cục bộ trong trình duyệt'],
+ 'p5-illustrator-site':['Design-led, agent-assisted build','Bản dựng ưu tiên thiết kế, có agent hỗ trợ'],'p5-site':['Lean p5.js build','Bản dựng p5.js tinh gọn'],'three-creative-site':['3D web alternative','Phương án web 3D'],'three-illustrator-site':['Design-led Three.js alternative','Phương án Three.js ưu tiên thiết kế'],'three-agent':['Agent-assisted implementation','Triển khai có agent hỗ trợ'],'three-learn':['Learn-first implementation','Triển khai ưu tiên tự học'],
+ 'next-gemini-agent':['Agent-assisted server-model MVP','MVP dùng model phía server, có agent hỗ trợ'],'next-gemini-learn':['Learn-first server-model MVP','MVP dùng model phía server, ưu tiên tự học'],'next-browser-model':['Browser-local model alternative','Phương án model chạy cục bộ trong trình duyệt'],'next-browser-learn':['Learn-first browser-local alternative','Phương án browser-local ưu tiên tự học'],
  'p5-poster':['Code-assisted audio mapping','Ánh xạ audio có code hỗ trợ'],'td-poster':['Node-based realtime workflow','Quy trình realtime dạng node'],'ae-poster':['Timeline-based motion workflow','Quy trình motion theo timeline'],
  'blender-geo':['Procedural Geometry Nodes workflow','Quy trình Geometry Nodes procedural'],'blender-manual':['Manual Blender workflow','Quy trình Blender thủ công'],'houdini-geo':['Houdini procedural alternative','Phương án procedural bằng Houdini'],
  'blender-only':['Single-app focused workflow','Quy trình tập trung một ứng dụng'],'blender-resolve':['Blender plus finishing workflow','Quy trình Blender kèm hậu kỳ'],'maya-ae':['Multi-app animation alternative','Phương án animation đa ứng dụng'],'clarify-project':['Requirements clarification','Làm rõ yêu cầu']
@@ -21,14 +23,7 @@ const clamp=(n:number)=>Math.max(0,Math.min(100,Math.round(n)));
 const unique=<T,>(values:T[])=>[...new Set(values)];
 
 type Seed={id:string;apps:string[];human:number;learning:number;agent:number;risk:number};
-const seeds=(kind:string):Seed[]=>kind==='installation'?[{id:'td-native',apps:['blender','touchdesigner','davinci-resolve'],human:315,learning:45,agent:0,risk:16},{id:'td-python',apps:['blender','python-opencv','touchdesigner','davinci-resolve'],human:275,learning:105,agent:50,risk:26},{id:'td-lean',apps:['touchdesigner','davinci-resolve'],human:350,learning:70,agent:0,risk:19},{id:'unity-route',apps:['blender','davinci-resolve'],human:390,learning:150,agent:25,risk:34}]
-:kind==='creative-web'?[{id:'p5-illustrator-site',apps:['illustrator','p5js','vercel'],human:260,learning:70,agent:60,risk:16},{id:'p5-site',apps:['p5js','vercel'],human:300,learning:90,agent:75,risk:20},{id:'three-creative-site',apps:['threejs','vercel'],human:285,learning:85,agent:95,risk:25}]
-:kind==='threejs'?[{id:'three-agent',apps:['threejs','vercel'],human:260,learning:40,agent:95,risk:18},{id:'three-learn',apps:['threejs','vercel'],human:380,learning:150,agent:0,risk:22},{id:'p5-site',apps:['p5js','vercel'],human:300,learning:75,agent:45,risk:28}]
-:kind==='ai-chatbot'?[{id:'next-gemini-agent',apps:['nextjs','gemini-api','vercel'],human:375,learning:60,agent:150,risk:22},{id:'next-gemini-learn',apps:['nextjs','gemini-api','vercel'],human:475,learning:210,agent:0,risk:28},{id:'next-browser-model',apps:['nextjs','browser-llm','vercel'],human:440,learning:120,agent:150,risk:34}]
-:kind==='poster'?[{id:'p5-poster',apps:['illustrator','p5js'],human:205,learning:55,agent:40,risk:16},{id:'td-poster',apps:['illustrator','touchdesigner'],human:250,learning:100,agent:0,risk:20},{id:'ae-poster',apps:['illustrator','after-effects'],human:235,learning:115,agent:0,risk:18}]
-:kind==='geometry'?[{id:'blender-geo',apps:['blender'],human:290,learning:70,agent:0,risk:14},{id:'blender-manual',apps:['blender'],human:390,learning:15,agent:0,risk:19},{id:'houdini-geo',apps:['houdini'],human:285,learning:210,agent:0,risk:30}]
-:kind==='animation'?[{id:'blender-only',apps:['blender'],human:330,learning:35,agent:0,risk:13},{id:'blender-resolve',apps:['blender','davinci-resolve'],human:310,learning:55,agent:0,risk:15},{id:'maya-ae',apps:['maya','after-effects'],human:345,learning:190,agent:0,risk:29}]
-:[{id:'clarify-project',apps:[],human:25,learning:0,agent:0,risk:45}];
+export const candidateStrategies=(kind:string):Seed[]=>deriveCandidateStrategies(kind).map((strategy)=>({id:strategy.id,apps:strategy.softwareIds,human:strategy.humanMinutes,learning:strategy.learningMinutes,agent:strategy.agentMinutes,risk:strategy.risk}));
 
 function kindOf(text:string){if(has(text,['touchdesigner','projection','installation','hand tracking','projected','trình chiếu']))return'installation';if(has(text,['three.js','threejs','portfolio','webgl','web-and-creative-coding.library.three-js']))return'threejs';if(has(text,['chatbot','chat bot','ai chat','conversational tutor','language practice','language learning','project-requirements.required-interaction.chatbot']))return'ai-chatbot';if(has(text,['creative coding','p5.js','p5js','web-and-creative-coding.library.p5-js','web publishing','generative typography','interactive web graphics'])||(has(text,['website','web page','webpage','browser','web experience'])&&has(text,['lyrics','typography','interactive','creative','generative'])))return'creative-web';if(has(text,['bauhaus','poster','react to music','audio-react','âm nhạc','audio-and-music.audio-reactive-technique.frequency-bands']))return'poster';if(has(text,['geometry nodes','procedural vegetation','solarpunk','3d-production.geometry-nodes-technique.vegetation-scatter']))return'geometry';if(has(text,['animation','3d video','3d social','cel-shad','toon shad','3d-production.npr-technique.cel-shading']))return'animation';return'unresolved'}
 function appMentions(text:string){return Object.entries(APPS).filter(([,label])=>text.includes(label.toLowerCase())||(label==='Three.js'&&text.includes('three.js'))).map(([id])=>id)}
@@ -142,8 +137,8 @@ export function delegationActionOverlap(left:PipelineTask,right:PipelineTask):nu
  return union?intersection/union:0;
 }
 
-function delegationGuide(task:PipelineTask,input:ProjectInput):AgentDelegationGuide{
- const techniquePlan=resolveTechniquePlans(task.techniqueIds,task.recommendedSoftwareId,input.language);
+function delegationGuide(task:PipelineTask,input:ProjectInput,kind:string):AgentDelegationGuide{
+ const techniquePlan=resolveTechniquePlans(task.techniqueIds,task.recommendedSoftwareId,input.language,kind);
  const details=flattenTechniquePlans(techniquePlan);
  const deadline=input.deadline||tr(input.language,'Not specified','Không chỉ định');
  const isChatbotTask=task.techniqueIds.some((id)=>id.includes('language-model')||id.includes('prompting-technique')||id.includes('moderation')||id.endsWith('.chatbot'));
@@ -157,9 +152,9 @@ function delegationGuide(task:PipelineTask,input:ProjectInput):AgentDelegationGu
   ['Approved outputs from prerequisite steps','Existing repository, files, and tests','Target languages, conversation scenarios, and approved age/content policy','Client/server boundary, required environment-variable names such as GEMINI_API_KEY when used, and quota limits; never provide secret values']):(input.language==='vi'?
   ['Output đã duyệt từ các bước phụ thuộc','Repository, file và asset hiện có','Nội dung, copy, media, dữ liệu và art direction được brief duyệt rõ ràng','Runtime mục tiêu, deadline và mọi ràng buộc']:
   ['Approved outputs from prerequisite steps','Existing repository, files, and assets',"Project content, copy, media, data, and creative direction explicitly approved by the brief",'Target runtime, deadline, and every stated constraint']);
- const contextChecklist=visualContext?[...baseContextChecklist,visualContext]:baseContextChecklist;
- const expectedOutputs=unique([...details.artifacts,tr(input.language,'A change log naming every file or asset changed','Nhật ký thay đổi nêu rõ file hoặc asset đã sửa'),tr(input.language,'Test, build, and visual-validation evidence','Bằng chứng test, build và kiểm tra trực quan'),tr(input.language,'Remaining assumptions, risks, and human decisions','Giả định, rủi ro và quyết định còn cần con người')]);
- const reviewChecklist=unique([...details.acceptanceChecks,tr(input.language,'The result stays in scope without redesigning unrelated work','Kết quả đúng phạm vi và không redesign phần không liên quan'),tr(input.language,'The user can understand, edit, and continue the work','Người dùng có thể hiểu, chỉnh sửa và tiếp tục công việc')]);
+ const contextChecklist=unique([...(visualContext?[...baseContextChecklist,visualContext]:baseContextChecklist),...task.inputs]);
+ const expectedOutputs=unique([...task.outputs,...details.artifacts,tr(input.language,'A change log naming every file or asset changed','Nhật ký thay đổi nêu rõ file hoặc asset đã sửa'),tr(input.language,'Test, build, and visual-validation evidence','Bằng chứng test, build và kiểm tra trực quan'),tr(input.language,'Remaining assumptions, risks, and human decisions','Giả định, rủi ro và quyết định còn cần con người')]);
+ const reviewChecklist=unique([...task.acceptanceEvidence,...details.acceptanceChecks,tr(input.language,'The result stays in scope without redesigning unrelated work','Kết quả đúng phạm vi và không redesign phần không liên quan'),tr(input.language,'The user can understand, edit, and continue the work','Người dùng có thể hiểu, chỉnh sửa và tiếp tục công việc')]);
  const dependencyText=task.prerequisiteTaskIds.length?task.prerequisiteTaskIds.join(', '):tr(input.language,'Không có','None');
  const aiTaskText=`${task.title} ${task.objective} ${task.techniqueIds.join(' ')}`.toLowerCase();
  const implementationApp=task.recommendedSoftwareId;
@@ -190,8 +185,9 @@ function delegationGuide(task:PipelineTask,input:ProjectInput):AgentDelegationGu
  const productionModelBoundary=task.recommendedSoftwareId==='gemini-api'||task.recommendedSoftwareId==='browser-llm'
   ?tr(input.language,`${task.softwareLabel} is the product's production inference runtime. The implementation agent edits and validates the application; it is not automatically the same model as the production runtime.`,`${task.softwareLabel} là runtime suy luận của sản phẩm. Agent triển khai chỉnh sửa và kiểm tra ứng dụng; nó không tự động là cùng model với runtime sản phẩm.`)
   :tr(input.language,'This AI route is for the implementation agent only. Do not add a production AI dependency unless the assignment explicitly requires one.','Tuyến AI này chỉ dành cho agent triển khai. Không thêm phụ thuộc AI production nếu nhiệm vụ không yêu cầu rõ.');
- const techniqueText=techniquePlan.map((plan,index)=>`${index+1}. ${plan.label}\n   ${plan.method}`).join('\n');
+ const techniqueText=techniquePlan.map((plan,index)=>`${index+1}. ${plan.label}\n   Method: ${plan.method}${plan.relationshipNotes.length?`\n   Relationship: ${plan.relationshipNotes.join(' ')}`:''}`).join('\n');
  const groundingText=task.knowledgeGrounding.playbookIds.join('\n');
+ const artifactFlowText=`${tr(input.language,'Inputs','Đầu vào')}:\n${task.inputs.map((item,index)=>`${index+1}. ${item}`).join('\n')}\n${tr(input.language,'Outputs owned by this step','Đầu ra do bước này phụ trách')}:\n${task.outputs.map((item,index)=>`${index+1}. ${item}`).join('\n')}\n${tr(input.language,'Consumed by downstream tasks','Được bước sau sử dụng')}: ${task.consumedBy.join(', ')||tr(input.language,'No downstream task','Không có bước sau')}\n${tr(input.language,'Acceptance evidence','Bằng chứng chấp nhận')}:\n${task.acceptanceEvidence.map((item,index)=>`${index+1}. ${item}`).join('\n')}`;
  const summary={
   approach:techniquePlan.map((plan)=>plan.label),
   keyActions:techniquePlan.map((plan)=>plan.implementationSteps[0]).filter(Boolean),
@@ -218,6 +214,9 @@ RANH GIỚI TRÁCH NHIỆM
 Phụ trách: ${task.responsibility}
 Không làm trong bước này:
 ${task.nonGoals.map((item,index)=>`${index+1}. ${item}`).join('\n')}
+
+LUỒNG ARTIFACT GIỮA CÁC BƯỚC
+${artifactFlowText}
 
 TUYẾN AI ĐỀ XUẤT
 ${aiRoute?`${aiRoute.label} qua ${aiRoute.accessRoute}. Lý do: ${aiRoute.reasons.slice(0,2).join(' ')} Điểm mạnh phù hợp: ${aiRoute.strongFor.slice(0,2).join('; ')}. Cần lưu ý: ${aiRoute.watchFor[0]??'kiểm tra giới hạn provider hiện tại'}.`:`Chưa xác nhận quyền truy cập implementation agent nên không tự động chọn model. Các tuyến để so sánh:\n${candidateComparison}`}
@@ -272,6 +271,9 @@ Own: ${task.responsibility}
 Do not do in this step:
 ${task.nonGoals.map((item,index)=>`${index+1}. ${item}`).join('\n')}
 
+CROSS-STEP ARTIFACT FLOW
+${artifactFlowText}
+
 RECOMMENDED AI ROUTE
 ${aiRoute?`${aiRoute.label} via ${aiRoute.accessRoute}. Why: ${aiRoute.reasons.slice(0,2).join(' ')} Relevant strengths: ${aiRoute.strongFor.slice(0,2).join('; ')}. Watch for: ${aiRoute.watchFor[0]??'current provider limits'}.`:`Implementation-agent access is not confirmed, so no model is auto-selected. Compare these viable routes:\n${candidateComparison}`}
 Boundary: ${productionModelBoundary}
@@ -306,21 +308,30 @@ FAILURE MODES TO PREVENT
 ${details.failureModes.map((item,index)=>`${index+1}. ${item}`).join('\n')}
 
 Start by inspecting the prerequisite outputs, repository, and supplied assets. State a short plan that follows the implementation sequence above and identify only genuine blockers. Then complete the assignment, verify every acceptance criterion, and finish with a change log, validation evidence, assumptions, and remaining risks.`;
- return{compatibleAgents,prompt,summary,prerequisiteTaskIds:task.prerequisiteTaskIds,techniquePlan:techniquePlan.map(({techniqueId,label,method})=>({techniqueId,label,method})),implementationSteps:details.implementationSteps,contextChecklist,expectedOutputs,reviewChecklist,failureModes:details.failureModes,aiModelDecision};
+ return{compatibleAgents,prompt,summary,prerequisiteTaskIds:task.prerequisiteTaskIds,techniquePlan:techniquePlan.map(({techniqueId,label,method,relationshipNotes})=>({techniqueId,label,method,relationshipNotes})),implementationSteps:details.implementationSteps,contextChecklist,expectedOutputs,reviewChecklist,failureModes:details.failureModes,artifactGraph:{inputs:task.inputs,outputs:task.outputs,consumedBy:task.consumedBy,acceptanceEvidence:task.acceptanceEvidence},aiModelDecision};
 }
 
 function tasks(kind:string,seed:Seed,lang:Language,known:string[],input:ProjectInput,requestedTechniques:string[]):PipelineTask[]{
  const seeds=taskSeeds(kind,seed,known,requestedTechniques);
- const built=seeds.map((t,index)=>{
+ const base=seeds.map((t,index)=>{
   const boundary=taskBoundary(kind,t,lang);
   const techniqueIds=groundedTechniqueIds(kind,t);
-  const plans=resolveTechniquePlans(techniqueIds,t.app,lang);
+  const plans=resolveTechniquePlans(techniqueIds,t.app,lang,kind);
   const techniqueDetails=flattenTechniquePlans(plans);
-  const fallbackDone=[tr(lang,'The required behavior works.','Hành vi bắt buộc hoạt động.'),tr(lang,'The output can be reviewed or exported.','Đầu ra có thể duyệt hoặc xuất.')];
+  const fallbackDone=[tr(lang,'The required behavior works.','Hành vi bắt buộc hoạt động.'),tr(lang,'The output can be reviewed or exported.','Đầu ra có thể duyệt hoặc xuất.'),tr(lang,'The next task can use the approved result without guessing missing decisions.','Bước tiếp theo có thể dùng kết quả đã duyệt mà không phải đoán quyết định còn thiếu.')];
   const playbookIds=plans.map((plan)=>plan.techniqueId);
-  const task:PipelineTask={id:t.id,title:tr(lang,...t.title),objective:tr(lang,...t.objective),responsibility:boundary.responsibility,nonGoals:boundary.nonGoals,techniqueIds,knowledgeGrounding:{source:'knowledge/quanda.skills',status:playbookIds.length===techniqueIds.length?'grounded':'partial',conceptIds:techniqueIds,playbookIds},prerequisiteTaskIds:t.prerequisites??(index?[seeds[index-1].id]:[]),recommendedSoftwareId:t.app,softwareLabel:t.app?APPS[t.app]:tr(lang,'Software-agnostic','Không phụ thuộc phần mềm'),softwareAgnostic:t.app===null,method:t.method,methodLabel:methodLabel(lang,t.method),resourceIds:(t.method==='read_documentation'||t.method==='follow_tutorial')&&t.app&&official[t.app]?[official[t.app]]:[],estimatedHumanMinutes:t.human,estimatedLearningMinutes:t.learn,estimatedAgentMinutes:t.agent,whyIncluded:tr(lang,...t.why),definitionOfDone:techniqueDetails.acceptanceChecks.length?techniqueDetails.acceptanceChecks:fallbackDone,agentDelegation:null};
-  return{...task,agentDelegation:t.method==='delegate_to_agent'?delegationGuide(task,input):null};
+  const definitionOfDone=techniqueDetails.acceptanceChecks.length?techniqueDetails.acceptanceChecks:fallbackDone;
+  const outputs=techniqueDetails.artifacts.length?techniqueDetails.artifacts:[tr(lang,`${tr(lang,...t.title)} — approved step result`,`${tr(lang,...t.title)} — kết quả bước đã duyệt`)];
+  const task:PipelineTask={id:t.id,title:tr(lang,...t.title),objective:tr(lang,...t.objective),responsibility:boundary.responsibility,nonGoals:boundary.nonGoals,inputs:[],outputs,consumedBy:[],acceptanceEvidence:definitionOfDone.map((check)=>tr(lang,`Observable pass: ${check}`,`Bằng chứng đạt: ${check}`)),techniqueIds,knowledgeGrounding:{source:'knowledge/quanda.skills',status:playbookIds.length===techniqueIds.length?'grounded':'partial',conceptIds:techniqueIds,playbookIds},prerequisiteTaskIds:t.prerequisites??(index?[seeds[index-1].id]:[]),recommendedSoftwareId:t.app,softwareLabel:t.app?APPS[t.app]:tr(lang,'Software-agnostic','Không phụ thuộc phần mềm'),softwareAgnostic:t.app===null,method:t.method,methodLabel:methodLabel(lang,t.method),resourceIds:(t.method==='read_documentation'||t.method==='follow_tutorial')&&t.app&&official[t.app]?[official[t.app]]:[],estimatedHumanMinutes:t.human,estimatedLearningMinutes:t.learn,estimatedAgentMinutes:t.agent,whyIncluded:tr(lang,...t.why),definitionOfDone,agentDelegation:null};
+  return task;
  });
+ const connected=base.map((task)=>{
+  const prerequisites=task.prerequisiteTaskIds.flatMap((id)=>base.filter((candidate)=>candidate.id===id));
+  const inputs=prerequisites.length?unique(prerequisites.flatMap((candidate)=>candidate.outputs)):[tr(lang,`Approved project brief: ${input.brief.trim()}`,`Brief dự án đã duyệt: ${input.brief.trim()}`),tr(lang,`Constraints: ${input.constraints.trim()||'none stated'}`,`Ràng buộc: ${input.constraints.trim()||'không nêu'}`)];
+  const consumedBy=base.filter((candidate)=>candidate.prerequisiteTaskIds.includes(task.id)).map((candidate)=>candidate.id);
+  return{...task,inputs,consumedBy};
+ });
+ const built=connected.map((task)=>({...task,agentDelegation:task.method==='delegate_to_agent'?delegationGuide(task,input,kind):null}));
  const delegated=built.filter((task)=>task.agentDelegation);
  for(let index=1;index<delegated.length;index++){
   const overlap=delegationActionOverlap(delegated[index-1],delegated[index]);
@@ -332,9 +343,10 @@ function score(seed:Seed,input:ProjectInput,known:string[],required:string[],cap
  const missing=required.filter((id)=>!seed.apps.includes(id)),viable=!missing.length,knownCount=seed.apps.filter((id)=>known.includes(id)).length,newApps=seed.apps.length-knownCount,learn=Math.max(0,seed.learning-knownCount*20),work=seed.human+learn,resourceMatches=seed.apps.filter((id)=>official[id]).length;
  const b:ScoreBreakdown={requirements:viable?100:15,familiarity:clamp(44+knownCount/Math.max(1,seed.apps.length)*56),learningCost:clamp(100-learn/2.8),executionCost:clamp(100-seed.human/7.5),switchingCost:clamp(100-newApps*18),resourceQuality:clamp(58+resourceMatches*12),deadlineFit:clamp(capacity/Math.max(1,work)*100),risk:clamp(100-seed.risk*1.7)};
  const pathTasks=tasks(kind,seed,input.language,known,input,requestedTechniques),pathScore=viable?Math.round(Object.entries(WEIGHTS).reduce((sum,[key,w])=>sum+b[key as keyof ScoreBreakdown]*w,0)):0;
+ const reasoningChain=reasoningChainForStrategy({projectKind:kind,strategyId:seed.id,softwareIds:seed.apps,techniqueIds:unique(pathTasks.flatMap((task)=>task.techniqueIds)),knownSoftwareIds:known,requiredSoftwareIds:required,language:input.language});
  const strengths=[...(viable&&required.length?[tr(input.language,'Satisfies every explicit software requirement','Đáp ứng mọi yêu cầu phần mềm')]:[]),...(knownCount?[tr(input.language,`Reuses ${knownCount} familiar tool${knownCount>1?'s':''}`,`Tái sử dụng ${knownCount} công cụ quen thuộc`)]:[]),...(kind==='ai-chatbot'&&seed.apps.includes('gemini-api')?[tr(input.language,'Keeps the model credential server-side and the provider adapter replaceable','Giữ credential model phía server và adapter provider có thể thay thế')]:[]),...(kind==='ai-chatbot'&&seed.apps.includes('browser-llm')?[tr(input.language,'Avoids per-message model API calls','Tránh lệnh gọi model API theo từng tin nhắn')]:[]),...(b.deadlineFit>=100?[tr(input.language,'Fits the stated time capacity','Phù hợp quỹ thời gian')]:[])];
  const weaknesses=[...(newApps?[tr(input.language,`Introduces ${newApps} new tool${newApps>1?'s':''}`,`Giới thiệu ${newApps} công cụ mới`)]:[]),...(kind==='ai-chatbot'&&seed.apps.includes('gemini-api')?[tr(input.language,'Free-tier availability and quota must be verified before launch','Cần kiểm tra free tier và quota trước khi ra mắt')]:[]),...(kind==='ai-chatbot'&&seed.apps.includes('browser-llm')?[tr(input.language,'Requires a model download and a capable user device','Cần tải model và thiết bị người dùng đủ mạnh')]:[]),...(b.deadlineFit<100?[tr(input.language,'Exceeds the current time capacity','Vượt quỹ thời gian')]:[]),...(resourceMatches===0?[tr(input.language,'No matching verified local resource','Chưa có tài nguyên local phù hợp')]:[])];
- return{id:seed.id,title:seed.apps.length?seed.apps.map((id)=>APPS[id]).join(' → '):tr(input.language,'Clarify project requirements','Làm rõ yêu cầu dự án'),strategyLabel:tr(input.language,...(STRATEGIES[seed.id]??['Standard execution','Triển khai tiêu chuẩn'])),softwareIds:seed.apps,softwareLabels:seed.apps.map((id)=>APPS[id]),tasks:pathTasks,estimatedHumanMinutes:pathTasks.reduce((s,t)=>s+t.estimatedHumanMinutes,0),estimatedLearningMinutes:pathTasks.reduce((s,t)=>s+t.estimatedLearningMinutes,0),estimatedAgentMinutes:pathTasks.reduce((s,t)=>s+t.estimatedAgentMinutes,0),score:pathScore,scoreBreakdown:b,strengths,weaknesses,viable,rejectionReasons:missing.map((id)=>tr(input.language,`Missing required ${APPS[id]}`,`Thiếu ${APPS[id]} bắt buộc`))};
+ return{id:seed.id,title:seed.apps.length?seed.apps.map((id)=>APPS[id]).join(' → '):tr(input.language,'Clarify project requirements','Làm rõ yêu cầu dự án'),strategyLabel:tr(input.language,...(STRATEGIES[seed.id]??['Standard execution','Triển khai tiêu chuẩn'])),softwareIds:seed.apps,softwareLabels:seed.apps.map((id)=>APPS[id]),tasks:pathTasks,reasoningChain,estimatedHumanMinutes:pathTasks.reduce((s,t)=>s+t.estimatedHumanMinutes,0),estimatedLearningMinutes:pathTasks.reduce((s,t)=>s+t.estimatedLearningMinutes,0),estimatedAgentMinutes:pathTasks.reduce((s,t)=>s+t.estimatedAgentMinutes,0),score:pathScore,scoreBreakdown:b,strengths,weaknesses,viable,rejectionReasons:missing.map((id)=>tr(input.language,`Missing required ${APPS[id]}`,`Thiếu ${APPS[id]} bắt buộc`))};
 }
 function detourDecisions(rejected:CandidatePath[],recommended:CandidatePath,lang:Language):DetourDecision[]{
  return rejected.slice(0,3).map((path)=>{
@@ -364,6 +376,6 @@ export function solveProject(input:ProjectInput,understanding?:ProjectAnalysisOu
  const kind=kindOf(text),explicitRequired=mandatory(`${input.brief}. ${input.constraints}`.toLowerCase()),constraintSoftware=appMentions(input.constraints.toLowerCase()),analyzedRequired=(understanding?.resolution.mandatorySoftwareIds??[]).filter((id)=>constraintSoftware.includes(id)),required=[...new Set([...explicitRequired,...analyzedRequired])],known=[...new Set([...appMentions(input.skills.toLowerCase()),...(understanding?.resolution.softwareIds??[])])];
  const deadline=input.deadline?new Date(`${input.deadline}T23:59:59`):new Date(Date.now()+7*86400000),days=Math.max(1,Math.ceil((deadline.getTime()-Date.now())/86400000)),capacity=Math.round(days*Math.max(.5,input.hoursPerDay)*60);
  const requestedTechniques=understanding?.resolution.techniqueIds??[];
- const all=seeds(kind).map((seed)=>score(seed,input,known,required,capacity,kind,requestedTechniques)),viable=all.filter((p)=>p.viable).sort((a,b)=>b.score-a.score),recommended=viable[0]??all.sort((a,b)=>b.score-a.score)[0],rejected=all.filter((p)=>!p.viable);
- return{destination:understanding?.analysis.destination??input.brief.trim(),detectedKind:kind,capacityMinutes:capacity,daysAvailable:days,requirements:required.map((id)=>APPS[id]),knownSoftware:known.map((id)=>APPS[id]),recommended,alternatives:viable.slice(1),rejected,detours:detourDecisions(rejected,recommended,input.language),solverVersion:'mvp-rules-1.7.1',scoringVersion:'deterministic-1.0.0'};
+ const all=candidateStrategies(kind).map((seed)=>score(seed,input,known,required,capacity,kind,requestedTechniques)),viable=all.filter((p)=>p.viable).sort((a,b)=>b.score-a.score),recommended=viable[0]??all.sort((a,b)=>b.score-a.score)[0],rejected=all.filter((p)=>!p.viable);
+ return{destination:understanding?.analysis.destination??input.brief.trim(),detectedKind:kind,capacityMinutes:capacity,daysAvailable:days,requirements:required.map((id)=>APPS[id]),knownSoftware:known.map((id)=>APPS[id]),recommended,alternatives:viable.slice(1),rejected,detours:detourDecisions(rejected,recommended,input.language),solverVersion:'mvp-rules-1.8.0',scoringVersion:'deterministic-1.0.0'};
 }

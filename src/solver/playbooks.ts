@@ -1,5 +1,6 @@
 import playbookData from '@/knowledge/technique-playbooks.json';
 import type { Language } from './types';
+import { orderTechniquesByRelationships, relationshipNotes } from './knowledge-graph';
 
 type LocalizedText = Record<Language,string>;
 type LocalizedList = Record<Language,string[]>;
@@ -12,6 +13,7 @@ export interface TechniquePlan {
   implementationSteps:string[];
   acceptanceChecks:string[];
   failureModes:string[];
+  relationshipNotes:string[];
 }
 
 const unique=<T,>(values:T[])=>[...new Set(values)];
@@ -22,12 +24,13 @@ export const playbookAliases:Record<string,string[]>=Object.fromEntries(
   playbookData.playbooks.map((playbook)=>[playbook.techniqueId,playbook.aliases]),
 );
 
-export function resolveTechniquePlans(techniqueIds:string[],softwareId:string|null,language:Language):TechniquePlan[]{
-  return unique(techniqueIds).flatMap((techniqueId)=>{
+export function resolveTechniquePlans(techniqueIds:string[],softwareId:string|null,language:Language,context=''):TechniquePlan[]{
+  const ordered=orderTechniquesByRelationships(unique(techniqueIds),context);
+  return ordered.flatMap((techniqueId)=>{
     const playbook=playbookData.playbooks.find((candidate)=>candidate.techniqueId===techniqueId);
     if(!playbook)return[];
     const softwareMethod=playbook.softwareMethods.find((candidate)=>softwareId&&candidate.softwareIds.includes(softwareId))??playbook.softwareMethods[0];
-    return[{techniqueId,label:text(playbook.label,language),method:text(softwareMethod.method,language),artifacts:list(playbook.artifacts,language),implementationSteps:list(playbook.implementationSteps,language),acceptanceChecks:list(playbook.acceptanceChecks,language),failureModes:list(playbook.failureModes,language)}];
+    return[{techniqueId,label:text(playbook.label,language),method:text(softwareMethod.method,language),artifacts:list(playbook.artifacts,language),implementationSteps:list(playbook.implementationSteps,language),acceptanceChecks:list(playbook.acceptanceChecks,language),failureModes:list(playbook.failureModes,language),relationshipNotes:relationshipNotes(techniqueId,ordered,context,language)}];
   });
 }
 
@@ -37,5 +40,6 @@ export function flattenTechniquePlans(plans:TechniquePlan[]){
     implementationSteps:unique(plans.flatMap((plan)=>plan.implementationSteps)),
     acceptanceChecks:unique(plans.flatMap((plan)=>plan.acceptanceChecks)),
     failureModes:unique(plans.flatMap((plan)=>plan.failureModes)),
+    relationshipNotes:unique(plans.flatMap((plan)=>plan.relationshipNotes)),
   };
 }
