@@ -547,30 +547,37 @@ Prefer:
 
 ---
 
-# 17. What QUANDA Should Show Was Skipped
+# 17. Detours QUANDA Avoided
 
-A key proof mechanism is showing unnecessary work removed.
+A key proof mechanism is showing which evaluated routes were rejected and why. This section must be derived from actual solver candidates, never from a fixed list of software or generic courses.
 
 Example:
 
 ```text
-QUANDA skipped
+Detours QUANDA avoided
 
-Blender navigation
-→ You already know it
+Blender → DaVinci Resolve
+→ Rejected because it is missing required TouchDesigner
 
-Basic modelling
-→ You already know it
+Cost avoided
+→ Avoids investing in a route that cannot deliver the brief under its current constraints
 
-Sculpting
-→ Not required
+Reconsider when
+→ TouchDesigner becomes optional or the brief changes
 
-Rigging
-→ Not required
-
-Maya
-→ Adds learning overhead with no project-specific advantage
+Solver evidence
+→ Missing required TouchDesigner
 ```
+
+Each detour record should include:
+
+- the evaluated route title
+- the project-specific blocking reason
+- the cost or risk avoided
+- when the route should be reconsidered
+- the solver evidence supporting the decision
+
+Do not repeat viable alternatives from the comparison section. If no evaluated route was rejected with meaningful evidence, hide the detours section entirely.
 
 Optional:
 

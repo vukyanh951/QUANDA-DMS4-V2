@@ -83,6 +83,7 @@ export interface AIModelSelectionInput {
   hardware?: string;
   preferredLanguage?: string;
   taskDescription?: string;
+  requireKnownAccess?: boolean;
 }
 
 export interface AIModelScoreBreakdown {
@@ -107,6 +108,10 @@ export interface AIModelCandidateDecision {
   reasons: string[];
   rejectionReasons: string[];
   accessRoute: string;
+  accessMatched: boolean;
+  roleSummary: string[];
+  strongFor: string[];
+  watchFor: string[];
   freshnessStatus: AIModelRecord['currentVerification']['status'];
 }
 
@@ -120,5 +125,5 @@ export interface AIModelSelectionDecision {
   rejected: AIModelCandidateDecision[];
   uncertainties: string[];
   nonAIReason: string | null;
-  selectorVersion: 'deterministic-ai-selector-1.0.0';
+  selectorVersion: 'deterministic-ai-selector-1.1.0';
 }
