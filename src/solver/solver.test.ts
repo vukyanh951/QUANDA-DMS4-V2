@@ -1,4 +1,4 @@
-import assert from 'node:assert/strict';import test from 'node:test';import playbookData from '@/knowledge/technique-playbooks.json';import {delegationActionOverlap,solveProject} from './solve';
+import assert from 'node:assert/strict';import test from 'node:test';import relationshipData from '@/knowledge/knowledge-relationships.json';import playbookData from '@/knowledge/technique-playbooks.json';import {validateKnowledgeRelationships} from './knowledge-graph';import {candidateStrategies,delegationActionOverlap,solveProject} from './solve';import {validateStrategyGraph} from './strategy-graph';
 const deadline=new Date(Date.now()+7*86400000).toISOString().slice(0,10);
 test('keeps mandatory TouchDesigner',()=>{const s=solveProject({brief:'TouchDesigner is mandatory. Hand tracking controls a projected flower.',deadline,hoursPerDay:2,skills:'Blender, TouchDesigner, DaVinci Resolve',constraints:'Must use TouchDesigner',language:'en'});assert(s.recommended.softwareIds.includes('touchdesigner'));assert(s.alternatives.every((p)=>p.softwareIds.includes('touchdesigner')));assert(s.rejected.length>0)});
 test('prefers familiar Blender',()=>{const s=solveProject({brief:'Cel-shaded product animation',deadline,hoursPerDay:3,skills:'Blender modelling materials lighting keyframes',constraints:'Do not introduce another 3D package',language:'en'});assert.equal(s.recommended.softwareIds[0],'blender');assert(!s.recommended.softwareIds.includes('maya'))});
@@ -127,4 +127,43 @@ test('delegated prompts do not inherit unrelated project subjects',()=>{
    assert.match(task.agentDelegation?.prompt??'',/RESPONSIBILITY BOUNDARY/);
   }
  }
+});
+test('execution tasks form an explicit artifact handoff graph',()=>{
+ const solution=solveProject({brief:'Lyrics website with creative scrolling typography',deadline,hoursPerDay:3,skills:'Illustrator advanced; coding none',constraints:'Prefer free tools',language:'en'});
+ const tasks=solution.recommended.tasks;
+ for(const task of tasks){
+  assert(task.inputs.length>0,`${task.id} inputs`);
+  assert(task.outputs.length>0,`${task.id} outputs`);
+  assert(task.acceptanceEvidence.length>0,`${task.id} evidence`);
+  for(const downstreamId of task.consumedBy){
+   const downstream=tasks.find((candidate)=>candidate.id===downstreamId);
+   assert(downstream,`${task.id} -> ${downstreamId}`);
+   assert(downstream.prerequisiteTaskIds.includes(task.id));
+   assert(task.outputs.some((output)=>downstream.inputs.includes(output)),`${task.id} output is consumed by ${downstreamId}`);
+  }
+ }
+ const scaffold=tasks.find((task)=>task.id==='scaffold');
+ const typography=tasks.find((task)=>task.id==='typography');
+ assert(scaffold?.consumedBy.includes('typography'));
+ assert(scaffold?.outputs.some((output)=>typography?.inputs.includes(output)));
+ assert.match(scaffold?.agentDelegation?.prompt??'',/CROSS-STEP ARTIFACT FLOW/);
+ assert.match(scaffold?.agentDelegation?.prompt??'',/Outputs owned by this step/);
+});
+test('typed knowledge relationships cover the complete planning vocabulary',()=>{
+ const techniqueIds=playbookData.playbooks.map((playbook)=>playbook.techniqueId);
+ assert.deepEqual(validateKnowledgeRelationships(techniqueIds),[]);
+ const types=new Set(relationshipData.relationships.map((edge)=>edge.relationType));
+ for(const required of ['requires','produces','consumes','enables','conflicts-with','alternative-to','validated-by'])assert(types.has(required),required);
+});
+test('candidate strategies are graph-derived and expose a relationship reasoning chain',()=>{
+ assert.deepEqual(validateStrategyGraph(),[]);
+ assert(candidateStrategies('creative-web').length>=4);
+ assert(candidateStrategies('ai-chatbot').length>=4);
+ const solution=solveProject({brief:'Lyrics website with creative scrolling typography',deadline,hoursPerDay:3,skills:'Illustrator advanced; coding none',constraints:'Prefer free tools',language:'en'});
+ assert(solution.alternatives.length>=3);
+ assert(solution.recommended.reasoningChain.length>=3);
+ assert(solution.recommended.reasoningChain.some((item)=>item.includes('produces:')||item.includes('requires:')||item.includes('enables:')));
+ const typography=solution.recommended.tasks.find((task)=>task.id==='typography');
+ assert(typography?.agentDelegation?.techniquePlan.some((plan)=>plan.relationshipNotes.length>0));
+ assert.match(typography?.agentDelegation?.prompt??'',/Relationship:/);
 });
